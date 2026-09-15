@@ -126,8 +126,17 @@ half, and the repo's rule is one implementation of the *gate*, not of the *trigg
 
 RED → run → GREEN → run → commit. Never write the implementation before the test
 fails. `python3 -m unittest -q test_automation.<Class>` is the narrow loop; if a local
-deny rule blocks `python3`, use `make check-offline RUFF=.venv/bin/ruff
+deny rule blocks `python3` — on the authoring machine `*python*` is a user-level deny rule,
+so **assume it is blocked** — use `make check-offline RUFF=.venv/bin/ruff
 MYPY=.venv/bin/mypy` instead (it runs the same suite, and takes ~32 s).
+
+**A green unittest class is not a green task.** GREEN means
+`make check-offline RUFF=.venv/bin/ruff MYPY=.venv/bin/mypy` exits 0, ruff and mypy
+included. The first implementation run of this plan produced two lint errors — `RUF012` on
+a class-level dict and `B007` on an unused loop variable — that reached a "verified" state
+because the narrow class passed and the full gate was never run. Run the gate for every
+task, and paste its **real exit code**: a pipe through `tail` reports the pipe's status and
+hides the failure, so do not pipe the gate.
 
 ## T0 — Baseline (no commit, no edits)
 
@@ -158,7 +167,7 @@ Open `test_automation.py`. Insert this block **immediately before** the line
 (line 2791 at `c4e28e9`), so it lands next to the other harness seams:
 
 ```python
-# ----------------------------------------------------------------- harness skill surface (#NNN)
+# ----------------------------------------------------------------- harness skill surface
 class TestHarnessSkillSurface(unittest.TestCase):
     """The harness-neutral half of the harness layer.
 
@@ -316,8 +325,7 @@ gates the facts it restates from root instead of freezing the file. Add to
     def test_opencode_commands_and_the_skills_agree_on_the_command(self):
         # The procedure lives in the skill; opencode.json keeps only the wrapper. What
         # must not drift is the command each one names — one gate, named once.
-        expected = {"check": "make check", "fix": "make fix",
-                    "sync": "./sync-plugin-docs.sh"}
+        expected = self.COMMANDS  # one mapping — test 1 owns it, this test reuses it
         config = json.loads(Path(ROOT, "opencode.json").read_text(encoding="utf-8"))
         for name, command in expected.items():
             self.assertIn(command, config["command"][name]["template"],
@@ -522,7 +530,7 @@ Insert this block **immediately before** the same
 line (it will sit directly after `TestHarnessSkillSurface`):
 
 ```python
-# ----------------------------------------------------------------- Hermes harness adapter (#NNN)
+# ----------------------------------------------------------------- Hermes harness adapter
 class TestHermesHarnessAdapter(unittest.TestCase):
     """Pins the Hermes half of the harness layer.
 
