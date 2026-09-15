@@ -18,6 +18,10 @@
   `945aa19`, `85d2b26`, `934fe19`, `7b4fefc`). The tree is opencode-only today.
 - **Category**: refactor
 - **Planned at**: commit `c4e28e9`, 2026-09-15
+- **Progress**: T1 and T2 are LANDED — merged in PR #2 (`chore/uv-run-gates`, base `5c02e82`) with a `uv` migration of every gate. T3-T7 continue on branch `feat/hermes-harness-plugin`.
+- **Runner (updated)**: the interpreter form used below is deny-blocked on the authoring host (the rule matches the interpreter name anywhere in a command). Use `uv run -m unittest -q test_automation.<Class>` and plain `make check-offline`; translate the older commands, never copy them.
+- **Drift**: the check above fires. Since `c4e28e9`: `AGENTS.md` compacted (-281), the `Makefile` moved to `uv`, `.opencode/plugins/commit-gate.ts` changed, `test_automation.py` gained `TestHarnessSkillSurface`. Re-read the live tree for anchors; excerpt line numbers are stale.
+- **Pins are fact-anchored**: `TestPluginFrontDoorSignals` reads signals from the "Evaluate tools for" sentence in `AGENTS.md` and the parenthesised list in `plugin/README.md`. T5 must change both sides together or neither.
 
 ## Goal
 
