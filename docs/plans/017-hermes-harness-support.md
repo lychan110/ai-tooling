@@ -18,7 +18,8 @@
   `945aa19`, `85d2b26`, `934fe19`, `7b4fefc`). The tree is opencode-only today.
 - **Category**: refactor
 - **Planned at**: commit `c4e28e9`, 2026-09-15
-- **Progress**: T1 and T2 are LANDED — merged in PR #2 (`chore/uv-run-gates`, base `5c02e82`) with a `uv` migration of every gate. T3-T7 continue on branch `feat/hermes-harness-plugin`.
+- **Progress**: T1 and T2 are LANDED — merged in PR #2 (`chore/uv-run-gates`, base `5c02e82`) with a `uv` migration of every gate. T3-T5 are LANDED on `feat/hermes-harness-plugin`; T6 is VERIFIED LIVE; T7 is in flight. The three pins the compaction broke (`test_signal_count_matches_root`, `test_plugin_names_every_root_signal`, `test_the_prose_chains_match_the_recipe`) all pass again — they now assert the facts rather than the phrasing; `make check` exits 0 with `Ran 755 tests` / `OK (skipped=2)`.
+- **T6 as landed (2026-09-15)**: the adapter loads only with BOTH switches — `HERMES_ENABLE_PROJECT_PLUGINS=true` *and* `ai-tooling-harness` in `plugins.enabled`. The env var alone discovers without loading, and `hermes plugins enable` cannot do it for a repo-local plugin ("not installed or bundled"). Verified end-to-end: with drift in a watched doc, a live session's `echo git commit .` tool request was rewritten by the gate and the agent read the diagnostic instead of the raw command. The rewrite emits with `echo`, not `printf` — `printf` is deny-listed in the operator's config, so the pre-fix diagnostic was swallowed by the deny layer. T6.1's truncation expectation is void: `AGENTS.md` is 3,976 chars after `dcf3554`.
 - **Runner (updated)**: the interpreter form used below is deny-blocked on the authoring host (the rule matches the interpreter name anywhere in a command). Use `uv run -m unittest -q test_automation.<Class>` and plain `make check-offline`; translate the older commands, never copy them.
 - **Drift**: the check above fires. Since `c4e28e9`: `AGENTS.md` compacted (-281), the `Makefile` moved to `uv`, `.opencode/plugins/commit-gate.ts` changed, `test_automation.py` gained `TestHarnessSkillSurface`. Re-read the live tree for anchors; excerpt line numbers are stale.
 - **Pins are fact-anchored**: `TestPluginFrontDoorSignals` reads signals from the "Evaluate tools for" sentence in `AGENTS.md` and the parenthesised list in `plugin/README.md`. T5 must change both sides together or neither.
@@ -1541,14 +1542,16 @@ so there rather than omitting it.
 
 ## Risks and tradeoffs
 
-1. **`AGENTS.md` is 176 KB and Hermes truncates context files.** A small-context model
-   silently loses the middle of the file. Mitigation: T6.1 measures it; the operator page
-   documents `context_file_max_chars`. Accepted because the alternative — a second
-   instruction file — breaks the one-surface rule.
+1. **`AGENTS.md` used to overflow Hermes's context budget.** It was 175,158 chars, and a
+   Hermes session kept ~17% of it. `dcf3554` compacted it to 3,976 chars, so it now loads
+   whole and this risk is retired rather than mitigated. If it ever grows past the ceiling
+   again, `context_file_max_chars` is the knob — never a second instruction file, which
+   would break the one-surface rule.
 2. **The Hermes gate is opt-in, so parity is weaker than opencode's.** opencode
-   auto-loads `.opencode/plugins/*.ts`; a Hermes user who never sets
-   `HERMES_ENABLE_PROJECT_PLUGINS` and never enables the plugin gets no commit gate.
-   CI and `make check` remain the real backstop, and the operator page says so plainly.
+   auto-loads `.opencode/plugins/*.ts`; a Hermes user who sets neither
+   `HERMES_ENABLE_PROJECT_PLUGINS` nor a `plugins.enabled` entry keeps the adapter
+   discovered-but-unloaded and gets no commit gate. CI and `make check` remain the real
+   backstop, and the operator page says so plainly.
 3. **Middleware is fail-open, by contract.** A bug in the adapter silently stops gating
    rather than breaking a session. That is the right failure direction here, and it is
    exactly why `TestHermesHarnessAdapter` *executes* the adapter instead of pinning its
