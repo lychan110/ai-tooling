@@ -1313,8 +1313,16 @@ commit the scratch file instead.
 
 ```bash
 cd /home/lychan/projects/ai-tooling
-but commit -b feat/hermes-harness-support -m "docs(harness): document Hermes support and refresh the harness section"
+but commit -b feat/hermes-harness-plugin -m "docs(harness): document Hermes support and refresh the harness section"
 ```
+
+**As landed (2026-09-15).** T5.4 shipped as `docs/agents/hermes-harness.md`, minus its stale size
+section: `AGENTS.md` is 3,976 chars after the `dcf3554` compaction, so the page says the file loads
+whole instead of reporting an 83 percent truncation. T5.5 shipped as written. T5.1-T5.3 were
+re-derived rather than applied, because the compaction had already replaced the old 101-line harness
+section with a five-line `## Supported harness` block, leaving those edits without anchors. That
+section now names both harnesses and links the new page. The plan-row half of T5 has no home:
+`docs/plans/` holds plan 017 and no index, so no row was invented for it.
 
 ## T6 — prove Hermes actually loads it
 
@@ -1328,12 +1336,10 @@ cd /home/lychan/projects/ai-tooling
 hermes chat --query 'reply with the single word ok'
 ```
 
-Expected: `ok`, then **a match** — the expected case here, not a surprise. This machine
-already reports `kept 22400+6400 of 175158 chars` for this file: a 32 000-char budget, 70%
-head / 20% tail (~83% of the file, the whole middle, dropped). Search your session store
+Expected: `ok`, then **no truncation marker** — `AGENTS.md` was compacted to 3,976 chars by `dcf3554` after this plan was written, so the whole file now fits. Search your session store
 for the marker (`ctx_search` over `~/.hermes/sessions/`, or `grep -rn` in a shell) and
 **record the exact `kept N+M of TOTAL chars` line in the PR body** — it is what tells a
-maintainer how much of this repo's instructions a Hermes agent really sees (~17% today).
+maintainer how much of this repo's instructions a Hermes agent really sees.
 
 The installed `hermes-agent` skill's project-context reference describes the shape:
 `context_file_max_chars` when set, otherwise a dynamic cap of floor 20 000 / ceiling
