@@ -95,7 +95,7 @@ content fork). Canonical homes per artifact, with the other harness derived/sync
 (ADR-0002; never hand-maintain a duplicate that drifts):
 
 - **Instructions** → `CLAUDE.md` (both harnesses)
-- **Repo skills** → `.claude/skills/` + `.agents/skills/` (both harnesses auto-discover; `.claude/skills/find-skills` is a symlink to `.agents/skills/find-skills`)
+- **Repo skills** → `.agents/skills/` canonical; `.claude/skills/` mirrors them as symlinks for Claude Code discovery (`.claude/skills/find-skills` was already a symlink)
 - **Specialized agent (`eval-runner`)** → `.opencode/agents/` canonical; `.claude/agents/eval-runner.md` is a symlink to it (one source file, zero drift)
 - **Hook logic** → opencode plugins in `.opencode/plugins/` (`commit-gate.ts`, `auto-sync.ts`) that call the **same** `audit-evals.py --offline` / `sync-plugin-docs.sh` scripts Claude Code's hooks use — so the local opencode, local Claude Code, and CI (`make check`) gates reference one implementation
 - **Deterministic gates** → custom commands `/check` `/fix` `/sync` (opencode) and `make check`/`make fix`/`./sync-plugin-docs.sh` directly
