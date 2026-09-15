@@ -1,6 +1,6 @@
 # Watchlist — what to revisit, and when
 
-Everything worth re-evaluating or watching, **derived** (not hand-maintained) from data already in the repo: DEFER verdicts and their triggers, the STACK prose flags, the staleness sweep, and the unverified-claim / skill-measurement backlogs. Regenerate with `python3 watchlist.py`; do not edit between the markers. For *first-time* evaluation priorities see [NEXT-EVALS.md](NEXT-EVALS.md); this page is for *revisiting* work already started.
+Everything worth re-evaluating or watching, **derived** (not hand-maintained) from data already in the repo: DEFER verdicts and their triggers, the STACK prose flags, the staleness sweep, and the unverified-claim / skill-measurement backlogs. Regenerate with `uv run watchlist.py`; do not edit between the markers. For *first-time* evaluation priorities see [NEXT-EVALS.md](NEXT-EVALS.md); this page is for *revisiting* work already started.
 
 <!-- WATCHLIST:START -->
 

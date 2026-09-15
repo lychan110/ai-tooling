@@ -25,11 +25,15 @@ jobs:
         with:
           python-version: "3.12"
 
-      # ruff and mypy are the only non-stdlib gates (#388). Pinned to exact versions in
-      # requirements-dev.txt so an upstream rule addition can't turn an unrelated PR red;
-      # TestIntegrityMakefile pins that this step exists and that the pins stay exact.
-      - name: Install the pinned lint dependencies
-        run: python -m pip install --disable-pip-version-check -r requirements-dev.txt
+      # uv owns the interpreter and the gate environment (#610): `make check` reaches
+      # every script through `uv run`, and ruff/mypy are pinned EXACTLY in pyproject.toml's
+      # `dev` dependency group, resolved from the committed uv.lock. TestIntegrityMakefile
+      # pins that this step exists and that the pins stay exact.
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - name: Install the pinned dev dependencies
+        run: uv sync --dev --frozen
 
       # Single entrypoint (#114): `make check` runs the full gate set in --check mode
       # — the lint gates (ruff, mypy), the offline detectors (B/D/G/J/K/O), the selftest,

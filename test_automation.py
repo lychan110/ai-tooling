@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 test_automation.py — characterization tests for the count/sync automation:
 reconcile-counts.py, audit-evals.py detector G (audit_comparison), and
@@ -11,7 +11,7 @@ through a DetectorContext built from the fixture directory (#199) or by copying
 the script into a fixture tree.
 
 Run:
-  python3 -m unittest test_automation -v      # or: python3 test_automation.py
+  uv run -m unittest test_automation -v      # or: uv run test_automation.py
 Exits non-zero on any failure (gates CI / pre-commit).
 """
 import contextlib
@@ -717,7 +717,7 @@ class TestReconcileMain(unittest.TestCase):
         shutil.copy(os.path.join(ROOT, "audit-evals.py"), os.path.join(d, "audit-evals.py"))
 
     def _run(self, d, *args):
-        return subprocess.run(["python3", "reconcile-counts.py", *args],
+        return subprocess.run([sys.executable, "reconcile-counts.py", *args],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def test_catalog_count_from_fixture_root(self):
@@ -1302,7 +1302,7 @@ class TestDetectorPopulations(unittest.TestCase):
                             r"|\d+\s+record\(s\)")
 
     def _headlines(self):
-        r = subprocess.run(["python3", "audit-evals.py", *self.OFFLINE_REPORT_FLAGS],
+        r = subprocess.run([sys.executable, "audit-evals.py", *self.OFFLINE_REPORT_FLAGS],
                            cwd=ROOT, capture_output=True, text=True, check=False)
         return [ln for ln in r.stdout.splitlines() if ln.startswith("== ")]
 
@@ -2459,36 +2459,37 @@ class TestPluginFrontDoorSignals(unittest.TestCase):
     marketplace package was told the framework has five and never met Verifiability
     (#313). Reads the real tree on purpose: the drift is *between two real files*,
     so a fixture would pin nothing. Derives the expected signals from root AGENTS.md
-    rather than hardcoding them, so a seventh signal needs no test edit."""
+    rather than hardcoding them, so a seventh signal needs no test edit. The anchors below
+    are the sentences that carry the fact, not the wording around them."""
 
-    # Anchored on a number word: root AGENTS.md:7 also says "the quality signals they
-    # move", which a bare \w+ would match first.
-    _COUNT = re.compile(r"\b(four|five|six|seven|eight|nine)\s+quality signals\b", re.IGNORECASE)
+    # Anchored on the sentence that carries the signals, not the wording around it: that
+    # wording moved once already (AGENTS.md compaction, dcf3554) and broke three pins.
+    _ROOT_SIGNALS = re.compile(r"Evaluate tools for\s+(.+?)\.", re.DOTALL)
+    _PLUGIN_SIGNALS = re.compile(r"quality signals\s*\(([^)]+)\)")
 
     def _text(self, rel):
         with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
             return f.read()
 
-    def _count_word(self, text, rel):
-        m = self._COUNT.search(text)
-        self.assertIsNotNone(m, msg=f"{rel} has no 'N quality signals' phrase")
-        return m.group(1).lower()
+    def _signals(self, text, pattern, rel):
+        m = pattern.search(text)
+        self.assertIsNotNone(m, msg=f"{rel} no longer states which signals it evaluates on")
+        names = [s for s in re.split(r",\s*(?:and\s+)?|\s+and\s+", m.group(1)) if s]
+        self.assertGreaterEqual(len(names), 5, msg=f"{rel} parsed too few signals: {names}")
+        return names
 
     def test_signal_count_matches_root(self):
-        root = self._count_word(self._text("AGENTS.md"), "AGENTS.md")
-        plugin = self._count_word(self._text("plugin/README.md"), "plugin/README.md")
-        self.assertEqual(plugin, root,
+        root = self._signals(self._text("AGENTS.md"), self._ROOT_SIGNALS, "AGENTS.md")
+        plugin = self._signals(self._text("plugin/README.md"), self._PLUGIN_SIGNALS,
+                               "plugin/README.md")
+        self.assertEqual(len(plugin), len(root),
                          msg="plugin/README.md quotes a different signal count than root")
 
     def test_plugin_names_every_root_signal(self):
-        # Root lists them after a colon, up to the parenthetical gloss on the last one.
-        m = re.search(r"quality signals:\s*(.+?)\s*\(", self._text("AGENTS.md"))
-        self.assertIsNotNone(m, msg="root AGENTS.md no longer lists its signals after a colon")
-        # ", and X" splits on the comma first, so the optional "and " is consumed there too.
-        names = [s for s in re.split(r",\s*(?:and\s+)?|\s+and\s+", m.group(1)) if s]
-        self.assertGreaterEqual(len(names), 5, msg=f"parsed too few signals: {names}")
-        plugin = self._text("plugin/README.md")
-        for n in names:
+        root = self._signals(self._text("AGENTS.md"), self._ROOT_SIGNALS, "AGENTS.md")
+        plugin = self._signals(self._text("plugin/README.md"), self._PLUGIN_SIGNALS,
+                               "plugin/README.md")
+        for n in root:
             self.assertIn(n, plugin, msg=f"plugin/README.md omits the {n} signal")
 
 
@@ -2787,6 +2788,79 @@ class TestHookTriggerSeam(unittest.TestCase):
                 capture_output=True, text=True, cwd=d, check=False)
             self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
 
+
+# ----------------------------------------------------------------- harness skill surface
+class TestHarnessSkillSurface(unittest.TestCase):
+    """The harness-neutral half of the harness layer.
+
+    `/check`, `/fix` and `/sync` are `opencode.json` prompt templates for opencode.
+    Hermes exposes every project skill as `/<skill-name>` and reads the same
+    `.agents/skills/` directory, so the three procedures live there once and both
+    harnesses get the command. These tests pin that each skill still names the REAL
+    command, so it cannot rot into a description of a gate that no longer exists.
+    """
+
+    COMMANDS: ClassVar[dict[str, str]] = {
+        "check": "make check",
+        "fix": "make fix",
+        "sync": "./sync-plugin-docs.sh",
+    }
+
+    def test_each_command_skill_exists_and_names_its_command(self):
+        for name, command in self.COMMANDS.items():
+            path = Path(ROOT, ".agents", "skills", name, "SKILL.md")
+            self.assertTrue(path.is_file(), msg=f"missing {path}")
+            text = path.read_text(encoding="utf-8")
+            self.assertIn(command, text, msg=f"{name}/SKILL.md does not name `{command}`")
+
+    def test_each_named_make_target_exists(self):
+        # A skill describing a target the Makefile dropped would send the agent to a
+        # command that fails for a reason no commit caused.
+        body = Path(ROOT, "Makefile").read_text(encoding="utf-8")
+        for _name, command in self.COMMANDS.items():
+            if not command.startswith("make "):
+                continue
+            target = command.split()[1]
+            self.assertIn(f"\n{target}:", body, msg=f"Makefile has no `{target}:` target")
+
+
+    def test_eval_runner_procedure_has_exactly_one_home(self):
+        # The procedure used to live only in `.opencode/agents/eval-runner.md`. It lives
+        # in the project skill now; the opencode agent is a wrapper that names it. Pinned
+        # in both directions: the skill must keep the load-bearing steps, and the wrapper
+        # must not grow a second copy of them.
+        skill = Path(ROOT, ".agents", "skills", "eval-runner", "SKILL.md")
+        self.assertTrue(skill.is_file(), msg=f"missing {skill}")
+        text = skill.read_text(encoding="utf-8")
+        for step in ("objective oracle", "A/B", "How we tested it",
+                     "audit-evals.py --fabrication"):
+            self.assertIn(step, text, msg=f"eval-runner skill lost the `{step}` step")
+
+        agent = Path(ROOT, ".opencode", "agents", "eval-runner.md").read_text(encoding="utf-8")
+        self.assertIn(".agents/skills/eval-runner/SKILL.md", agent,
+                      msg="the opencode agent must point at the skill")
+        self.assertNotIn("How we tested it", agent,
+                         msg="the opencode agent has grown a second copy of the procedure")
+
+    def test_eval_runner_keeps_the_opencode_subagent_shape(self):
+        # `mode: subagent` and the permission block are opencode's agent-file shape;
+        # dropping them silently demotes the runner to a normal agent.
+        agent = Path(ROOT, ".opencode", "agents", "eval-runner.md").read_text(encoding="utf-8")
+        head = agent.split("---")[1]
+        self.assertRegex(head, r"(?m)^mode:\s*subagent\s*$")
+        self.assertRegex(head, r"(?m)^name:\s*eval-runner\s*$")
+
+    def test_opencode_commands_and_the_skills_agree_on_the_command(self):
+        # The procedure lives in the skill; opencode.json keeps only the wrapper. What
+        # must not drift is the command each one names — one gate, named once.
+        expected = self.COMMANDS
+        config = json.loads(Path(ROOT, "opencode.json").read_text(encoding="utf-8"))
+        for name, command in expected.items():
+            self.assertIn(command, config["command"][name]["template"],
+                          msg=f"opencode.json's /{name} no longer runs `{command}`")
+            skill = Path(ROOT, ".agents", "skills", name, "SKILL.md")
+            self.assertIn(command, skill.read_text(encoding="utf-8"),
+                          msg=f".agents/skills/{name} no longer runs `{command}`")
 
 # ----------------------------------------------------------------- detector I (evidence field, #62)
 class TestEvidenceField(unittest.TestCase):
@@ -3128,7 +3202,7 @@ class TestGateCoverage(unittest.TestCase):
     def _cli(self, d, *flags):
         for fn in ("audit-evals.py", "catalog_lib.py"):
             shutil.copy(os.path.join(ROOT, fn), os.path.join(d, fn))
-        return subprocess.run(["python3", "audit-evals.py", *flags],
+        return subprocess.run([sys.executable, "audit-evals.py", *flags],
                               cwd=d, capture_output=True, text=True, check=False)
 
     # --- the rule, applied to every gate ------------------------------------
@@ -3645,7 +3719,7 @@ class TestLastVerifiedBackfill(unittest.TestCase):
         self.assertEqual(backfill_lv.backfill_text(t, self.DATE), t)
 
     def _run_check(self, d):
-        return subprocess.run(["python3", "backfill-lastverified.py", "--check"],
+        return subprocess.run([sys.executable, "backfill-lastverified.py", "--check"],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def test_check_flags_missing_and_passes_after_apply(self):
@@ -3774,7 +3848,7 @@ class TestDetectorR(unittest.TestCase):
             shutil.copy(os.path.join(ROOT, "catalog_lib.py"), os.path.join(d, "catalog_lib.py"))
             _write(d, "repo-metadata.json",
                    json.dumps({"a/x": {"fetched_at": "2001-01-01"}}))
-            r = subprocess.run(["python3", "audit-evals.py", "--metadata-staleness"],
+            r = subprocess.run([sys.executable, "audit-evals.py", "--metadata-staleness"],
                                cwd=d, capture_output=True, text=True, check=False)
             self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
             self.assertIn("R. metadata staleness", r.stdout)
@@ -4421,7 +4495,7 @@ class TestIntegrityMakefile(unittest.TestCase):
         "$(MYPY)",
         "audit-evals.py --offline",
         "audit-evals.py --selftest",
-        "python3 -m unittest -q test_automation",
+        "unittest -q test_automation",
         "reconcile-counts.py --check",
         "backfill-evidence.py --check",
         "backfill-lastverified.py --check",
@@ -4458,7 +4532,7 @@ class TestIntegrityMakefile(unittest.TestCase):
     DATA_GATES = tuple(g for g in GATES if g not in (
         "$(RUFF) check",
         "$(MYPY)",
-        "python3 -m unittest -q test_automation",
+        "unittest -q test_automation",
         "audit-evals.py --installs",
     ))
 
@@ -4483,10 +4557,15 @@ class TestIntegrityMakefile(unittest.TestCase):
     # one of the four other `a → b` chains in CLAUDE.md.
     FIX_CHAIN_ANCHOR = "apply-mode fixers in dependency order"
 
-    # Where the chain is restated outside the Makefile. Both are facts copied from the
-    # recipe, so both get a test — `reconcile-counts.py` and TestPluginFrontDoorSignals
-    # are the precedent for gating a restated fact rather than the file restating it.
-    CHAIN_PROSE = ("AGENTS.md", "opencode.json")
+    # Where the chain is restated outside the Makefile. A restatement is a copied fact, so
+    # it gets a test — `reconcile-counts.py` and TestPluginFrontDoorSignals are the
+    # precedent for gating a restated fact rather than the file restating it.
+    #
+    # AGENTS.md is deliberately NOT here. It carried the chain until it was compacted
+    # (dcf3554) into a short front door whose own rule is to delegate long form to
+    # `docs/agents/` and ADRs. The invariant that matters is that every copy that DOES
+    # restate the chain matches `make fix` — not that a particular file restates it.
+    CHAIN_PROSE = ("opencode.json",)
 
     def _raw_target_body(self, target):
         """The literal recipe lines of `target:`, delegation unexpanded. Prefix-safe —
@@ -4588,8 +4667,8 @@ class TestIntegrityMakefile(unittest.TestCase):
             text = Path(ROOT, rel).read_text(encoding="utf-8")
             self.assertIn("command -v make", text,
                           msg=f"{rel} must probe for make before blocking on it")
-            self.assertIn("command -v python3", text,
-                          msg=f"{rel} must probe for python3 before blocking on it")
+            self.assertIn("command -v uv", text,
+                          msg=f"{rel} must probe for uv before blocking on it")
             self.assertIn("^check-data:", text,
                           msg=f"{rel} must probe that the target exists before running it")
 
@@ -4597,7 +4676,7 @@ class TestIntegrityMakefile(unittest.TestCase):
     @staticmethod
     def _gate_script(line):
         """The script a `check-data` recipe line invokes, or None."""
-        m = re.match(r"^(?:python3\s+|\./)([\w.-]+\.(?:py|sh))\s+--", line)
+        m = re.match(r"^(?:\$\(UV\)\s+run\s+|\./)([\w.-]+\.(?:py|sh))\s+--", line)
         return m.group(1) if m else None
 
     def _fix_chain(self):
@@ -4606,10 +4685,10 @@ class TestIntegrityMakefile(unittest.TestCase):
         for line in self._raw_target_body("fix"):
             if line.startswith("@$(MAKE)"):
                 continue  # the trailing re-verify, not a fixer
-            if line == "$(RUFF) check --fix":
+            if line == "$(UV) run $(RUFF) check --fix":
                 names.append("ruff --fix")
                 continue
-            m = re.match(r"^(?:python3\s+|\./)([\w.-]+)\.(?:py|sh)$", line)
+            m = re.match(r"^(?:\$\(UV\)\s+run\s+|\./)([\w.-]+)\.(?:py|sh)$", line)
             self.assertIsNotNone(m, msg=f"unrecognized `fix:` recipe line: {line}")
             names.append(m.group(1))
         return names
@@ -4636,7 +4715,7 @@ class TestIntegrityMakefile(unittest.TestCase):
             script = self._gate_script(line)
             self.assertIsNotNone(script, msg=f"unrecognized `check-data` line: {line}")
             seen.add(script)
-            apply_form = ("python3 " if script.endswith(".py") else "./") + script
+            apply_form = ("$(UV) run " if script.endswith(".py") else "./") + script
             if script in exempt:
                 self.assertTrue(exempt[script].strip(),
                                 msg=f"{script} is exempt with no reason given")
@@ -4688,11 +4767,13 @@ class TestIntegrityMakefile(unittest.TestCase):
         # the build breaks for a reason no code change caused: the versions are pinned to
         # an exact release, and CI installs them. They run first in both check targets
         # because a syntax error should surface before twelve data gates parse the tree
-        # with it.
-        reqs = Path(ROOT, "requirements-dev.txt").read_text(encoding="utf-8")
-        pins = [l.strip() for l in reqs.splitlines()
-                if l.strip() and not l.strip().startswith("#")]
-        self.assertTrue(pins, "requirements-dev.txt declares no pins")
+        # with it. The pins live in pyproject.toml's `dev` group now that uv owns that
+        # environment (#610), so the exact-version rule is checked where uv reads it.
+        pyproject = Path(ROOT, "pyproject.toml").read_text(encoding="utf-8")
+        m = re.search(r"\[dependency-groups\](.*?)(?=\n\[)", pyproject, re.DOTALL)
+        self.assertIsNotNone(m, "pyproject.toml declares no [dependency-groups]")
+        pins = re.findall(r'"([^"]+)"', m.group(1))
+        self.assertTrue(pins, "the dev dependency group declares no pins")
         for pin in pins:
             self.assertIn("==", pin, msg=f"dev dependency is not pinned exactly: {pin}")
         self.assertTrue(any(p.startswith("ruff==") for p in pins))
@@ -4700,12 +4781,12 @@ class TestIntegrityMakefile(unittest.TestCase):
 
         for target in ("check", "check-offline"):
             body = self._target_body(target)
-            self.assertEqual(body[:2], ["$(RUFF) check", "$(MYPY)"],
+            self.assertEqual(body[:2], ["$(UV) run $(RUFF) check", "$(UV) run $(MYPY)"],
                              msg=f"`make {target}` must run the lint gates first")
 
         ci = Path(ROOT, ".github/workflows/integrity.yml").read_text(encoding="utf-8")
-        self.assertIn("requirements-dev.txt", ci,
-                      "CI must install the dev pins or `make check` cannot run the lint gates")
+        self.assertIn("astral-sh/setup-uv", ci,
+                      "CI must install uv or `make check` cannot reach the lint gates")
 
     def test_fix_applies_ruff_before_the_data_fixers(self):
         # `ruff check --fix` reorders imports and rewrites expressions; the data fixers
@@ -4713,7 +4794,7 @@ class TestIntegrityMakefile(unittest.TestCase):
         # after them would leave the tree needing a second `make fix` to settle.
         body = self._target_body("fix")
         self.assertTrue(body, "Makefile has no `fix:` target body")
-        self.assertEqual(body[0], "$(RUFF) check --fix")
+        self.assertEqual(body[0], "$(UV) run $(RUFF) check --fix")
 
     def test_the_local_only_fixers_stay_out_of_fix(self):
         # `make fix` is the canonical repair and runs in CI's shadow via `check`. Two
@@ -4754,7 +4835,7 @@ class TestIntegrityMakefile(unittest.TestCase):
         # apply-mode backfill must run in `fix` so the field is populated before check gates it.
         with open(os.path.join(ROOT, "Makefile"), encoding="utf-8") as f:
             mk = f.read()
-        self.assertRegex(mk, r"fix:[\s\S]*python3 backfill-lastverified\.py(?!\s+--check)",
+        self.assertRegex(mk, r"fix:[\s\S]*\$\(UV\) run backfill-lastverified\.py(?!\s+--check)",
                          "`make fix` must run backfill-lastverified.py in apply mode")
 
 
@@ -5315,7 +5396,7 @@ class TestTriage(unittest.TestCase):
             self.assertEqual(bands["P5 ships-inside"], [])
 
     def _run(self, d, *args):
-        return subprocess.run(["python3", "triage.py", *args],
+        return subprocess.run([sys.executable, "triage.py", *args],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def test_check_catches_drift(self):
@@ -5529,7 +5610,7 @@ class TestAuditEvalsCLI(unittest.TestCase):
             _write(d, f"{name}.md", f"# {name}\n")
 
     def _run(self, d, *args):
-        return subprocess.run(["python3", "audit-evals.py", *args],
+        return subprocess.run([sys.executable, "audit-evals.py", *args],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def _headers(self, res):
@@ -5757,7 +5838,7 @@ class TestWatchlist(unittest.TestCase):
             shutil.copy(os.path.join(ROOT, fn), os.path.join(d, fn))
 
     def _run(self, d, *args):
-        return subprocess.run(["python3", "watchlist.py", *args],
+        return subprocess.run([sys.executable, "watchlist.py", *args],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def test_check_catches_drift(self):
@@ -6233,7 +6314,7 @@ class TestCatalogMirror(unittest.TestCase):
             self._ctx(d, [self._row("t", "https://github.com/new/t")],
                       {"t": self._eval("t", "https://github.com/old/t",
                                        self._row("t", "https://github.com/old/t"))})
-            r = subprocess.run(["python3", "audit-evals.py", "--catalog-mirror"],
+            r = subprocess.run([sys.executable, "audit-evals.py", "--catalog-mirror"],
                                cwd=d, capture_output=True, text=True, check=False)
             self.assertEqual(r.returncode, 0, r.stderr)
             self.assertIn("== U. catalog-entry mirror drift", r.stdout)
@@ -6251,7 +6332,7 @@ class TestCatalogMirror(unittest.TestCase):
                       {"a": self._eval("a", urls["a"], self._row("a", urls["a"])),
                        "b": self._headed("b", urls["b"]),
                        "c": self._headed("c", urls["c"])})
-            r = subprocess.run(["python3", "audit-evals.py", "--catalog-mirror"],
+            r = subprocess.run([sys.executable, "audit-evals.py", "--catalog-mirror"],
                                cwd=d, capture_output=True, text=True, check=False)
             head = r.stdout.splitlines()[0]
             self.assertIn("of 1 mirrored eval(s)", head, msg=head)
@@ -8536,10 +8617,10 @@ class TestInternalLinks(unittest.TestCase):
 
     def test_check_flag_gates_and_bare_run_reports(self):
         # check-stars.py's split: the gate-vs-report call is one word in the Makefile.
-        r = subprocess.run(["python3", "check-links.py"], cwd=ROOT,
+        r = subprocess.run([sys.executable, "check-links.py"], cwd=ROOT,
                            capture_output=True, text=True, check=False)
         self.assertEqual(r.returncode, 0)
-        r = subprocess.run(["python3", "check-links.py", "--check"], cwd=ROOT,
+        r = subprocess.run([sys.executable, "check-links.py", "--check"], cwd=ROOT,
                            capture_output=True, text=True, check=False)
         self.assertEqual(r.returncode, 0, msg=r.stdout)
 
@@ -8748,10 +8829,10 @@ class TestPluginPackage(unittest.TestCase):
         self.assertFalse(os.path.exists(os.path.join(ROOT, "plugin", "CLAUDE.md")))
 
     def test_check_flag_gates_and_bare_run_reports(self):
-        r = subprocess.run(["python3", "check-plugin.py"], cwd=ROOT,
+        r = subprocess.run([sys.executable, "check-plugin.py"], cwd=ROOT,
                            capture_output=True, text=True, check=False)
         self.assertEqual(r.returncode, 0)
-        r = subprocess.run(["python3", "check-plugin.py", "--check"], cwd=ROOT,
+        r = subprocess.run([sys.executable, "check-plugin.py", "--check"], cwd=ROOT,
                            capture_output=True, text=True, check=False)
         self.assertEqual(r.returncode, 0, msg=r.stdout)
 

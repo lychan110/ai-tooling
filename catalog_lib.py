@@ -10,7 +10,7 @@ import from here, so they provably agree by construction. The same argument
 centralizes the COMPARISON verdict-row parse (ADR-0002's shared-parser seam):
 three detectors used to carry byte-identical fixed-offset regexes.
 `sync-plugin-docs.sh`'s apply-mode verify block counts through here too
-(via python3 -c, #195). The same-tool keying (#197) and the triple-key
+(via uv run python -c, #195). The same-tool keying (#197) and the triple-key
 evidence lookup (#201) live here as well, next to the parsers they serve.
 
 All functions are pure (text/values in, value out) — callers read the files.

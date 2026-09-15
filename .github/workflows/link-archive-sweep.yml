@@ -36,12 +36,16 @@ jobs:
         with:
           python-version: "3.12"
 
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
       # Capture output and exit code without failing the job: detector C is gating
       # (non-zero on link rot), but this sweep is deliberately report-only.
       - name: Run link-rot + archived sweep
         id: sweep
         run: |
-          python3 audit-evals.py --links --archived > sweep.txt 2>&1 || true
+          uv run audit-evals.py --links --archived > sweep.txt 2>&1 || true
           echo "----- sweep output -----"
           cat sweep.txt
           # Actionable: a dead/moved/gone repo, an archived repo not yet disclosed in its

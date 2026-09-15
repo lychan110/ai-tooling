@@ -13,7 +13,7 @@
 // to the Makefile list.
 //
 // **"Could not run" is not "failed."** The preconditions are probed explicitly — make,
-// python3, the target — and any one of them missing returns without blocking. Exit
+// uv, the target — and any one of them missing returns without blocking. Exit
 // codes cannot carry that distinction (make exits non-zero for a missing target and
 // for a real finding alike), so it is decided BEFORE the run, never inferred from it.
 
@@ -38,7 +38,7 @@ export default (async ({ worktree, $ }) => {
 
       try {
         // The same three preconditions audit-gate.sh checks, in the same order.
-        const probe = await $.nothrow().cwd(worktree)`sh -c 'command -v make >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1 && grep -q "^check-data:" Makefile'`
+        const probe = await $.nothrow().cwd(worktree)`sh -c 'command -v make >/dev/null 2>&1 && command -v uv >/dev/null 2>&1 && grep -q "^check-data:" Makefile'`
         if (probe.exitCode !== 0) return // cannot run → never block
 
         const result = await $.nothrow().cwd(worktree)`make --no-print-directory check-data`
@@ -49,11 +49,11 @@ export default (async ({ worktree, $ }) => {
           (result.stdout?.toString("utf8") || "")
         const trimmed = diag.slice(0, DIAG_TRUNC)
         // base64-encode so the gate output (multi-line, quotes) survives the shell
-        // round-trip intact. Decode with python3 (already a dependency of the gates).
+        // round-trip intact. Decode with uv run python (already a dependency of the gates).
         const b64 = Buffer.from(trimmed, "utf8").toString("base64")
         output.args.command =
           "echo \"BLOCKED by opencode commit-gate: 'make check-data' failed before 'git commit' — fix the tree, then re-run the commit.\" ; " +
-          "python3 -c \"import base64,sys;sys.stdout.write(base64.b64decode('" +
+          "uv run python -c \"import base64,sys;sys.stdout.write(base64.b64decode('" +
           b64 +
           "').decode(errors='replace'))\""
       } catch {

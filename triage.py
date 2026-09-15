@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 triage.py — band the `discovery-log` leads and regenerate NEXT-EVALS.md.
 
@@ -332,7 +332,7 @@ def render(ordered, ranked, incumbents, containers=None):
         "# Next evals — a banded promotion queue",
         "",
         f"The {total} `discovery-log` leads, **derived** (not hand-maintained) from data "
-        "already in the repo plus `repo-metadata.json`. Regenerate with `python3 triage.py`; "
+        "already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; "
         "do not edit between the markers.",
         "",
         "Leads are grouped into **bands**, not a single ranked list. Within a band the order "
@@ -364,7 +364,7 @@ def render(ordered, ranked, incumbents, containers=None):
             continue
         shown = rows if name == "P0 measure" else rows[:BAND_SAMPLE]
         if len(shown) < len(rows):
-            lines.append(f"_Listing {len(shown)} of {len(rows)} — rerun `python3 triage.py` "
+            lines.append(f"_Listing {len(shown)} of {len(rows)} — rerun `uv run triage.py` "
                          "and read the source for the tail (no silent cap)._")
             lines.append("")
         lines.append("| Tool | Stage | Score | Why | Command |")

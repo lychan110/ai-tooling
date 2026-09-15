@@ -63,7 +63,7 @@ done
 # set lands in a tree the target is not in — 16 were dead that way, 3 of them on the
 # bundle's own front page. The rewrite is depth-only: a link broken at ROOT stays
 # broken here, so check-links.py keeps reporting it where the fix belongs.
-python3 "$REPO_ROOT/rewrite-doc-links.py" "$DEST_DOCS" > /dev/null
+uv run "$REPO_ROOT/rewrite-doc-links.py" "$DEST_DOCS" > /dev/null
 
 # --- Skills: plugin/skills/ → DEST_SKILLS (strip ${CLAUDE_PLUGIN_ROOT}/docs/ paths) ---
 for skill_dir in "$PLUGIN_SKILLS"/*/; do
@@ -89,9 +89,9 @@ fi
 # "what counts as a catalog row" (#195). A grep here had subtly different
 # whitespace rules and could silently diverge.
 # Runs from REPO_ROOT so the repo's catalog_lib.py resolves first, wherever the
-# caller's cwd is (python3 -c puts cwd at the head of sys.path).
+# caller's cwd is (a `-c` snippet puts cwd at the head of sys.path).
 count_catalog_entries() {
-  (cd "$REPO_ROOT" && python3 -c '
+  (cd "$REPO_ROOT" && uv run python -c '
 import sys, catalog_lib
 with open(sys.argv[1], encoding="utf-8") as f:
     print(catalog_lib.catalog_count(f.read()))' "$1")

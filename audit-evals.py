@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 audit-evals.py — integrity checks for the ai-tooling catalog.
 
@@ -565,42 +565,42 @@ Fifteen detectors (A-O), each proven to catch real problems (see git history,
      Offline — it reads one file already in the tree.
 
 Usage:
-  python3 audit-evals.py              # A + B + D + G + J + K + O + Q (all offline but A)
-  python3 audit-evals.py --offline    # B + D + G + J + K + O + Q only (no network)
-  python3 audit-evals.py --installs   # install resolver only
-  python3 audit-evals.py --fabrication # fabrication classifier only
-  python3 audit-evals.py --verdicts   # verdict-sync only (offline)
-  python3 audit-evals.py --comparison # COMPARISON.md vs CATALOG.md consistency (offline)
-  python3 audit-evals.py --drift      # STACK.md vs verdicts + exclusion ledger (offline)
-  python3 audit-evals.py --verdict-evidence  # ADOPT/KEEP must be run-backed or disclaimered (offline)
-  python3 audit-evals.py --rows       # malformed CATALOG/COMPARISON table rows (offline)
-  python3 audit-evals.py --bulk-triage  # bulk-marked evals may only SKIP (offline)
-  python3 audit-evals.py --scope      # P0 leads whose eval concedes it is out of scope (offline)
-  python3 audit-evals.py --identity   # catalog rows that are facets of one artifact (offline)
-  python3 audit-evals.py --installed  # ADOPT/KEEP rows vs this machine's install records (local)
-  python3 audit-evals.py --license-declared  # 'NONE' licenses declared outside a LICENSE file (offline)
-  python3 audit-evals.py --containment  # `Ships inside` declarations P5 cannot act on (offline)
-  python3 audit-evals.py --conditional-gate  # CONDITIONAL rows entitled to neither ADR-0005 clause (offline)
-  python3 audit-evals.py --license-header  # eval `**License:**` headers vs repo-metadata.json (offline)
-  python3 audit-evals.py --duplicate-evals  # COMPARISON rows with more than one eval file (offline)
-  python3 audit-evals.py --workflow-skips  # WORKFLOW.md links whose catalog row reads SKIP (offline)
-  python3 audit-evals.py --containment-evidence  # `Ships inside` cells npm refutes (offline)
-  python3 audit-evals.py --stage-drift   # rows filed under a stage their eval disowns (offline)
-  python3 audit-evals.py --repo-installs  # sources this repo vendors but never judged (offline)
-  python3 audit-evals.py --layer-drift   # Process/Tooling/Infrastructure disagreements (offline)
-  python3 audit-evals.py --claim-drift   # a tool's headline number, restated and drifting (offline)
-  python3 audit-evals.py --link-identity  # links naming one tool and pointing at another (offline)
-  python3 audit-evals.py --links      # link-rot sweep only (slow, ~450 requests)
-  python3 audit-evals.py --archived   # archived-repo report (slow, ~450 gh-api calls)
-  python3 audit-evals.py --skills     # skill-evidence backlog report (offline)
-  python3 audit-evals.py --overlaps   # dangling overlap-reference report (offline)
-  python3 audit-evals.py --clusters   # overlap clusters still awaiting a pick (offline)
-  python3 audit-evals.py --savings-claims  # unverified token-savings headlines (offline)
-  python3 audit-evals.py --evidence   # declared Evidence-field distribution (offline)
-  python3 audit-evals.py --staleness  # flag evals past their last-verified threshold (offline)
-  python3 audit-evals.py --metadata-staleness  # age the repo-metadata.json cache (offline)
-  python3 audit-evals.py --lead-headlines  # discovery-log leads claiming a verdict (offline)
-  python3 audit-evals.py --selftest   # unit-test the evidence classifier (offline)
+  uv run audit-evals.py              # A + B + D + G + J + K + O + Q (all offline but A)
+  uv run audit-evals.py --offline    # B + D + G + J + K + O + Q only (no network)
+  uv run audit-evals.py --installs   # install resolver only
+  uv run audit-evals.py --fabrication # fabrication classifier only
+  uv run audit-evals.py --verdicts   # verdict-sync only (offline)
+  uv run audit-evals.py --comparison # COMPARISON.md vs CATALOG.md consistency (offline)
+  uv run audit-evals.py --drift      # STACK.md vs verdicts + exclusion ledger (offline)
+  uv run audit-evals.py --verdict-evidence  # ADOPT/KEEP must be run-backed or disclaimered (offline)
+  uv run audit-evals.py --rows       # malformed CATALOG/COMPARISON table rows (offline)
+  uv run audit-evals.py --bulk-triage  # bulk-marked evals may only SKIP (offline)
+  uv run audit-evals.py --scope      # P0 leads whose eval concedes it is out of scope (offline)
+  uv run audit-evals.py --identity   # catalog rows that are facets of one artifact (offline)
+  uv run audit-evals.py --installed  # ADOPT/KEEP rows vs this machine's install records (local)
+  uv run audit-evals.py --license-declared  # 'NONE' licenses declared outside a LICENSE file (offline)
+  uv run audit-evals.py --containment  # `Ships inside` declarations P5 cannot act on (offline)
+  uv run audit-evals.py --conditional-gate  # CONDITIONAL rows entitled to neither ADR-0005 clause (offline)
+  uv run audit-evals.py --license-header  # eval `**License:**` headers vs repo-metadata.json (offline)
+  uv run audit-evals.py --duplicate-evals  # COMPARISON rows with more than one eval file (offline)
+  uv run audit-evals.py --workflow-skips  # WORKFLOW.md links whose catalog row reads SKIP (offline)
+  uv run audit-evals.py --containment-evidence  # `Ships inside` cells npm refutes (offline)
+  uv run audit-evals.py --stage-drift   # rows filed under a stage their eval disowns (offline)
+  uv run audit-evals.py --repo-installs  # sources this repo vendors but never judged (offline)
+  uv run audit-evals.py --layer-drift   # Process/Tooling/Infrastructure disagreements (offline)
+  uv run audit-evals.py --claim-drift   # a tool's headline number, restated and drifting (offline)
+  uv run audit-evals.py --link-identity  # links naming one tool and pointing at another (offline)
+  uv run audit-evals.py --links      # link-rot sweep only (slow, ~450 requests)
+  uv run audit-evals.py --archived   # archived-repo report (slow, ~450 gh-api calls)
+  uv run audit-evals.py --skills     # skill-evidence backlog report (offline)
+  uv run audit-evals.py --overlaps   # dangling overlap-reference report (offline)
+  uv run audit-evals.py --clusters   # overlap clusters still awaiting a pick (offline)
+  uv run audit-evals.py --savings-claims  # unverified token-savings headlines (offline)
+  uv run audit-evals.py --evidence   # declared Evidence-field distribution (offline)
+  uv run audit-evals.py --staleness  # flag evals past their last-verified threshold (offline)
+  uv run audit-evals.py --metadata-staleness  # age the repo-metadata.json cache (offline)
+  uv run audit-evals.py --lead-headlines  # discovery-log leads claiming a verdict (offline)
+  uv run audit-evals.py --selftest   # unit-test the evidence classifier (offline)
 
 Exit code is non-zero if any gating detector finds a problem — a BROKEN install
 (A), a FABRICATION candidate (B), a VERDICT mismatch (D), COMPARISON drift (G),
@@ -4778,10 +4778,10 @@ def main():
         print(f"== R. metadata staleness (report-only) — {total} record(s), "
               f"{len(stale)} past {METADATA_STALE_DAYS}d, {undated} undated ==")
         if not total:
-            print("  no repo-metadata.json — run `python3 refresh-metadata.py` to build it")
+            print("  no repo-metadata.json — run `uv run refresh-metadata.py` to build it")
         elif oldest is None:
             print("  UNDATED — no record carries a fetch date, so the cache's age is unknown.")
-            print("  Run `python3 refresh-metadata.py` to stamp them (not backfilled: a "
+            print("  Run `uv run refresh-metadata.py` to stamp them (not backfilled: a "
                   "floor date would assert a fetch that never happened).")
         else:
             slug, date, age = oldest
@@ -4789,7 +4789,7 @@ def main():
             if stale:
                 print(f"  {len(stale)} record(s) past the {METADATA_STALE_DAYS}d threshold — "
                       "an archived-since repo still reads as live to the triage bands.")
-                print("  Refresh: `python3 refresh-metadata.py`")
+                print("  Refresh: `uv run refresh-metadata.py`")
             else:
                 print("  OK — every stamped record is within the threshold")
             if undated:
@@ -4904,7 +4904,7 @@ def main():
               f"across {collected} record(s) carrying the signal, "
               f"{undisclosed} undisclosed in CATALOG.md ==")
         if not collected:
-            print("  no maintenance data — run `python3 refresh-metadata.py --maintenance` "
+            print("  no maintenance data — run `uv run refresh-metadata.py --maintenance` "
                   "to collect it (absence of the field is 'not collected', not 'nothing is dead')")
         elif not finds:
             print("  OK — no catalogued repo announces discontinuation or has lost its license")
@@ -4978,7 +4978,7 @@ def main():
               f"{records} record(s) whose 'NONE' license is declared elsewhere, "
               f"{grounded} carrying a license-grounded SKIP ==")
         if not records:
-            print("  no license_declared data — run `python3 refresh-metadata.py` to "
+            print("  no license_declared data — run `uv run refresh-metadata.py` to "
                   "collect it (absence of the field is 'not collected', never 'every "
                   "NONE is a real absence')")
         elif not finds:
@@ -5031,7 +5031,7 @@ def main():
         print(f"== AC. license header vs record (report-only) — {len(finds)} of "
               f"{compared} comparable eval header(s) contradict repo-metadata.json ==")
         if not compared:
-            print("  no comparable records — run `python3 refresh-metadata.py` to "
+            print("  no comparable records — run `uv run refresh-metadata.py` to "
                   "populate repo-metadata.json (0 records is not 0 findings)")
         elif not finds:
             print("  OK — every eval header agrees with the license on record")
@@ -5095,7 +5095,7 @@ def main():
                   "default and means every row is independently installable (#343)")
         elif not seen:
             # 0 records is not 0 findings (detector V's rule): nothing was asked.
-            print("  no member_packages records — run `python3 refresh-metadata.py "
+            print("  no member_packages records — run `uv run refresh-metadata.py "
                   "--containment` to collect them (0 records is not 0 findings)")
         elif not refuted:
             print("  OK — every checked declaration survives the one test that can "

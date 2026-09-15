@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 reconcile-counts.py — derive the catalog tool-count from CATALOG.md and write it
 everywhere it is quoted, and rebuild COMPARISON.md's per-stage summary from its own

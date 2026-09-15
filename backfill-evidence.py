@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 backfill-evidence.py — populate the Evidence-strength field (#62/#67) across every
 evaluation and mirror it as a column in COMPARISON.md, kept in sync with the evals.

@@ -1,9 +1,33 @@
+# Project + tooling config for the integrity scripts (#388, #610).
+#
+# `uv` owns the interpreter: every `make` recipe reaches Python through `uv run`, so a
+# machine whose shell blocks `python3` still runs the gates. ruff and mypy are the first
+# and only non-stdlib gates in that path, so they are pinned EXACTLY in the `dev` group
+# below — an unpinned linter turns an upstream rule addition into a red build on an
+# unrelated PR. uv.lock is committed, so `uv run` resolves them from the local cache.
+[project]
+name = "ai-tooling"
+version = "0.0.0"
+requires-python = ">=3.10"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff==0.16.1",
+    "mypy==2.3.0",
+]
+
+# Not a package: these scripts run in place from the checkout, so uv must not try to
+# build or install this directory into the environment it creates for them.
+[tool.uv]
+package = false
+
 # Lint + type-check configuration for the integrity scripts (#388).
 #
-# Until now `make check` ran on python3 + gh + node and nothing else — every script
+# `make check` runs on uv + gh + node and nothing else — every script
 # pure stdlib — while 8,000+ lines of Python guarded data that is itself gated fifteen
 # ways. ruff and mypy are the first dependencies in that gate path, which is why they
-# are PINNED in requirements-dev.txt: an unpinned linter turns an upstream rule
+# are PINNED in the `dev` dependency group below: an unpinned linter turns an upstream
 # addition into a red build on an unrelated PR.
 #
 # Both are wired into `make check`; `make fix` runs `ruff check --fix` and
