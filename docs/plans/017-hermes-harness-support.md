@@ -1585,7 +1585,30 @@ so there rather than omitting it.
     before anything else. This plugin imports only the standard library, so it is clean
     today — but a future edit that reaches into Hermes internals must re-run that check.
 
-**The load-bearing risk — measured, not predicted.** `AGENTS.md` is **175 158 chars** and
+**Addendum — 2026-09-15 02:29 EDT.** `AGENTS.md` was compacted out from under this plan:
+commit `dcf3554 docs: compact agent operating guide` (author Yu-Chin Chan, 06:29:13 +0000)
+took it from **175 158 to 3 976 chars** and landed in the shared GitButler working tree
+mid-run (GitButler rebased this branch onto it). Three consequences, recorded rather than
+worked around:
+
+1. **The risk recorded below is resolved.** At 3 976 chars the whole file loads, so T6.1's expected
+   outcome flips: expect **no** truncation marker, not a match. Re-measure, but a clean load
+   is now the normal case.
+2. **Three pins fail** — `TestPluginFrontDoorSignals.test_signal_count_matches_root` ("no
+   'N quality signals' phrase"), `TestPluginFrontDoorSignals.test_plugin_names_every_root_signal`
+   ("lists its signals after a colon"), `TestIntegrityMakefile.test_the_prose_chains_match_the_recipe`
+   ("states the repair chain"). The compacted guide still names the six signals and still
+   carries `make fix` → `make check`, so the facts survive and the *phrasing* moved. How to
+   resolve them is the maintainer's call, and is being confirmed: either the pins assert the
+   facts instead of the wording (recommended), or the remaining tasks record three known,
+   externally-caused failures in their GREEN gate.
+3. **T5.1 and T5.2 must be re-derived** against the compacted text. Both rewrote bullets of
+   the 175 KB file — "Hook logic → `.opencode/plugins/` … `audit-evals.py --offline` /
+   `sync-plugin-docs.sh`" and "Deterministic gates → custom commands `/check` `/fix` `/sync`
+   (opencode)" — that do not exist in that form any more. Read the file as it is; do not
+   transcribe the old text.
+
+**The load-bearing risk — measured, not predicted (now resolved — see the addendum above).** `AGENTS.md` *was* **175 158 chars** and
 Hermes keeps **`22400+6400`** of it on this machine: 70% head + 20% tail, ~83% of the file
 dropped, including the middle where most of the operating rules live. Everything else in
 this plan is plumbing; this is what decides how well a Hermes agent actually works here.
