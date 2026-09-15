@@ -2823,6 +2823,32 @@ class TestHarnessSkillSurface(unittest.TestCase):
             self.assertIn(f"\n{target}:", body, msg=f"Makefile has no `{target}:` target")
 
 
+    def test_eval_runner_procedure_has_exactly_one_home(self):
+        # The procedure used to live only in `.opencode/agents/eval-runner.md`. It lives
+        # in the project skill now; the opencode agent is a wrapper that names it. Pinned
+        # in both directions: the skill must keep the load-bearing steps, and the wrapper
+        # must not grow a second copy of them.
+        skill = Path(ROOT, ".agents", "skills", "eval-runner", "SKILL.md")
+        self.assertTrue(skill.is_file(), msg=f"missing {skill}")
+        text = skill.read_text(encoding="utf-8")
+        for step in ("objective oracle", "A/B", "How we tested it",
+                     "audit-evals.py --fabrication"):
+            self.assertIn(step, text, msg=f"eval-runner skill lost the `{step}` step")
+
+        agent = Path(ROOT, ".opencode", "agents", "eval-runner.md").read_text(encoding="utf-8")
+        self.assertIn(".agents/skills/eval-runner/SKILL.md", agent,
+                      msg="the opencode agent must point at the skill")
+        self.assertNotIn("How we tested it", agent,
+                         msg="the opencode agent has grown a second copy of the procedure")
+
+    def test_eval_runner_keeps_the_opencode_subagent_shape(self):
+        # `mode: subagent` and the permission block are opencode's agent-file shape;
+        # dropping them silently demotes the runner to a normal agent.
+        agent = Path(ROOT, ".opencode", "agents", "eval-runner.md").read_text(encoding="utf-8")
+        head = agent.split("---")[1]
+        self.assertRegex(head, r"(?m)^mode:\s*subagent\s*$")
+        self.assertRegex(head, r"(?m)^name:\s*eval-runner\s*$")
+
     def test_opencode_commands_and_the_skills_agree_on_the_command(self):
         # The procedure lives in the skill; opencode.json keeps only the wrapper. What
         # must not drift is the command each one names — one gate, named once.
