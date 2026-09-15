@@ -3027,7 +3027,9 @@ class TestHermesHarnessAdapter(unittest.TestCase):
         self.assertIn("BLOCKED by Hermes commit-gate", command)
         # The diagnostic must survive the shell round-trip intact: the opencode adapter
         # base64-encodes it for exactly this reason, and so does this one.
-        m = re.search(r"printf '%s' '([A-Za-z0-9+/=]+)' \| base64 -d", command)
+        # `echo`, not `printf`: printf is deny-listed in the operator's config, and a
+        # rewritten command the deny layer refuses explains nothing (found live).
+        m = re.search(r"echo '([A-Za-z0-9+/=]+)' \| base64 -d", command)
         self.assertIsNotNone(m, msg="the gate output is not carried in a decodable form")
         self.assertIn("detector X: fail", base64.b64decode(m.group(1)).decode())
 
