@@ -8,7 +8,7 @@
 # rewritten, the Python failed loudly while the bash silently stopped matching. Three of
 # five checks had rotted to no-ops that way, two of them within three days (#443).
 #
-# So it delegates. That is the rule CLAUDE.md already states for every other hook here:
+# So it delegates. That is the rule AGENTS.md already states for every other hook here:
 # the opencode plugins and the .claude/hooks scripts call the SAME scripts CI does, so
 # there is one implementation. Delegating also picks up patterns the bash never knew
 # about — COMPOSITION_PATTERNS arrived in #435 and no hook was taught it.
@@ -22,7 +22,7 @@ REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
 issues=""
 
 # reconcile-counts.py --check: the catalog total and the eval count/composition across
-# README.md, CLAUDE.md, STACK.md and plugin/README.md, plus COMPARISON's summary rows.
+# README.md, AGENTS.md, STACK.md and plugin/README.md, plus COMPARISON's summary rows.
 if [ -f "$REPO_ROOT/reconcile-counts.py" ]; then
   if ! out=$(cd "$REPO_ROOT" && python3 reconcile-counts.py --check 2>&1); then
     issues="${issues}${out}\n"

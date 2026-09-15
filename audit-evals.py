@@ -126,7 +126,7 @@ Fifteen detectors (A-O), each proven to catch real problems (see git history,
      counts as compliant on any triggering/A-B vocabulary, so an honest measured eval is
      never false-flagged. A tracked metric, not a gate. Offline.
      (Was a second "Q" until #317 — Q belongs to eliminate-only, which is referenced by
-     letter in CLAUDE.md, triage.py, TEMPLATE.md, routines.md and the triage-lead skill.)
+     letter in AGENTS.md, triage.py, TEMPLATE.md, routines.md and the triage-lead skill.)
 
   T. LEAD HEADLINE OVERREACH (opt-in, --lead-headlines, REPORT-ONLY) — a COMPARISON row
      reading `discovery-log` says the tool was never exercised, so its eval is notes,
@@ -415,7 +415,7 @@ Fifteen detectors (A-O), each proven to catch real problems (see git history,
      (check-stars.py), `**Last verified:**` (backfill-lastverified.py + the staleness
      sweep), `**Evidence:**` (backfill-evidence.py, tier-stack.py), `**Last triaged:**`
      (detector Q), `**Dev loop stage:**` (detector AG). Layer had a comment and three test
-     fixtures. It is not decorative — CLAUDE.md's opening states the three-layer model and
+     fixtures. It is not decorative — AGENTS.md's opening states the three-layer model and
      TEMPLATE.md declares a CLOSED set — and the fact is written in three places, all
      drifted.
        DRIFT      — a WORKFLOW.md `| Layer |` row whose eval header names a different
@@ -549,7 +549,7 @@ Fifteen detectors (A-O), each proven to catch real problems (see git history,
      documented rules (a slug, never a display name; empty means independently
      installable) are enforced by nothing (#405).
        UNROWED     — the declared container has no catalog row, so P5's disposition
-                     names something not in the inventory. This is the case CLAUDE.md
+                     names something not in the inventory. This is the case AGENTS.md
                      records as invisible to X and needing a human — true before the
                      column existed, a slug compare after it.
        SELF-LINKED — the row's own link IS the container's repo root, so it asserts
@@ -1931,7 +1931,7 @@ def audit_workflow_drift(ctx):
     """Detector P: ([(slug, stack_line)], picks) — STACK picks absent from WORKFLOW.md.
 
     `picks` is the POPULATION, and it is returned because the headline used to print only
-    the findings while CLAUDE.md described P as *"prints a count so it's a number to
+    the findings while AGENTS.md described P as *"prints a count so it's a number to
     shrink"* — the same confusion #467 fixed in detector U, where `0 … across 0` read
     identically to *nothing was checked*.
 
@@ -2187,7 +2187,7 @@ def audit_lead_headlines(ctx):
 # ---------------------------------------------------------------- U. catalog-entry mirror drift (report-only)
 # TEMPLATE.md has every eval close with a `## Catalog entry` section holding that tool's
 # CATALOG.md row. It is a mirror — a fact restated in two places with no generator and no
-# test — so it drifts, and 62% of it had (#345). This is the same class root CLAUDE.md
+# test — so it drifts, and 62% of it had (#345). This is the same class root AGENTS.md
 # calls out for plugin/README.md: *gate the shared facts, not the file*.
 #
 # Two kinds, reported apart because they are not equally dangerous:
@@ -2604,7 +2604,7 @@ def selftest():
 # The seven offline gates `--offline` selects — the set `make check`, the
 # `.claude/hooks/audit-gate.sh` pre-commit hook and the opencode commit-gate plugin all
 # run (all three invoke `--offline` bare, so they move together). This tuple is the
-# source of truth for what "offline" means; CLAUDE.md's prose list documents it and
+# source of truth for what "offline" means; AGENTS.md's prose list documents it and
 # must be updated alongside any change here.
 # ---------------------------------------------------------------- W. P0 scope mismatch (report-only)
 # The score has no scope term (#353). Every term measures attention, so a lead that
@@ -3132,7 +3132,7 @@ def audit_containment(ctx):
     Two kinds, reported apart because their remedies differ:
 
       UNROWED      the declared container has no catalog row, so "settle the container"
-                   names something not in the inventory. This is the case CLAUDE.md
+                   names something not in the inventory. This is the case AGENTS.md
                    records as invisible to detector X and needing a human — true before
                    the column existed, a slug compare after it (`presentation-creator`
                    declares `getsentry/skills` in a cell now).
@@ -3392,7 +3392,7 @@ def audit_stage_drift(ctx):
 # `**Last triaged:**` (detector Q), `**Dev loop stage:**` (detector AG since #453). Layer
 # had a comment and three test fixtures.
 #
-# It is not decorative: CLAUDE.md's opening states the model ("three layers per stage —
+# It is not decorative: AGENTS.md's opening states the model ("three layers per stage —
 # process, tooling, infrastructure") and TEMPLATE.md declares a CLOSED set. The fact is
 # then written in three places and all three drifted:
 #
@@ -4382,7 +4382,7 @@ CLAUDE_VERBS = frozenset({
     "update", "upgrade",
 })
 
-# The pages a reader or an agent EXECUTES. CLAUDE.md, audit-evals.py and test_automation.py
+# The pages a reader or an agent EXECUTES. AGENTS.md, audit-evals.py and test_automation.py
 # all name fabricated verbs ON PURPOSE — documenting a defect is not committing it, the line
 # detector B's HONEST vocabulary already draws — so none of the three is walked here.
 # plugin/docs/ is a synced MIRROR of these same root files (#437's split) and would double
@@ -4421,7 +4421,7 @@ def audit_claude_verbs(ctx):
     This deliberately does not reproduce #488's hand-built census line for line — two of its
     four "not a subcommand" rows turn out, under a precise word-boundary match, to be
     something else entirely: `claude-squad: stable 1.0.19 (bottled)` is Homebrew formula
-    output (a hyphen, not whitespace, follows "claude"), and `claude-code → CLAUDE.md` is a
+    output (a hyphen, not whitespace, follows "claude"), and `claude-code → AGENTS.md` is a
     table mapping a tool name to a file. Both would have been false positives; excluding them
     is the fix, not a miss.
 
