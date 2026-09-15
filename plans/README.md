@@ -4,6 +4,8 @@
 
 **Run 2** — improve skill, 2026-08-03 (audit at commit `a388dd2`). Focus: the automation layer itself. Run 1 built the derived-page apparatus (`triage.py`, `watchlist.py`, `tier-stack.py`, the detector engine); run 2 audits it as production code. Plans 012–015 — all four are correctness/reliability fixes in the gate path, none touches the catalog data. Selected as the default top-4 by leverage; the remaining findings are in "Findings considered and rejected".
 
+**Run 3** — harness agnosticism, 2026-09-14 (audit at commit `ddd343e`). Focus: drop the Claude Code dependency. Plan 016 — reconnaissance of the Claude-coupled surface plus the staged decoupling path (repo skills to `.agents/`, instructions to `AGENTS.md`, delete the duplicated bash hook half).
+
 Execute in the order below unless dependencies say otherwise. Each executor: read the plan fully before starting, honor its STOP conditions, and update your row when done.
 
 ## Execution order & status
@@ -25,6 +27,7 @@ Execute in the order below unless dependencies say otherwise. Each executor: rea
 | [013](013-audit-flag-parsing.md) | Make `audit-evals.py` flags compose; reject typos instead of silently changing the gate set | P1 | M | — | DONE 2026-08-03 ([#300](https://github.com/mattbutlerengineering/ai-tooling/issues/300)) |
 | [014](014-parallel-install-resolver.md) | Resolve installs in parallel; add `make check-offline` | P2 | S | — | DONE 2026-08-03 ([#301](https://github.com/mattbutlerengineering/ai-tooling/issues/301)) |
 | [015](015-derived-surface-numbers.md) | Stop hand-written numbers going stale inside derived surfaces | P2 | M | — | TODO |
+| [016](016-decouple-from-claude-code.md) | Decouple from Claude Code — harness-agnostic instructions, skills, hooks | P1 | L | — | TODO |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJECTED (with one-line rationale)
 
@@ -35,6 +38,7 @@ Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJE
 - **006 after 005**: shares generator conventions (markers, `--check`, Makefile wiring); mirror rather than reinvent.
 - **007 after 005+006**: the front door links NEXT-EVALS.md and WATCHLIST.md (has a reduced-scope fallback if run early).
 - **010/011 after 009**: both apply the measurement protocols 009 defines; 009+010 edit TEMPLATE.md — land sequentially, never in parallel.
+- **016 independent of 001-015**: it touches `.claude/`, `CLAUDE.md` and the plugin surface, not the catalog data or the gate path. S2 (rename) and S3 (delete the bash hooks) both edit `CLAUDE.md` — land them sequentially, never in parallel.
 - **Independent lanes** (can run in parallel with anything): 003, 004, 008.
 - Two tracks by theme: *consolidation* (001→002→005→006→007, plus 003/004) answers "one document, what to install/work/watch"; *rigor* (009→010→011, plus 008) answers "evaluate skills/tools better".
 
