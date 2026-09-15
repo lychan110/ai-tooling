@@ -299,6 +299,58 @@ in any new doc. `TestIntegrityMakefile._prose_chain` scans `CHAIN_PROSE =
 ("AGENTS.md", "opencode.json")` for the anchor `apply-mode fixers in dependency order`;
 a third copy of the chain elsewhere is unchecked drift. Point at the existing text.
 
+### T1.4b — pin the opencode command templates to the new skills
+
+`/check` `/fix` `/sync` are now defined in **two harness homes**: the `command` block of
+`opencode.json` (`template` + `agent`, ~line 32 onward) and the project skills this task
+just created. One fact, two definitions, coupled by nothing is this repo's #443/#469
+defect shape, and it would have shipped here silently.
+
+`opencode.json` **keeps** its templates: they carry `agent` and permission semantics a
+skill cannot express, and rewriting a working harness's command shape is not this plan's
+job. What this plan does is **gate the shared fact** — the way `plugin/README.md`'s rule
+gates the facts it restates from root instead of freezing the file. Add to
+`TestHarnessSkillSurface`:
+
+```python
+    def test_opencode_commands_and_the_skills_agree_on_the_command(self):
+        # The procedure lives in the skill; opencode.json keeps only the wrapper. What
+        # must not drift is the command each one names — one gate, named once.
+        expected = {"check": "make check", "fix": "make fix",
+                    "sync": "./sync-plugin-docs.sh"}
+        config = json.loads(Path(ROOT, "opencode.json").read_text(encoding="utf-8"))
+        for name, command in expected.items():
+            self.assertIn(command, config["command"][name]["template"],
+                          msg=f"opencode.json's /{name} no longer runs `{command}`")
+            skill = Path(ROOT, ".agents", "skills", name, "SKILL.md")
+            self.assertIn(command, skill.read_text(encoding="utf-8"),
+                          msg=f".agents/skills/{name} no longer runs `{command}`")
+```
+
+If `json` is not already imported at the top of `test_automation.py`, add it to the stdlib
+import block (alphabetical, as ruff's `I` rules want it).
+
+Verify:
+
+```bash
+cd /home/lychan/projects/ai-tooling
+python3 -m unittest -q test_automation.TestHarnessSkillSurface
+```
+
+Expected: green immediately. It is a pin, not a RED step: both sides already exist, and
+what it buys is that the next person to edit one of them finds out.
+
+Then sanity-check that a template really does still carry the command (guards against a
+pin that passes on an empty match):
+
+```bash
+cd /home/lychan/projects/ai-tooling
+python3 -m json.tool opencode.json | grep -A1 '"check"'
+```
+
+Expected: the `/check` description line, i.e. the entry is present and non-empty — not a
+bare `"check": {}`.
+
 ### T1.5 Commit
 
 ```bash
