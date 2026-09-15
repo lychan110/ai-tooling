@@ -2788,6 +2788,53 @@ class TestHookTriggerSeam(unittest.TestCase):
             self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
 
 
+# ----------------------------------------------------------------- harness skill surface
+class TestHarnessSkillSurface(unittest.TestCase):
+    """The harness-neutral half of the harness layer.
+
+    `/check`, `/fix` and `/sync` are `opencode.json` prompt templates for opencode.
+    Hermes exposes every project skill as `/<skill-name>` and reads the same
+    `.agents/skills/` directory, so the three procedures live there once and both
+    harnesses get the command. These tests pin that each skill still names the REAL
+    command, so it cannot rot into a description of a gate that no longer exists.
+    """
+
+    COMMANDS: ClassVar[dict[str, str]] = {
+        "check": "make check",
+        "fix": "make fix",
+        "sync": "./sync-plugin-docs.sh",
+    }
+
+    def test_each_command_skill_exists_and_names_its_command(self):
+        for name, command in self.COMMANDS.items():
+            path = Path(ROOT, ".agents", "skills", name, "SKILL.md")
+            self.assertTrue(path.is_file(), msg=f"missing {path}")
+            text = path.read_text(encoding="utf-8")
+            self.assertIn(command, text, msg=f"{name}/SKILL.md does not name `{command}`")
+
+    def test_each_named_make_target_exists(self):
+        # A skill describing a target the Makefile dropped would send the agent to a
+        # command that fails for a reason no commit caused.
+        body = Path(ROOT, "Makefile").read_text(encoding="utf-8")
+        for _name, command in self.COMMANDS.items():
+            if not command.startswith("make "):
+                continue
+            target = command.split()[1]
+            self.assertIn(f"\n{target}:", body, msg=f"Makefile has no `{target}:` target")
+
+
+    def test_opencode_commands_and_the_skills_agree_on_the_command(self):
+        # The procedure lives in the skill; opencode.json keeps only the wrapper. What
+        # must not drift is the command each one names — one gate, named once.
+        expected = self.COMMANDS
+        config = json.loads(Path(ROOT, "opencode.json").read_text(encoding="utf-8"))
+        for name, command in expected.items():
+            self.assertIn(command, config["command"][name]["template"],
+                          msg=f"opencode.json's /{name} no longer runs `{command}`")
+            skill = Path(ROOT, ".agents", "skills", name, "SKILL.md")
+            self.assertIn(command, skill.read_text(encoding="utf-8"),
+                          msg=f".agents/skills/{name} no longer runs `{command}`")
+
 # ----------------------------------------------------------------- detector I (evidence field, #62)
 class TestEvidenceField(unittest.TestCase):
     def test_evidence_level_parses_each_value(self):
