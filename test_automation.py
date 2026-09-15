@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 test_automation.py — characterization tests for the count/sync automation:
 reconcile-counts.py, audit-evals.py detector G (audit_comparison), and
@@ -11,7 +11,7 @@ through a DetectorContext built from the fixture directory (#199) or by copying
 the script into a fixture tree.
 
 Run:
-  python3 -m unittest test_automation -v      # or: python3 test_automation.py
+  uv run -m unittest test_automation -v      # or: uv run test_automation.py
 Exits non-zero on any failure (gates CI / pre-commit).
 """
 import contextlib
@@ -717,7 +717,7 @@ class TestReconcileMain(unittest.TestCase):
         shutil.copy(os.path.join(ROOT, "audit-evals.py"), os.path.join(d, "audit-evals.py"))
 
     def _run(self, d, *args):
-        return subprocess.run(["python3", "reconcile-counts.py", *args],
+        return subprocess.run([sys.executable, "reconcile-counts.py", *args],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def test_catalog_count_from_fixture_root(self):
@@ -1302,7 +1302,7 @@ class TestDetectorPopulations(unittest.TestCase):
                             r"|\d+\s+record\(s\)")
 
     def _headlines(self):
-        r = subprocess.run(["python3", "audit-evals.py", *self.OFFLINE_REPORT_FLAGS],
+        r = subprocess.run([sys.executable, "audit-evals.py", *self.OFFLINE_REPORT_FLAGS],
                            cwd=ROOT, capture_output=True, text=True, check=False)
         return [ln for ln in r.stdout.splitlines() if ln.startswith("== ")]
 
@@ -3202,7 +3202,7 @@ class TestGateCoverage(unittest.TestCase):
     def _cli(self, d, *flags):
         for fn in ("audit-evals.py", "catalog_lib.py"):
             shutil.copy(os.path.join(ROOT, fn), os.path.join(d, fn))
-        return subprocess.run(["python3", "audit-evals.py", *flags],
+        return subprocess.run([sys.executable, "audit-evals.py", *flags],
                               cwd=d, capture_output=True, text=True, check=False)
 
     # --- the rule, applied to every gate ------------------------------------
@@ -3719,7 +3719,7 @@ class TestLastVerifiedBackfill(unittest.TestCase):
         self.assertEqual(backfill_lv.backfill_text(t, self.DATE), t)
 
     def _run_check(self, d):
-        return subprocess.run(["python3", "backfill-lastverified.py", "--check"],
+        return subprocess.run([sys.executable, "backfill-lastverified.py", "--check"],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def test_check_flags_missing_and_passes_after_apply(self):
@@ -3848,7 +3848,7 @@ class TestDetectorR(unittest.TestCase):
             shutil.copy(os.path.join(ROOT, "catalog_lib.py"), os.path.join(d, "catalog_lib.py"))
             _write(d, "repo-metadata.json",
                    json.dumps({"a/x": {"fetched_at": "2001-01-01"}}))
-            r = subprocess.run(["python3", "audit-evals.py", "--metadata-staleness"],
+            r = subprocess.run([sys.executable, "audit-evals.py", "--metadata-staleness"],
                                cwd=d, capture_output=True, text=True, check=False)
             self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
             self.assertIn("R. metadata staleness", r.stdout)
@@ -4770,7 +4770,7 @@ class TestIntegrityMakefile(unittest.TestCase):
         # with it. The pins live in pyproject.toml's `dev` group now that uv owns that
         # environment (#610), so the exact-version rule is checked where uv reads it.
         pyproject = Path(ROOT, "pyproject.toml").read_text(encoding="utf-8")
-        m = re.search(r"\[dependency-groups\](.*?)(?=\n\[)", pyproject, re.S)
+        m = re.search(r"\[dependency-groups\](.*?)(?=\n\[)", pyproject, re.DOTALL)
         self.assertIsNotNone(m, "pyproject.toml declares no [dependency-groups]")
         pins = re.findall(r'"([^"]+)"', m.group(1))
         self.assertTrue(pins, "the dev dependency group declares no pins")
@@ -5396,7 +5396,7 @@ class TestTriage(unittest.TestCase):
             self.assertEqual(bands["P5 ships-inside"], [])
 
     def _run(self, d, *args):
-        return subprocess.run(["python3", "triage.py", *args],
+        return subprocess.run([sys.executable, "triage.py", *args],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def test_check_catches_drift(self):
@@ -5610,7 +5610,7 @@ class TestAuditEvalsCLI(unittest.TestCase):
             _write(d, f"{name}.md", f"# {name}\n")
 
     def _run(self, d, *args):
-        return subprocess.run(["python3", "audit-evals.py", *args],
+        return subprocess.run([sys.executable, "audit-evals.py", *args],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def _headers(self, res):
@@ -5838,7 +5838,7 @@ class TestWatchlist(unittest.TestCase):
             shutil.copy(os.path.join(ROOT, fn), os.path.join(d, fn))
 
     def _run(self, d, *args):
-        return subprocess.run(["python3", "watchlist.py", *args],
+        return subprocess.run([sys.executable, "watchlist.py", *args],
                               cwd=d, capture_output=True, text=True, check=False)
 
     def test_check_catches_drift(self):
@@ -6314,7 +6314,7 @@ class TestCatalogMirror(unittest.TestCase):
             self._ctx(d, [self._row("t", "https://github.com/new/t")],
                       {"t": self._eval("t", "https://github.com/old/t",
                                        self._row("t", "https://github.com/old/t"))})
-            r = subprocess.run(["python3", "audit-evals.py", "--catalog-mirror"],
+            r = subprocess.run([sys.executable, "audit-evals.py", "--catalog-mirror"],
                                cwd=d, capture_output=True, text=True, check=False)
             self.assertEqual(r.returncode, 0, r.stderr)
             self.assertIn("== U. catalog-entry mirror drift", r.stdout)
@@ -6332,7 +6332,7 @@ class TestCatalogMirror(unittest.TestCase):
                       {"a": self._eval("a", urls["a"], self._row("a", urls["a"])),
                        "b": self._headed("b", urls["b"]),
                        "c": self._headed("c", urls["c"])})
-            r = subprocess.run(["python3", "audit-evals.py", "--catalog-mirror"],
+            r = subprocess.run([sys.executable, "audit-evals.py", "--catalog-mirror"],
                                cwd=d, capture_output=True, text=True, check=False)
             head = r.stdout.splitlines()[0]
             self.assertIn("of 1 mirrored eval(s)", head, msg=head)
@@ -8617,10 +8617,10 @@ class TestInternalLinks(unittest.TestCase):
 
     def test_check_flag_gates_and_bare_run_reports(self):
         # check-stars.py's split: the gate-vs-report call is one word in the Makefile.
-        r = subprocess.run(["python3", "check-links.py"], cwd=ROOT,
+        r = subprocess.run([sys.executable, "check-links.py"], cwd=ROOT,
                            capture_output=True, text=True, check=False)
         self.assertEqual(r.returncode, 0)
-        r = subprocess.run(["python3", "check-links.py", "--check"], cwd=ROOT,
+        r = subprocess.run([sys.executable, "check-links.py", "--check"], cwd=ROOT,
                            capture_output=True, text=True, check=False)
         self.assertEqual(r.returncode, 0, msg=r.stdout)
 
@@ -8829,10 +8829,10 @@ class TestPluginPackage(unittest.TestCase):
         self.assertFalse(os.path.exists(os.path.join(ROOT, "plugin", "CLAUDE.md")))
 
     def test_check_flag_gates_and_bare_run_reports(self):
-        r = subprocess.run(["python3", "check-plugin.py"], cwd=ROOT,
+        r = subprocess.run([sys.executable, "check-plugin.py"], cwd=ROOT,
                            capture_output=True, text=True, check=False)
         self.assertEqual(r.returncode, 0)
-        r = subprocess.run(["python3", "check-plugin.py", "--check"], cwd=ROOT,
+        r = subprocess.run([sys.executable, "check-plugin.py", "--check"], cwd=ROOT,
                            capture_output=True, text=True, check=False)
         self.assertEqual(r.returncode, 0, msg=r.stdout)
 

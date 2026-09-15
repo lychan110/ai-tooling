@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 refresh-metadata.py — fetch GitHub repo metadata for every catalogued tool into
 `repo-metadata.json`, the offline cache the triage bands and the eval-header

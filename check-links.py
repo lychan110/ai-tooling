@@ -1,8 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """Every relative markdown link in the tracked tree must resolve to a real file.
 
-    python3 check-links.py            # report-only
-    python3 check-links.py --check    # gate: exit 1 on any dead link
+    uv run check-links.py            # report-only
+    uv run check-links.py --check    # gate: exit 1 on any dead link
 
 Detector C checks the links this repo does *not* control — ~450 unauthenticated
 HEAD requests at `github.com/owner/repo`, most of which come back rate-limited, which

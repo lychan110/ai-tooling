@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 tier-stack.py — group STACK.md's recommendations into evidence tiers (#72).
 

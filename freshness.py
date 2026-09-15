@@ -1,9 +1,9 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """What maintenance this catalog needs — the SessionStart hook's two questions, answered
 by the implementations that already own them.
 
-    gh api user/starred --paginate --jq '.[].full_name' | python3 freshness.py
-    python3 freshness.py --uncatalogued < slugs.txt   # just the slugs, for /sync-stars
+    gh api user/starred --paginate --jq '.[].full_name' | uv run freshness.py
+    uv run freshness.py --uncatalogued < slugs.txt   # just the slugs, for /sync-stars
 
 Prints nothing when there is nothing to say, so the hook can stay quiet.
 

@@ -19,12 +19,16 @@
 REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null)"
 [ -z "$REPO_ROOT" ] && exit 0
 
+# The gates run through uv (#610). A machine without it cannot run them, and a hook that
+# cannot run stays silent — a missing tool must not be reported as drift.
+command -v uv >/dev/null 2>&1 || exit 0
+
 issues=""
 
 # reconcile-counts.py --check: the catalog total and the eval count/composition across
 # README.md, AGENTS.md, STACK.md and plugin/README.md, plus COMPARISON's summary rows.
 if [ -f "$REPO_ROOT/reconcile-counts.py" ]; then
-  if ! out=$(cd "$REPO_ROOT" && python3 reconcile-counts.py --check 2>&1); then
+  if ! out=$(cd "$REPO_ROOT" && uv run reconcile-counts.py --check 2>&1); then
     issues="${issues}${out}\n"
   fi
 fi

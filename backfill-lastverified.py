@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 backfill-lastverified.py — populate the **Last verified:** header field (#65) across
 every evaluation so the staleness sweep (audit-evals.py --staleness) can see them.

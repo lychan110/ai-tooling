@@ -17,7 +17,7 @@ Find starred repos missing from the catalog, classify them, and generate ready-t
 
 ```bash
 gh api user/starred --paginate --jq '.[].full_name' \
-  | python3 freshness.py --uncatalogued > /tmp/gaps.txt
+  | uv run freshness.py --uncatalogued > /tmp/gaps.txt
 ```
 
 `freshness.py` owns this comparison, and it is resolved by **slug** — never by repo

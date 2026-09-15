@@ -41,9 +41,9 @@ one, say so and write an HONEST not-run review instead — do not invent a run.
 
 ## Self-check before finishing (must pass)
 
-- `python3 audit-evals.py --fabrication` — your eval must NOT be flagged (no run-claim
+- `uv run audit-evals.py --fabrication` — your eval must NOT be flagged (no run-claim
   without an honesty disclaimer or a genuine verified run).
-- If the target is an ADOPT *skill*, `python3 audit-evals.py --skills` should list it as
+- If the target is an ADOPT *skill*, `uv run audit-evals.py --skills` should list it as
   MEASURED (detector E). Avoid HONEST-vocabulary words like "inspected" / "read" /
   "examined" in the How-we-tested section unless the eval really is a disclosed not-run
   review — those words flip the classifier to backlog.

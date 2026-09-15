@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 next-evals.py — score the `discovery-log` leads (#plan-005). The scoring module
 behind the promotion queue; `triage.py` bands and renders NEXT-EVALS.md from it.

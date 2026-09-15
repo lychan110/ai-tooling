@@ -1,8 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """The published plugin package must be structurally valid and internally consistent.
 
-    python3 check-plugin.py            # report-only
-    python3 check-plugin.py --check    # gate: exit 1 on any finding
+    uv run check-plugin.py            # report-only
+    uv run check-plugin.py --check    # gate: exit 1 on any finding
 
 Detector A gates every install command in `STACK.md`, `CATALOG.md` and `evaluations/`
 because "a broken command means the tool was likely never run", and #416 sharpened that

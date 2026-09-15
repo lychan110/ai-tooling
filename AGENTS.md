@@ -47,10 +47,10 @@ Catalog rows have six cells: Name, Type, One-liner, Problem it solves, Overlaps 
 
 - `make check` — full local/CI integrity gate.
 - `make fix` — apply canonical repairs, then run `make check`.
-- `python3 reconcile-counts.py --check` — validate generated counts and summaries.
-- `python3 audit-evals.py --offline` — run offline evaluation detectors.
-- `python3 triage.py` — regenerate `NEXT-EVALS.md`.
-- `python3 refresh-metadata.py` — refresh GitHub metadata when needed.
+- `uv run reconcile-counts.py --check` — validate generated counts and summaries.
+- `uv run audit-evals.py --offline` — run offline evaluation detectors.
+- `uv run triage.py` — regenerate `NEXT-EVALS.md`.
+- `uv run refresh-metadata.py` — refresh GitHub metadata when needed.
 
 ## Agent workflow
 
@@ -65,7 +65,7 @@ Use inner/outer loop vocabulary: Plan, Implement, Verify, Review, Ship, Reflect.
 
 ## Adding entries
 
-Use `/add-catalog-entry`, resolve the canonical repository slug, place the row in the correct category, fill all six cells, and run `python3 reconcile-counts.py --check`. Never hand-edit mirrored counts or generated plugin docs.
+Use `/add-catalog-entry`, resolve the canonical repository slug, place the row in the correct category, fill all six cells, and run `uv run reconcile-counts.py --check`. Never hand-edit mirrored counts or generated plugin docs.
 
 ## Evaluations
 

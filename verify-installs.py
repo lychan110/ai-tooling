@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 verify-installs.py — write and check the `Install evidence` column in STACK-LEDGER.md
 (ADR-0006, #382).

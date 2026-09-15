@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 check-stars.py — the presence gate for the **Stars:** header field (#377).
 

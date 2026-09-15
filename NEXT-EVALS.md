@@ -1,6 +1,6 @@
 # Next evals — a banded promotion queue
 
-The 575 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `python3 triage.py`; do not edit between the markers.
+The 575 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
 
 Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 107 distinct values across these 575 leads (246 have zero overlap pressure; largest tie: 42) — enough to pick a head, not to rank a tail. Leads already stamped `**Last triaged:**` sink within their band so each pass surfaces un-examined ones.
 
@@ -59,7 +59,7 @@ _(none)_
 
 _SKIP "redundant with `<incumbent>`", or leave at discovery-log._
 
-_Listing 12 of 169 — rerun `python3 triage.py` and read the source for the tail (no silent cap)._
+_Listing 12 of 169 — rerun `uv run triage.py` and read the source for the tail (no silent cap)._
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
@@ -80,7 +80,7 @@ _Listing 12 of 169 — rerun `python3 triage.py` and read the source for the tai
 
 _leave; stamp `**Last triaged:**` only._
 
-_Listing 12 of 376 — rerun `python3 triage.py` and read the source for the tail (no silent cap)._
+_Listing 12 of 376 — rerun `uv run triage.py` and read the source for the tail (no silent cap)._
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|

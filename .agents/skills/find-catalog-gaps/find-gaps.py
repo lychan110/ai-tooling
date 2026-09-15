@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """
 find-gaps.py — surface tools that probably belong in CATALOG.md but aren't there.
 
@@ -14,7 +14,7 @@ A "present" check is `[name](` appearing in CATALOG.md (case-insensitive). Outpu
 a candidate list for human review — vet scope before adding (skip proprietary-only,
 model-serving infra, chat UIs, general business automation).
 
-  python3 .claude/skills/find-catalog-gaps/find-gaps.py
+  uv run .claude/skills/find-catalog-gaps/find-gaps.py
 """
 import os
 import subprocess

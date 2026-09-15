@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env -S uv run --script
 """Repoint a synced doc's outside-the-bundle links at the canonical repo.
 
-    python3 rewrite-doc-links.py <dest-docs-dir>
+    uv run rewrite-doc-links.py <dest-docs-dir>
 
 `sync-plugin-docs.sh` copies seven root files and three directories into `plugin/docs/`
 **verbatim**, so every relative link in a synced file whose target lives outside that

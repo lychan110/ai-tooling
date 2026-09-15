@@ -138,5 +138,5 @@ There is **no tool** in the catalog that picks reasoning-effort level; that is a
 ## Honesty notes
 
 - **Verdicts vs. evidence**: `MEASURED`/`RUN` = hands-on in this repo; `REVIEW`/`SOURCE-ONLY` = read from docs/source only — try at your own risk. Full field defs in [COMPARISON.md](COMPARISON.md).
-- **Savings % are mostly self-reported**: `python3 audit-evals.py --savings-claims` lists every unverified savings headline across the catalog. Only `caveman` (49–59%) and `headroom` were measured here. Reproduce a claim via [evaluations/token-savings-protocol.md](evaluations/token-savings-protocol.md) to graduate it.
+- **Savings % are mostly self-reported**: `uv run audit-evals.py --savings-claims` lists every unverified savings headline across the catalog. Only `caveman` (49–59%) and `headroom` were measured here. Reproduce a claim via [evaluations/token-savings-protocol.md](evaluations/token-savings-protocol.md) to graduate it.
 - **Source of truth**: this file is a *curated subset* of [CATALOG.md](CATALOG.md). Cross-check catalog entries before acting — it is not authoritative for counts or verdicts.

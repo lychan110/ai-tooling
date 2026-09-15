@@ -32,14 +32,14 @@ if command -v gh &>/dev/null; then
   stars=$(gh api user/starred --paginate --jq '.[].full_name' 2>/dev/null)
 fi
 
-report=$(cd "$REPO_ROOT" && printf '%s\n' "$stars" | python3 freshness.py 2>/dev/null)
+report=$(cd "$REPO_ROOT" && printf '%s\n' "$stars" | uv run freshness.py 2>/dev/null)
 
 # Output is either a JSON control payload or a message, never both concatenated: the old
 # hook printed the control line and then 100 lines of text, so the payload did not parse
 # as JSON and the control line was simply the first thing the user saw.
 if [ -n "$report" ]; then
   echo "$report"
-  echo "  (details: make check, or python3 audit-evals.py --staleness)"
+  echo "  (details: make check, or uv run audit-evals.py --staleness)"
 else
   echo "$json_quiet"
 fi
