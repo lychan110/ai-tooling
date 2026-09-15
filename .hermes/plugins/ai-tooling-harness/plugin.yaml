@@ -1,3 +1,4 @@
 name: ai-tooling-harness
 version: "1.0"
+provides_hooks: [post_tool_call]
 description: ai-tooling harness adapter — commit gate and plugin/docs auto-sync for Hermes Agent.

@@ -7,10 +7,8 @@ The Hermes Agent harness can drive this repository the way opencode does. Suppor
 Project-local plugins are deliberately off by default: a plugin that can rewrite a commit should never be enabled by accident.
 
 ```bash
-export HERMES_ENABLE_PROJECT_PLUGINS=true    # project-local plugins are not auto-loaded
-hermes plugins compat                        # confirm this checkout plugin is accepted
-hermes plugins enable ai-tooling-harness     # register the adapter
-hermes skills trust                          # trust project skills under .agents/skills/
+export HERMES_ENABLE_PROJECT_PLUGINS=true    # the opt-in for repo-local plugins
+hermes skills trust                          # trust repo-local skills under .agents/skills/
 ```
 
 `AGENTS.md` needs no Hermes-specific wiring - Hermes loads it as project context on its own.
