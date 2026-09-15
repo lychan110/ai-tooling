@@ -14,6 +14,7 @@ Run:
   uv run -m unittest test_automation -v      # or: uv run test_automation.py
 Exits non-zero on any failure (gates CI / pre-commit).
 """
+import base64
 import contextlib
 import datetime
 import gc
@@ -2691,18 +2692,24 @@ class TestWatchListSeam(unittest.TestCase):
                 self.assertTrue(os.path.exists(os.path.join(d, "plugin/docs", tail)),
                                 msg=f"listed entry not synced: {entry}")
 
+    # Every adapter that triggers off the watch set. A new one goes here.
+    ADAPTERS = (
+        ".opencode/plugins/auto-sync.ts",
+        ".hermes/plugins/ai-tooling-harness/__init__.py",
+    )
+
     def test_adapter_derives_from_list_watched(self):
-        # Each adapter consumes --list-watched rather than restating the watch set.
-        # The opencode plugin can't be executed from here, so pin its source: it
-        # must call --list-watched and must not hardcode any watched basename.
-        rel = ".opencode/plugins/auto-sync.ts"
-        with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
-            ts = f.read()
-        self.assertIn("--list-watched", ts,
-                      msg=f"{rel} does not derive its trigger set from --list-watched")
-        for name in sorted(self.WATCHED):
-            self.assertNotIn(f'"{name.rstrip("/")}"', ts,
-                             msg=f"opencode adapter hardcodes watched entry {name}")
+        # Each adapter consumes --list-watched rather than restating the watch set. The
+        # sources are pinned here; the Hermes adapter is also executed behaviourally by
+        # TestHermesHarnessAdapter, which the TS half cannot be without `bun`.
+        for rel in self.ADAPTERS:
+            with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
+                text = f.read()
+            self.assertIn("--list-watched", text,
+                          msg=f"{rel} does not derive its trigger set from --list-watched")
+            for name in sorted(self.WATCHED):
+                self.assertNotIn(f'"{name.rstrip("/")}"', text,
+                                 msg=f"{rel} hardcodes watched entry {name}")
 
     @unittest.skipUnless(shutil.which("bun"), "bun not installed; opencode adapter covered by source pin only")
     def test_opencode_plugin_triggers_on_every_previously_missed_entry(self):
@@ -2761,6 +2768,15 @@ class TestHookTriggerSeam(unittest.TestCase):
                          msg="commit-gate.ts commit predicate drifted from the pin")
         self.assertEqual(m.group(2), "",
                          msg="regex flags (e.g. /i) would diverge from bash's case-sensitive match")
+
+    def test_hermes_gate_pins_the_same_commit_predicate(self):
+        # The cross-language literal share is not practical, so this pin IS the single
+        # definition of the predicate for the Python adapter (same rule as the TS half).
+        source = self._source(".hermes/plugins/ai-tooling-harness/__init__.py")
+        m = re.search(r'^COMMIT_PREDICATE = "(.+?)"$', source, re.MULTILINE)
+        self.assertIsNotNone(m, msg="the Hermes adapter no longer defines COMMIT_PREDICATE")
+        self.assertEqual(m.group(1), self.PREDICATE,
+                         msg="the Hermes commit predicate drifted from the pin")
 
     def test_predicate_is_metacharacter_free(self):
         # With no metacharacters the TS regex test degenerates to the same
@@ -2861,6 +2877,184 @@ class TestHarnessSkillSurface(unittest.TestCase):
             skill = Path(ROOT, ".agents", "skills", name, "SKILL.md")
             self.assertIn(command, skill.read_text(encoding="utf-8"),
                           msg=f".agents/skills/{name} no longer runs `{command}`")
+# ----------------------------------------------------------------- Hermes harness adapter
+class TestHermesHarnessAdapter(unittest.TestCase):
+    """Pins the Hermes half of the harness layer.
+
+    The opencode adapters are TypeScript: they are source-pinned here and executed only
+    when `bun` happens to be installed. This adapter is Python in the same suite, so it
+    is imported and executed against fixtures — the stronger pin, and the only one that
+    can catch a fail-open bug in a plugin whose failures are silent by contract.
+    """
+
+    REL = os.path.join(".hermes", "plugins", "ai-tooling-harness", "__init__.py")
+
+    def setUp(self):
+        # _load() execs a fresh module per call and never registers it in sys.modules,
+        # so mutating REPO below cannot leak between tests.
+        self.mod = _load("ai_tooling_harness", self.REL)
+
+    def _registered(self):
+        """Run register() against a stub ctx and return {kind_or_hook_name: callback}."""
+        seen = {}
+
+        class Ctx:
+            @staticmethod
+            def register_middleware(kind, callback):
+                seen[kind] = callback
+
+            @staticmethod
+            def register_hook(name, callback):
+                seen[name] = callback
+
+        self.mod.register(Ctx())
+        return seen
+
+    def _repo(self, watch=(), makefile=None, audit_exit=1):
+        """A throwaway repo the adapter can run against. REPO is module-level on purpose
+        — that is the seam these tests use."""
+        d = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, d, ignore_errors=True)
+        _write(d, "Makefile", makefile if makefile is not None
+               else "check-data:\n\tpython3 audit-evals.py --offline\n")
+        _write(d, "audit-evals.py",
+               "import sys; sys.stderr.write('detector X: fail\\n'); "
+               f"sys.exit({audit_exit})\n")
+        _write(d, "sync-plugin-docs.sh",
+               "#!/usr/bin/env bash\n"
+               "set -euo pipefail\n"
+               'if [ "${1:-}" = "--list-watched" ]; then\n'
+               "  printf '%s\\n' " + " ".join(f"'{line}'" for line in watch) + "\n"
+               "  exit 0\n"
+               "fi\n"
+               'echo ran >> "$(dirname "$0")/synced.log"\n'
+               "exit 0\n")
+        # Harmless belt-and-braces: the adapter invokes the script through bash.
+        os.chmod(os.path.join(d, "sync-plugin-docs.sh"), 0o755)
+        self.mod.REPO = Path(d)
+        return d
+
+    def test_registers_the_commit_gate_and_the_auto_sync_half(self):
+        seen = self._registered()
+        self.assertIn("tool_request", seen, msg="no commit-gate middleware registered")
+        self.assertIn("post_tool_call", seen, msg="no auto-sync hook registered")
+
+    def test_the_commit_predicate_matches_the_opencode_adapter(self):
+        # One predicate, two adapters. A cross-language literal share is not practical,
+        # so this pin IS the single definition (TestHookTriggerSeam's rule).
+        self.assertEqual(self.mod.COMMIT_PREDICATE, TestHookTriggerSeam.PREDICATE)
+        self.assertFalse(re.search(r"[\\^$*+?()\[\]{}|]", self.mod.COMMIT_PREDICATE),
+                         msg="metacharacters would diverge from the substring match")
+
+    def test_the_plugin_resolves_the_repo_root_from_its_own_path(self):
+        # `parents[3]` is load-bearing: <repo>/.hermes/plugins/<name>/__init__.py.
+        # A shallower home would point every gate at the wrong tree, silently.
+        self.assertEqual(self.mod.REPO, Path(ROOT))
+
+    def _hook(self, **kwargs):
+        self._repo(**kwargs)
+        return self._registered()["post_tool_call"]
+
+    def test_auto_sync_triggers_on_a_watched_root_doc(self):
+        hook = self._hook(watch=("CATALOG.md", "evaluations/"))
+        hook(tool_name="write_file", args={"path": "CATALOG.md"})
+        self.assertTrue(os.path.exists(os.path.join(self.mod.REPO, "synced.log")),
+                        msg="an edit to a watched root doc must re-sync plugin/docs/")
+
+    def test_auto_sync_triggers_on_a_file_inside_a_watched_directory(self):
+        hook = self._hook(watch=("CATALOG.md", "evaluations/"))
+        hook(tool_name="patch", args={"path": "evaluations/aider.md"})
+        self.assertTrue(os.path.exists(os.path.join(self.mod.REPO, "synced.log")))
+
+
+    def test_auto_sync_skips_an_unwatched_path(self):
+        hook = self._hook(watch=("CATALOG.md",))
+        hook(tool_name="write_file", args={"path": "plans/017-hermes-harness-support.md"})
+        self.assertFalse(os.path.exists(os.path.join(self.mod.REPO, "synced.log")),
+                         msg="only the syncable set may trigger a sync")
+
+    def test_auto_sync_skips_the_derived_copy_so_it_cannot_loop(self):
+        hook = self._hook(watch=("CATALOG.md",))
+        hook(tool_name="write_file", args={"path": "plugin/docs/CATALOG.md"})
+        self.assertFalse(os.path.exists(os.path.join(self.mod.REPO, "synced.log")))
+
+    def test_auto_sync_ignores_a_non_write_tool(self):
+        hook = self._hook(watch=("CATALOG.md",))
+        hook(tool_name="read_file", args={"path": "CATALOG.md"})
+        self.assertFalse(os.path.exists(os.path.join(self.mod.REPO, "synced.log")))
+
+    def test_auto_sync_fails_open_when_the_watch_set_cannot_be_read(self):
+        # "could not run" is not "failed": a repo whose script is broken must not break
+        # the session, and must not be read as a watch-everything.
+        d = self._repo(watch=("CATALOG.md",))
+        os.remove(os.path.join(d, "sync-plugin-docs.sh"))
+        hook = self._registered()["post_tool_call"]
+        hook(tool_name="write_file", args={"path": "CATALOG.md"})
+        self.assertFalse(os.path.exists(os.path.join(d, "synced.log")))
+
+
+    def test_both_hooks_accept_the_documented_payload(self):
+        # The REAL contract, verbatim from the Hermes docs. Hermes calls plugin hooks by
+        # KEYWORD from a fixed payload (`post_tool_call`: tool_name, args, result,
+        # task_id, session_id, tool_call_id, turn_id, api_request_id, duration_ms,
+        # status, error_type, error_message, middleware_trace) and tells plugins to
+        # accept **kwargs. A hook naming its second parameter `params` instead of `args`
+        # gets None and never fires — while a test passing its own `params=` stays
+        # green. So this test passes what Hermes passes, and nothing of its own.
+        hook = self._hook(watch=("CATALOG.md",))
+        hook(tool_name="write_file", args={"path": "CATALOG.md"}, result="ok",
+             task_id="t1", session_id="s1", tool_call_id="c1", turn_id="u1",
+             api_request_id="a1", duration_ms=12, status="ok", error_type="",
+             error_message="", middleware_trace=[],
+             telemetry_schema_version="hermes.observer.v1")
+        self.assertTrue(os.path.exists(os.path.join(self.mod.REPO, "synced.log")),
+                        msg="the auto-sync hook did not fire on the documented payload")
+        # `tool_request` middleware payload: tool_name, args, original_args.
+        self.assertIsNone(self._registered()["tool_request"](
+            tool_name="terminal", args={"command": "ls"}, original_args={"command": "ls"},
+            middleware_schema_version="hermes.middleware.v1", session_id="s1"),
+            msg="a non-commit must pass through the documented payload unchanged")
+
+    def _gate(self, **kwargs):
+        self._repo(**kwargs)
+        return self._registered()["tool_request"]
+
+    def test_commit_gate_rewrites_a_failing_commit_into_a_diagnostic(self):
+        gate = self._gate()
+        out = gate(tool_name="terminal", args={"command": "git commit -m x"})
+        self.assertIsNotNone(out, msg="a failing gate must rewrite the commit")
+        command = out["args"]["command"]
+        self.assertIn("BLOCKED by Hermes commit-gate", command)
+        # The diagnostic must survive the shell round-trip intact: the opencode adapter
+        # base64-encodes it for exactly this reason, and so does this one.
+        m = re.search(r"printf '%s' '([A-Za-z0-9+/=]+)' \| base64 -d", command)
+        self.assertIsNotNone(m, msg="the gate output is not carried in a decodable form")
+        self.assertIn("detector X: fail", base64.b64decode(m.group(1)).decode())
+
+    def test_commit_gate_leaves_a_non_commit_command_alone(self):
+        gate = self._gate()
+        self.assertIsNone(gate(tool_name="terminal", args={"command": "git status"}))
+
+    def test_commit_gate_leaves_a_call_with_no_command_argument_alone(self):
+        # Identifying by argument shape, not tool id, is what keeps this robust to a
+        # differently-named shell tool.
+        gate = self._gate()
+        self.assertIsNone(gate(tool_name="read_file", args={"path": "AGENTS.md"}))
+
+    def test_commit_gate_fails_open_when_the_gate_cannot_run(self):
+        # A tree with no `check-data` target must let the commit through —
+        # TestIntegrityMakefile pins the same rule for the opencode half; this is its
+        # behavioural counterpart.
+        gate = self._gate(makefile="all:\n\t@true\n")
+        self.assertIsNone(gate(tool_name="terminal", args={"command": "git commit -m x"}))
+
+    def test_commit_gate_allows_the_commit_when_the_tree_is_green(self):
+        gate = self._gate(audit_exit=0)
+        self.assertIsNone(gate(tool_name="terminal", args={"command": "git commit -m x"}))
+
+    # The "derives its trigger set from --list-watched" pin for THIS adapter lives in
+    # TestWatchListSeam.test_adapter_derives_from_list_watched (T4.4), which loops over
+    # every adapter: two copies of one assertion is the drift shape this repo fights.
 
 # ----------------------------------------------------------------- detector I (evidence field, #62)
 class TestEvidenceField(unittest.TestCase):
@@ -4537,7 +4731,10 @@ class TestIntegrityMakefile(unittest.TestCase):
     ))
 
     # The commit gate (its predicate is pinned by TestHookTriggerSeam).
-    COMMIT_HOOKS = (".opencode/plugins/commit-gate.ts",)
+    COMMIT_HOOKS = (
+        ".opencode/plugins/commit-gate.ts",
+        ".hermes/plugins/ai-tooling-harness/__init__.py",
+    )
 
     # The gates whose `--check` has NO apply-mode counterpart, each with the reason it
     # cannot have one. DECLARED here, and deliberately never counted: the prose used to
