@@ -6,6 +6,11 @@
 
 **Run 3** — harness agnosticism, 2026-09-14 (audit at commit `ddd343e`). Focus: drop the Claude Code dependency. Plan 016 — reconnaissance of the Claude-coupled surface plus the staged decoupling path (repo skills to `.agents/`, instructions to `AGENTS.md`, delete the duplicated bash hook half).
 
+**Run 4** — harness parity, 2026-09-15 (audit at commit `c4e28e9`). Focus: make Hermes
+Agent a second supported harness without duplicating a single gate. Plan 017 — four
+project skills both harnesses read, one Python adapter over the same `make check-data` /
+`sync-plugin-docs.sh` the opencode adapters call, and the docs to enable it.
+
 Execute in the order below unless dependencies say otherwise. Each executor: read the plan fully before starting, honor its STOP conditions, and update your row when done.
 
 ## Execution order & status
@@ -28,6 +33,7 @@ Execute in the order below unless dependencies say otherwise. Each executor: rea
 | [014](014-parallel-install-resolver.md) | Resolve installs in parallel; add `make check-offline` | P2 | S | — | DONE 2026-08-03 ([#301](https://github.com/mattbutlerengineering/ai-tooling/issues/301)) |
 | [015](015-derived-surface-numbers.md) | Stop hand-written numbers going stale inside derived surfaces | P2 | M | — | TODO |
 | [016](016-decouple-from-claude-code.md) | Decouple from Claude Code — harness-agnostic instructions, skills, hooks | P1 | L | — | TODO |
+| [017](../docs/plans/017-hermes-harness-support.md) | Support Hermes Agent alongside opencode | P1 | M | — | IN PROGRESS 2026-09-15 |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJECTED (with one-line rationale)
 
