@@ -450,7 +450,7 @@ direct it to where it matters most, and a harness regulates three dimensions —
 architecture fitness, and functional behavior, the last of which it calls the hardest unsolved
 problem. Complements rather than duplicates the Anthropic post above: that one is a single
 company's internal architecture for long-running agents, this is the vendor-neutral vocabulary
-for the discipline this repo's own `CLAUDE.md` already calls "harness engineering" throughout
+for the discipline this repo's own `AGENTS.md` already calls "harness engineering" throughout
 its integrity-tooling section.
 
 ### [Codex as a platform: build on the open agent harness](https://developers.openai.com/blog/codex-as-a-platform) — OpenAI (2026-08-19)

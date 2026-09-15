@@ -102,7 +102,7 @@ may reach any verdict; that marker is not yours to write.
      otherwise plainly dominated. The reason must **name** the incumbent, successor,
      license or container it turns on.
    - **P5 is not a redundancy call.** A contained row is a *component* of the artifact
-     its container names, not a competitor to it — `CLAUDE.md` puts it plainly under
+     its container names, not a competitor to it — `AGENTS.md` puts it plainly under
      detector X: *"a redundancy verdict between the two is meaningless — that is the
      same thing, not a competitor."* So `SKIP — redundant with <container>` is wrong
      even when the container is a STACK pick. The two legitimate outcomes are

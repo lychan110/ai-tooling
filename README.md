@@ -36,7 +36,7 @@ This gives you five skills:
 
 ## Integrity
 
-The catalog is kept honest by `audit-evals.py` (install resolver, fabrication classifier, verdict sync, COMPARISON/CATALOG consistency) and `reconcile-counts.py --check`. These run automatically in CI (`.github/workflows/integrity.yml`) on every push and pull request — a PR that introduces a verdict mismatch, count drift, or fabrication-pattern eval fails its checks. See `CLAUDE.md` for the full detector list and the opt-in detectors.
+The catalog is kept honest by `audit-evals.py` (install resolver, fabrication classifier, verdict sync, COMPARISON/CATALOG consistency) and `reconcile-counts.py --check`. These run automatically in CI (`.github/workflows/integrity.yml`) on every push and pull request — a PR that introduces a verdict mismatch, count drift, or fabrication-pattern eval fails its checks. See `AGENTS.md` for the full detector list and the opt-in detectors.
 
 ## Quick Start
 

@@ -26,7 +26,7 @@ judgement (category, one-liner, overlaps). Detector G then verifies the result.
 
 3. **Scope check.** Only catalogue dev-loop tooling (produces/reviews/tests/ships code, or agent/MCP infra for that). Skip proprietary-only, model-serving infra, chat UIs, and general business automation — note the skip and why.
 
-4. **Craft the CATALOG row** (match the column format in `CLAUDE.md` > "Catalog format"):
+4. **Craft the CATALOG row** (match the column format in `AGENTS.md` > "Catalog format"):
    `| [name](https://github.com/{slug}) | <type> | <one-liner ~12 words> | <problem it solves> | <overlaps> | <ships inside> |`
    - **Overlaps**: name 2-4 existing entries in the same category (check them first); mark external/conceptual peers with `(ext.)`.
    - **Ships inside** (#343): usually **empty**, but all six cells are required — a 5-cell row fails gating detector O on row shape. Fill it only when the artifact is a *component* of a larger one you would install as a whole (a skill inside a pack, one server inside a monorepo), and fill it with an `owner/repo` slug, **never a display name** — a basename is not a synonym (#366, #374). A filled cell bands the row into `P5 ships-inside`, which says "settle the container", so filling it wrongly hides a real lead. If your dedup grep in step 2 found the *pack* already catalogued, this is the cell that says so.
@@ -37,7 +37,7 @@ judgement (category, one-liner, overlaps). Detector G then verifies the result.
    `awk '/^## /{s=$0} /^\| <peer> /{print s}' COMPARISON.md`
    Insert `| <name> | <type> | <auto ✓/blank> | <free ✓/blank> | discovery-log | SOURCE-ONLY |` under that same `## section`. An add with no hands-on eval is a **lead, not a verdict** — `discovery-log` is the vocabulary for that (COMPARISON.md's legend), and `SOURCE-ONLY` is what `backfill-evidence.py` derives for a row with no eval file. Do **not** write `CONDITIONAL`: the legend reserves it for a tool actually exercised (`Evidence` MEASURED/RUN) or one carrying a genuine `adopt-if:` condition, and eliminate-only forbids an unattended pass from reaching any positive verdict. The Evidence cell is not optional — a 5-cell row fails gating detector O on row shape.
 
-7. **Propagate counts.** `python3 reconcile-counts.py` — rewrites the catalog total in `README.md`, `CLAUDE.md`, `STACK.md` and `plugin/README.md` (its `FILES_TOTAL`) and rebuilds COMPARISON's summary + Total from the new body rows. Never hand-edit counts. The plugin's front door was `plugin/CLAUDE.md` until #441/#442; a file by that name reappearing at the plugin root is itself a `check-plugin.py` `FRONT-DOOR` finding, so never write one.
+7. **Propagate counts.** `python3 reconcile-counts.py` — rewrites the catalog total in `README.md`, `AGENTS.md`, `STACK.md` and `plugin/README.md` (its `FILES_TOTAL`) and rebuilds COMPARISON's summary + Total from the new body rows. Never hand-edit counts. The plugin's front door was `plugin/CLAUDE.md` until #441/#442; a file by that name reappearing at the plugin root is itself a `check-plugin.py` `FRONT-DOOR` finding, so never write one.
 
 8. **Sync the plugin copy.** `./sync-plugin-docs.sh`
 

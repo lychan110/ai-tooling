@@ -4,10 +4,10 @@ A **routine** is a scheduled Claude Code cloud agent that runs against this repo
 own (the daily discovery-and-triage pass is the canonical one). Routines are defined
 server-side at <https://claude.ai/code/routines> — nothing in this repo schedules them.
 Their only in-repo lever is this file: every routine checks out the repo and reads
-`CLAUDE.md`, which points here.
+`AGENTS.md`, which points here.
 
 This doc is the branch-and-merge contract. For what a routine may *conclude*, see the
-eliminate-only rule in `CLAUDE.md` and `NEXT-EVALS.md` — that is unchanged and
+eliminate-only rule in `AGENTS.md` and `NEXT-EVALS.md` — that is unchanged and
 independent of anything below.
 
 ## The rule: a routine lands its own PR
@@ -79,7 +79,7 @@ trivial to revert, instead of *before* it, on a branch that rots while it waits.
    `discovery/README.md` had stated the intended lifecycle the whole time — a scan issue
    "is closed by the pull request that catalogs those findings" — and nothing coupled that
    sentence to this file, the one a routine actually reads. That is the two-copies-of-one-
-   fact shape `CLAUDE.md` names for the count extractors, in prose.
+   fact shape `AGENTS.md` names for the count extractors, in prose.
 
    A reference that does not close is worse than no reference: it reads as bookkeeping
    already handled, so nobody checks it. Put the keyword in the **PR body** — a commit
