@@ -1,15 +1,14 @@
 // opencode auto-sync plugin (#154, parent #144).
 //
-// Re-implements the Claude Code `.claude/hooks/auto-sync.sh` PostToolUse(Edit|Write)
-// hook in opencode-native form. After the `edit` or `write` tool runs, if the edited
-// file path is a root doc that sync-plugin-docs.sh mirrors and is NOT already inside
-// plugin/docs/, re-run ./sync-plugin-docs.sh so plugin/docs/ never drifts during a
-// session. Fail-open and silent — mirror auto-sync.sh's contract.
+// opencode-native PostToolUse(Edit|Write) hook. After the `edit` or `write` tool runs, if
+// the edited file path is a root doc that sync-plugin-docs.sh mirrors and is NOT already
+// inside plugin/docs/, re-run ./sync-plugin-docs.sh so plugin/docs/ never drifts during a
+// session. Fail-open and silent.
 //
-// Same script, no gate drift: calls the identical sync-plugin-docs.sh that Claude
-// Code's hook and CI (make check) call. The trigger set is DERIVED from
-// `sync-plugin-docs.sh --list-watched` — the one definition of the syncable set —
-// never restated here (#194, pinned by TestWatchListSeam in test_automation.py).
+// Same script, no gate drift: calls the identical sync-plugin-docs.sh that the Hermes
+// adapter (`.hermes/plugins/ai-tooling-harness/`) and CI (make check) call. The trigger set
+// is DERIVED from `sync-plugin-docs.sh --list-watched` — the one definition of the
+// syncable set — never restated here (#194, pinned by TestWatchListSeam in test_automation.py).
 
 import type { Plugin } from "@opencode-ai/plugin"
 
