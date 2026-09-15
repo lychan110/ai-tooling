@@ -57,6 +57,6 @@ Output:
 - Count of new AI-tooling repos to add
 - Count of non-AI repos (skipped, with names listed)
 - The generated catalog entries grouped by section
-- Updated entry count for CLAUDE.md
+- Updated entry count for `AGENTS.md`
 
 Do NOT modify any files automatically. Present the entries for review.

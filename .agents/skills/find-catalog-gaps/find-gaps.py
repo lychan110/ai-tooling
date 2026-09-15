@@ -14,7 +14,7 @@ A "present" check is `[name](` appearing in CATALOG.md (case-insensitive). Outpu
 a candidate list for human review — vet scope before adding (skip proprietary-only,
 model-serving infra, chat UIs, general business automation).
 
-  uv run .claude/skills/find-catalog-gaps/find-gaps.py
+  uv run .agents/skills/find-catalog-gaps/find-gaps.py
 """
 import os
 import subprocess

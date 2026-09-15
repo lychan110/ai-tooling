@@ -18,17 +18,17 @@ Check your installed tools against the recommended workflow. Identifies what you
 Scan installed tools:
 
 ```bash
-# Plugins
-ls ~/.claude/plugins/cache/ 2>/dev/null
+# opencode config (project, then global)
+cat opencode.json 2>/dev/null
+cat ~/.config/opencode/opencode.json 2>/dev/null
 
-# Skills
-ls ~/.claude/skills/ 2>/dev/null
+# Hermes plugins, skills, MCP servers
+hermes plugins list 2>/dev/null
+ls ~/.hermes/skills/ 2>/dev/null
+hermes mcp list 2>/dev/null
 
-# MCP servers (from settings)
-cat ~/.claude/settings.json | grep -A2 '"mcpServers"' 2>/dev/null
-
-# Project-specific
-find . -name "CLAUDE.md" -o -name "AGENTS.md" 2>/dev/null
+# Project-specific instruction surface
+ls AGENTS.md opencode.json .agents/skills/ 2>/dev/null
 ```
 
 ### 2. Map against WORKFLOW.md

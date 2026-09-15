@@ -12,9 +12,13 @@ then `/plugin install ai-tooling@ai-tooling`.
 
 AI workflow toolkit organized around inner/outer dev loop stages and six quality signals (Correctness, Speed, Maintainability, Safety, Cost Efficiency, Verifiability).
 
+Under opencode or Hermes Agent the marketplace is not needed: clone the repo and the skills
+load from `.agents/skills/` (run `hermes skills trust` once, for Hermes). The commands below
+are the Claude Code packaging of those same five skills.
+
 ## Skills
 
-- `/setup-workflow` — bootstrap the recommended AI workflow in any repo (creates CLAUDE.md, checks global tools, identifies gaps)
+- `/setup-workflow` — bootstrap the recommended AI workflow in any repo (creates AGENTS.md, checks global tools, identifies gaps)
 - `/evaluate-tool` — evaluate a new AI tool before adopting it (checks catalog overlap, quality signal fit, dev loop stage)
 - `/audit-workflow` — audit current setup against the recommended dev loop tool stack
 - `/update-catalog` — sync the AI tooling catalog with current GitHub stars and local installs

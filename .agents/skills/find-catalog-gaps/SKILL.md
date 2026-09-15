@@ -14,7 +14,7 @@ add them (with `/add-catalog-entry`).
 ## Run it
 
 ```bash
-uv run .claude/skills/find-catalog-gaps/find-gaps.py
+uv run .agents/skills/find-catalog-gaps/find-gaps.py
 ```
 
 This combines two signals:

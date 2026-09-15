@@ -77,7 +77,7 @@ jobs:
         run: |
           {
             echo "The scheduled sweep (\`audit-evals.py --links --archived\`) found catalog drift."
-            echo "Triage: fix the dead/moved link or add a ⚠️ archived note (or repoint) per CLAUDE.md."
+            echo "Triage: fix the dead/moved link or add a ⚠️ archived note (or repoint) per AGENTS.md."
             echo
             echo "Sweep run: $RUN_URL"
             echo
