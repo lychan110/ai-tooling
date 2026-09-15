@@ -1,10 +1,10 @@
 # Routines: unattended cloud agents
 
-A **routine** is a scheduled Claude Code cloud agent that runs against this repo on its
-own (the daily discovery-and-triage pass is the canonical one). Routines are defined
-server-side at <https://claude.ai/code/routines> — nothing in this repo schedules them.
-Their only in-repo lever is this file: every routine checks out the repo and reads
-`AGENTS.md`, which points here.
+A **routine** is a scheduled, unattended agent run against this repo on its own (the daily
+discovery-and-triage pass is the canonical one). Routines are scheduled outside this repo —
+nothing here creates them; a Hermes cron job is the supported shape, and any harness that
+can check out the repo and run the gates works the same way. Their only in-repo lever is
+this file: every routine checks out the repo and reads `AGENTS.md`, which points here.
 
 This doc is the branch-and-merge contract. For what a routine may *conclude*, see the
 eliminate-only rule in `AGENTS.md` and `NEXT-EVALS.md` — that is unchanged and

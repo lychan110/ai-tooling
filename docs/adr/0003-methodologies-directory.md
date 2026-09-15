@@ -47,8 +47,8 @@ Rationale for a directory over a `WORKFLOW.md` section:
   verifies its sync alongside `evaluations/` and `discovery/`. New methodology docs
   propagate automatically — no per-file allowlist edits.
 - The directory is a single shared rsync line in `sync-plugin-docs.sh`; both harnesses
-  (Claude Code, opencode) and CI call that one script, so there is no lockstep/drift
-  surface to maintain (consistent with the lockstep invariant in `CLAUDE.md`).
+  (opencode, Hermes) and CI call that one script, so there is no lockstep/drift
+  surface to maintain (consistent with the lockstep invariant in `AGENTS.md`).
 - These docs are reference, not authoritative tool data — they carry no counts, verdicts,
   or Evidence fields, so the catalog drift detectors (D/G/J/K) and `reconcile-counts` do
   not apply to them.

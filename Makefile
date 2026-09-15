@@ -35,7 +35,7 @@
 #
 # Which gates have no fixer is DECLARED, not counted in prose: TestIntegrityMakefile's
 # NO_APPLY_MODE holds the set with a reason each, and derives from this file which gates
-# must have one (#461). The three ordinals that used to live here and in CLAUDE.md gave
+# must have one (#461). The three ordinals that used to live here and in AGENTS.md gave
 # three different answers for a set of four.
 #
 # `uv` owns the interpreter and the environment. `python3` is not on every machine's

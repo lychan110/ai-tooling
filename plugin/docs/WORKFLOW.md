@@ -125,7 +125,7 @@ Is the code good? This is where maintainability and safety get their primary che
 | | [PR-Agent](https://github.com/The-PR-Agent/pr-agent) — CI-native PR reviewer: auto-describe, review, improve on every push, works for non-Claude-Code users — ⚠️ **SKIP** for a Claude-Code-native stack: redundant with `code-review` in-session and `claude-code-action` in CI, both already STACK ([eval](evaluations/pr-agent.md)) | Correctness, Speed |
 | **Infrastructure** | Review findings tracked by category — are "simplify this" comments decreasing over time? | Maintainability |
 
-**Feedback arc:** If the same category of review finding keeps appearing (e.g., "missing error handling"), that's a CLAUDE.md rule waiting to be written. claude-reflect captures these automatically.
+**Feedback arc:** If the same category of review finding keeps appearing (e.g., "missing error handling"), that's an `AGENTS.md` rule waiting to be written. claude-reflect captures these automatically.
 
 ### Ship
 
@@ -236,7 +236,7 @@ What worked across the whole epic? What didn't? Retrospect operates at a higher 
 
 | Layer | What |
 |-------|------|
-| **Process** | Review the full epic: which tasks went smoothly, which required rework, which assumptions were wrong. Update architecture docs and CLAUDE.md rules. |
+| **Process** | Review the full epic: which tasks went smoothly, which required rework, which assumptions were wrong. Update architecture docs and `AGENTS.md` rules. |
 | **Tooling** | claude-mem timeline views — see patterns across sessions ([eval](evaluations/memory-systems.md)) |
 | | [engram](https://github.com/Gentleman-Programming/engram) — agent-agnostic memory with topic-key upserts and conflict surfacing, portable across 7+ agents ([eval](evaluations/engram.md)) |
 | | [mem0](https://github.com/mem0ai/mem0) — relationship-aware memory with entity linking and published retrieval benchmarks, cross-editor support ([eval](evaluations/mem0.md)) |
@@ -359,7 +359,7 @@ Don't install everything at once. Adopt in layers:
 
 Install the skills that enforce discipline. No infrastructure needed — just better habits.
 
-- **CLAUDE.md + rules/** — encode conventions, coding style, commit format, security checks
+- **AGENTS.md + rules/** — encode conventions, coding style, commit format, security checks
 - **mattpocock/skills** — engineering conventions, grilling, architecture improvement
 - **agent-skills** — lifecycle structure with verification gates
 - **superpowers** — TDD enforcement, systematic debugging
@@ -416,7 +416,7 @@ explainers), and production talks for the outer loop.
 | agentmemory | Overlap with claude-mem. Pick one memory system. Conflicting context is worse than no memory. |
 | ECC, formerly `everything-claude-code` (251+ skills) | Too broad. Use targeted skills (mattpocock, agent-skills) instead of a kitchen-sink plugin ([eval](evaluations/ecc.md)). Same repo as the ECC listed one row above — `19435b9` merged the two catalog rows and the two evals; the legacy name is kept here so a search for it still lands. |
 | Flowise, LangGraph | Visual/programmatic agent builders — for building AI products, not for your own dev workflow. |
-| OpenHands | Full platform replacement — you're augmenting Claude Code, not replacing it. |
+| OpenHands | Full platform replacement — you're augmenting your harness, not replacing it. |
 | sandcastle, gastown | Overlap with claude-squad for orchestration. |
 | Understand-Anything | Prettier dashboard but no live sync. codegraph ([eval](evaluations/codegraph.md)) + graphify ([eval](evaluations/graphify.md)) cover both live and deep analysis. |
 | repomix | Different approach (serialization vs. graph) — useful for feeding code to non-agent LLMs, not needed when agents have file access. |

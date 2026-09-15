@@ -15,7 +15,7 @@ Maintain a high-signal inventory and evaluation of AI tools, skills, agents, har
 - `STACK-LEDGER.md` — machine-readable ADOPT/KEEP exclusions.
 - `evaluations/` — hands-on evaluations and discovery logs.
 - `docs/agents/` — detailed agent procedures and rationale.
-- `plugin/` — installable Claude Code package; generated docs must not be edited directly.
+- `plugin/` — Claude Code marketplace packaging for the same skills; generated docs must not be edited directly.
 
 ## Source of truth
 

@@ -31,7 +31,7 @@ package = false
 # addition into a red build on an unrelated PR.
 #
 # Both are wired into `make check`; `make fix` runs `ruff check --fix` and
-# `ruff format` ahead of the other fixers. See CLAUDE.md's integrity-audit section.
+# `ruff format` ahead of the other fixers. See AGENTS.md for the gate list.
 
 [tool.ruff]
 target-version = "py310"

@@ -19,14 +19,10 @@ Refresh the catalog by checking for new GitHub stars, newly installed local tool
 # Current GitHub stars
 gh api user/starred --paginate --jq '.[].full_name'
 
-# Current local plugins
-ls ~/.claude/plugins/cache/ 2>/dev/null
-
-# Current local skills
-ls ~/.claude/skills/ 2>/dev/null
-
-# Current MCP servers
-cat ~/.claude/settings.json 2>/dev/null
+# Current harness plugins, skills, MCP servers
+hermes plugins list 2>/dev/null
+ls .agents/skills/ ~/.hermes/skills/ 2>/dev/null
+cat opencode.json ~/.config/opencode/opencode.json 2>/dev/null
 ```
 
 ### 2. Diff against catalog

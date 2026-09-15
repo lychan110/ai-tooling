@@ -6,17 +6,29 @@ Evaluates tools against six quality signals (Correctness, Speed, Maintainability
 
 ## Install
 
-Add as a Claude Code marketplace:
+This repo's agent surface is written for opencode and Hermes Agent:
+
+- **opencode** reads `AGENTS.md` and `.agents/skills/` from the checkout — nothing to wire.
+  `opencode.json` carries the permission block and the `check` / `fix` / `sync` commands.
+- **Hermes Agent** loads `AGENTS.md` as project context and discovers `.agents/skills/`, but
+  does not auto-trust procedures from a cloned repo — run `hermes skills trust` once in the
+  checkout. The project-local plugin (`.hermes/plugins/ai-tooling-harness/`) carries the
+  commit gate and the `plugin/docs/` auto-sync; see
+  [docs/agents/hermes-harness.md](docs/agents/hermes-harness.md).
+
+Both harnesses drive the same gates: `make check`, `make fix`, `./sync-plugin-docs.sh`.
+
+The same five skills are also packaged as a Claude Code marketplace:
 
 ```bash
 claude plugin marketplace add mattbutlerengineering/ai-tooling
 claude plugin install ai-tooling@ai-tooling
 ```
 
-Or from inside a session: `/plugin marketplace add mattbutlerengineering/ai-tooling`
+Or from inside a Claude Code session: `/plugin marketplace add mattbutlerengineering/ai-tooling`
 then `/plugin install ai-tooling@ai-tooling`.
 
-This gives you five skills:
+The five skills:
 
 - `/setup-workflow` — bootstrap the recommended AI workflow in any repo
 - `/evaluate-tool` — evaluate a new tool before adopting it (checks stage fit, quality signals, overlap)
@@ -40,7 +52,7 @@ The catalog is kept honest by `audit-evals.py` (install resolver, fabrication cl
 
 ## Quick Start
 
-After installing, run `/setup-workflow` in any repo to bootstrap the recommended workflow. It creates a CLAUDE.md with quality-producing rules, checks your global tool installation, and identifies gaps.
+After installing, run `/setup-workflow` in any repo to bootstrap the recommended workflow. It creates an `AGENTS.md` with quality-producing rules, checks your global tool installation, and identifies gaps.
 
 ## The Workflow
 
