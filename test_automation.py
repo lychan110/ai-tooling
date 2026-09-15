@@ -2453,15 +2453,15 @@ class TestFreshnessHook(unittest.TestCase):
 # ----------------------------------------------------------------- plugin/README.md drift
 class TestPluginFrontDoorSignals(unittest.TestCase):
     """plugin/README.md is HAND-maintained — unlike plugin/docs/, which
-    sync-plugin-docs.sh mirrors and gates — so it drifts from root CLAUDE.md in
+    sync-plugin-docs.sh mirrors and gates — so it drifts from root AGENTS.md in
     silence. Its eval count sat 87 behind (#302) and its quality-signal list stayed
     at five for the entire life of ADR-0004's sixth signal, so anyone installing the
     marketplace package was told the framework has five and never met Verifiability
     (#313). Reads the real tree on purpose: the drift is *between two real files*,
-    so a fixture would pin nothing. Derives the expected signals from root CLAUDE.md
+    so a fixture would pin nothing. Derives the expected signals from root AGENTS.md
     rather than hardcoding them, so a seventh signal needs no test edit."""
 
-    # Anchored on a number word: root CLAUDE.md:7 also says "the quality signals they
+    # Anchored on a number word: root AGENTS.md:7 also says "the quality signals they
     # move", which a bare \w+ would match first.
     _COUNT = re.compile(r"\b(four|five|six|seven|eight|nine)\s+quality signals\b", re.IGNORECASE)
 
@@ -2475,15 +2475,15 @@ class TestPluginFrontDoorSignals(unittest.TestCase):
         return m.group(1).lower()
 
     def test_signal_count_matches_root(self):
-        root = self._count_word(self._text("CLAUDE.md"), "CLAUDE.md")
+        root = self._count_word(self._text("AGENTS.md"), "AGENTS.md")
         plugin = self._count_word(self._text("plugin/README.md"), "plugin/README.md")
         self.assertEqual(plugin, root,
                          msg="plugin/README.md quotes a different signal count than root")
 
     def test_plugin_names_every_root_signal(self):
         # Root lists them after a colon, up to the parenthetical gloss on the last one.
-        m = re.search(r"quality signals:\s*(.+?)\s*\(", self._text("CLAUDE.md"))
-        self.assertIsNotNone(m, msg="root CLAUDE.md no longer lists its signals after a colon")
+        m = re.search(r"quality signals:\s*(.+?)\s*\(", self._text("AGENTS.md"))
+        self.assertIsNotNone(m, msg="root AGENTS.md no longer lists its signals after a colon")
         # ", and X" splits on the comma first, so the optional "and " is consumed there too.
         names = [s for s in re.split(r",\s*(?:and\s+)?|\s+and\s+", m.group(1)) if s]
         self.assertGreaterEqual(len(names), 5, msg=f"parsed too few signals: {names}")
@@ -4486,7 +4486,7 @@ class TestIntegrityMakefile(unittest.TestCase):
     # Where the chain is restated outside the Makefile. Both are facts copied from the
     # recipe, so both get a test — `reconcile-counts.py` and TestPluginFrontDoorSignals
     # are the precedent for gating a restated fact rather than the file restating it.
-    CHAIN_PROSE = ("CLAUDE.md", "opencode.json")
+    CHAIN_PROSE = ("AGENTS.md", "opencode.json")
 
     def _raw_target_body(self, target):
         """The literal recipe lines of `target:`, delegation unexpanded. Prefix-safe —

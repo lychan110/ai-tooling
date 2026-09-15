@@ -46,4 +46,4 @@ To bootstrap any repo with these conventions, run `/setup-workflow`.
 
 - **Counts and stacks are derived, never hand-written.** `reconcile-counts.py` propagates the one catalog total; NEXT-EVALS.md, WATCHLIST.md, and STACK's evidence tiers are regenerated from data — nobody edits them by hand.
 - **Every verdict declares how hard we looked.** An Evidence taxonomy (MEASURED / RUN / REVIEW / SOURCE-ONLY) separates *what we concluded* from *how we know*, and honesty gates flag a strong verdict resting on a README skim.
-- **CI enforces all of it.** `make check` runs the full detector set on every push and pull request — see the Integrity audit section of [CLAUDE.md](CLAUDE.md).
+- **CI enforces all of it.** `make check` runs the full detector set on every push and pull request — see the Integrity audit section of [AGENTS.md](AGENTS.md).

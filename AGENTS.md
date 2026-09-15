@@ -89,20 +89,20 @@ MCP Servers, Observability, Research & Discovery, Security & Safety, Reference
 
 ### Supported harness (opencode)
 
-opencode is a supported harness alongside Claude Code. Both read this `CLAUDE.md`
-(opencode reads it as its rules fallback — there is intentionally no `AGENTS.md`
-content fork). Canonical homes per artifact, with the other harness derived/synced
-(ADR-0002; never hand-maintain a duplicate that drifts):
+opencode is the supported harness. It reads this `AGENTS.md` as its project rules
+(`AGENTS.md` is opencode's preferred project file; `CLAUDE.md` is not used here).
+Canonical homes per artifact, with nothing hand-maintained twice
+(ADR-0002):
 
-- **Instructions** → `CLAUDE.md` (both harnesses)
-- **Repo skills** → `.agents/skills/` canonical; `.claude/skills/` mirrors them as symlinks for Claude Code discovery (`.claude/skills/find-skills` was already a symlink)
-- **Specialized agent (`eval-runner`)** → `.opencode/agents/` canonical; `.claude/agents/eval-runner.md` is a symlink to it (one source file, zero drift)
-- **Hook logic** → opencode plugins in `.opencode/plugins/` (`commit-gate.ts`, `auto-sync.ts`) that call the **same** `audit-evals.py --offline` / `sync-plugin-docs.sh` scripts Claude Code's hooks use — so the local opencode, local Claude Code, and CI (`make check`) gates reference one implementation
+- **Instructions** → `AGENTS.md`
+- **Repo skills** → `.agents/skills/` canonical
+- **Specialized agent (`eval-runner`)** → `.opencode/agents/` canonical
+- **Hook logic** → opencode plugins in `.opencode/plugins/` (`commit-gate.ts`, `auto-sync.ts`) that call the **same** `audit-evals.py --offline` / `sync-plugin-docs.sh` scripts CI (`make check`) runs — one implementation, nothing duplicated per harness
 - **Deterministic gates** → custom commands `/check` `/fix` `/sync` (opencode) and `make check`/`make fix`/`./sync-plugin-docs.sh` directly
 
-**Lockstep invariant:** any change to a hook behavior must keep the opencode
-plugins, the Claude Code `.claude/hooks/` scripts, and `.github/workflows/integrity.yml`
-in lockstep — they all gate against the same coupled scripts, so they must not drift.
+**Single implementation:** any change to a hook behavior must keep the opencode
+plugins and `.github/workflows/integrity.yml` in lockstep — they all gate against
+the same coupled scripts, so they must not drift.
 The **shipped** plugin hook (`plugin/hooks/validate-counts.sh`) is held to the same rule
 since #443, and it is the one that had escaped it: it re-implemented the count extraction
 in bash, grepping for the *prose phrasing* each number sits in (`inventory of N`,
