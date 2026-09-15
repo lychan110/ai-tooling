@@ -7,9 +7,28 @@ The Hermes Agent harness can drive this repository the way opencode does. Suppor
 Project-local plugins are deliberately off by default: a plugin that can rewrite a commit should never be enabled by accident.
 
 ```bash
-export HERMES_ENABLE_PROJECT_PLUGINS=true    # the opt-in for repo-local plugins
-hermes skills trust                          # trust repo-local skills under .agents/skills/
+export HERMES_ENABLE_PROJECT_PLUGINS=true   # makes repo-local plugins discoverable
+hermes skills trust "$PWD"                 # trust repo-local skills under .agents/skills/
 ```
+
+Both halves are needed, and both are deliberate:
+
+```yaml
+# ~/.hermes/config.yaml
+plugins:
+  enabled:
+    - ai-tooling-harness     # discovered is not loaded
+```
+
+`hermes plugins list` never shows a repo-local plugin and `hermes plugins enable` refuses it
+("not installed or bundled" - that path manages bundled and user plugins), so the
+`plugins.enabled` entry is added by hand. `hermes skills trust` also takes the project root
+explicitly - bare, it trusts the enclosing git checkout of the *process* working directory,
+which is not always the repo you are standing in. With only the environment variable set the adapter
+is discovered but never loaded, and the gate stays silent - observed live on this repo.
+`hermes plugins compat .hermes/plugins/ai-tooling-harness` is the pre-flight check for a
+directory you are about to trust: it exits non-zero and names each file:line when an import
+has been retired.
 
 `AGENTS.md` needs no Hermes-specific wiring - Hermes loads it as project context on its own.
 
@@ -25,6 +44,8 @@ Two halves, mirroring the opencode plugins in `.opencode/plugins/`:
 **Fail-open is the contract.** Only a non-zero `check-data` blocks a commit. If `make`, `uv`, or the `check-data` target cannot be probed, or the gate cannot run at all, the commit passes unchanged - the repository rule that unknown and unreachable are not the same as absent and broken.
 
 **The hook second parameter is `args`, not `params`.** Hermes calls plugin hooks by keyword with the documented payload. Any other name means the hook silently never fires.
+
+**The blocked rewrite emits its diagnostic with `echo`, never `printf`.** `printf` is deny-listed in the operator's config, and a rewritten command the deny layer refuses explains nothing; the payload is base64, so neither quoting nor a deny layer can mangle it.
 
 ## One implementation, two triggers
 
