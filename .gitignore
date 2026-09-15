@@ -7,3 +7,6 @@ __pycache__/
 .mypy_cache/
 # uv's project environment for the pinned lint dependencies (pyproject.toml dev group)
 .venv/
+
+# Hermes harness scratch - plan-mode output. The tracked .hermes/plugins/ adapter stays.
+.hermes/plans/
