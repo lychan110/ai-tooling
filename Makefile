@@ -77,14 +77,14 @@ lint: lint-preflight
 # so full coverage costs ~3.5s per commit — the reason the two heavy exclusions above are
 # exclusions rather than an oversight.
 #
-# This is the ONE definition of that set, and both commit hooks call it
-# (`.claude/hooks/audit-gate.sh`, `.opencode/plugins/commit-gate.ts`). Before #459 they
-# ran `audit-evals.py --offline` alone — 1 of these 13 — while both described themselves
+# This is the ONE definition of that set, and the commit hook calls it
+# (`.opencode/plugins/commit-gate.ts`). Before #459 it ran
+# `audit-evals.py --offline` alone — 1 of these 13 — while it described itself
 # as running "the offline subset of make check", so every gate added since #153 silently
 # widened the hole: a stale NEXT-EVALS.md, a desynced plugin/docs/, a missing **Stars:**
 # line, a dead relative link and a stale WATCHLIST.md all passed the commit gate and
-# failed CI. A gate added here now reaches the Makefile, CI and both hooks at once, which
-# is what the lockstep invariant asks for and what nothing enforced.
+# failed CI. A gate added here now reaches the Makefile, CI and the hook at once, which
+# is what the single-implementation rule asks for and what nothing enforced.
 check-data:
 	python3 audit-evals.py --offline
 	python3 audit-evals.py --selftest

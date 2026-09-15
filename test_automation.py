@@ -1997,7 +1997,7 @@ class TestRepoInstallRecord(unittest.TestCase):
         with open(os.path.join(ROOT, *parts), encoding="utf-8") as fh:
             return fh.read()
 
-    HOMES = (".agents/skills", ".claude/skills")
+    HOMES = (".agents/skills",)
 
     def test_live_tree_lockfile_entries_resolve_to_a_real_skill_directory(self):
         # The invariant that makes the record trustworthy at all: a lockfile naming a
@@ -2182,7 +2182,7 @@ class TestSkillContracts(unittest.TestCase):
 
     @staticmethod
     def _skill(name):
-        with open(os.path.join(ROOT, ".claude", "skills", name, "SKILL.md"),
+        with open(os.path.join(ROOT, ".agents", "skills", name, "SKILL.md"),
                   encoding="utf-8") as fh:
             return fh.read()
 
@@ -2656,8 +2656,8 @@ process.exit(failed)
 
 class TestWatchListSeam(unittest.TestCase):
     """Pins the watch-list seam (#194): sync-plugin-docs.sh --list-watched is the
-    one definition of the syncable set, and both harness auto-sync adapters derive
-    their trigger predicate from it instead of hand-copying it. This fixes
+    one definition of the syncable set, and the opencode auto-sync adapter derives
+    its trigger predicate from it instead of hand-copying it. This fixes
     adapter-trigger drift; a brand-new root doc still needs a WATCHED_* entry
     (ADR-0001's allowlist is deliberate)."""
 
@@ -2690,72 +2690,18 @@ class TestWatchListSeam(unittest.TestCase):
                 self.assertTrue(os.path.exists(os.path.join(d, "plugin/docs", tail)),
                                 msg=f"listed entry not synced: {entry}")
 
-    def _run_claude_hook(self, d, file_path):
-        hook = os.path.join(d, "auto-sync.sh")
-        shutil.copy(os.path.join(ROOT, ".claude/hooks/auto-sync.sh"), hook)
-        # the hook resolves its JSON helper next to itself (#202) — ship it along
-        shutil.copy(os.path.join(ROOT, ".claude/hooks/hook-field.py"), os.path.join(d, "hook-field.py"))
-        payload = '{"tool_input": {"file_path": "%s"}}'.replace("%s", file_path)
-        env = {**os.environ, "CLAUDE_PROJECT_DIR": d}
-        return subprocess.run(["bash", hook], input=payload, env=env,
-                              capture_output=True, text=True, check=False)
-
-    def test_claude_hook_triggers_on_every_watched_entry(self):
-        # An edit to ANY watched entry — including STACK-LEDGER.md, discovery/,
-        # methodologies/, the three the hand-copied predicate silently omitted —
-        # must re-run the sync (observable as plugin/docs/ being populated).
-        edits = {
-            "CATALOG.md": "CATALOG.md", "WORKFLOW.md": "WORKFLOW.md",
-            "STACK.md": "STACK.md", "STACK-LEDGER.md": "STACK-LEDGER.md",
-            "NEXT-EVALS.md": "NEXT-EVALS.md", "WATCHLIST.md": "WATCHLIST.md",
-            "PLAYBOOK.md": "PLAYBOOK.md",
-            "evaluations/": "evaluations/foo.md", "discovery/": "discovery/bar.md",
-            "methodologies/": "methodologies/baz.md",
-        }
-        self.assertEqual(set(edits), self.WATCHED)  # one edit per watched entry
-        for entry, rel in edits.items():
-            with tempfile.TemporaryDirectory() as d:
-                _sync_fixture_tree(d)
-                r = self._run_claude_hook(d, os.path.join(d, rel))
-                self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
-                self.assertTrue(os.path.exists(os.path.join(d, "plugin/docs", rel)),
-                                msg=f"hook did not sync after editing {entry}")
-
-    def test_claude_hook_ignores_unwatched_and_derived_paths(self):
-        # Unwatched files and edits inside the derived plugin/docs/ copy must not
-        # re-sync (observable as plugin/docs/ never being created).
-        for rel in ("README.md", "plugin/docs/CATALOG.md"):
-            with tempfile.TemporaryDirectory() as d:
-                _sync_fixture_tree(d)
-                r = self._run_claude_hook(d, os.path.join(d, rel))
-                self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
-                self.assertFalse(os.path.exists(os.path.join(d, "plugin/docs/WORKFLOW.md")),
-                                 msg=f"hook synced on a non-trigger path: {rel}")
-
-    def test_both_adapters_derive_from_list_watched(self):
-        # Lockstep pin (CLAUDE.md invariant): each harness adapter consumes
-        # --list-watched rather than restating the watch set. The opencode plugin
-        # can't be executed from here, so pin its source: it must call
-        # --list-watched and must not hardcode any watched basename.
-        adapters = (".claude/hooks/auto-sync.sh", ".opencode/plugins/auto-sync.ts")
-        for rel in adapters:
-            with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
-                src = f.read()
-            self.assertIn("--list-watched", src,
-                          msg=f"{rel} does not derive its trigger set from --list-watched")
-        with open(os.path.join(ROOT, ".opencode/plugins/auto-sync.ts"), encoding="utf-8") as f:
+    def test_adapter_derives_from_list_watched(self):
+        # Each adapter consumes --list-watched rather than restating the watch set.
+        # The opencode plugin can't be executed from here, so pin its source: it
+        # must call --list-watched and must not hardcode any watched basename.
+        rel = ".opencode/plugins/auto-sync.ts"
+        with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
             ts = f.read()
+        self.assertIn("--list-watched", ts,
+                      msg=f"{rel} does not derive its trigger set from --list-watched")
         for name in sorted(self.WATCHED):
             self.assertNotIn(f'"{name.rstrip("/")}"', ts,
                              msg=f"opencode adapter hardcodes watched entry {name}")
-
-    def test_claude_hook_fails_open_when_sync_script_missing(self):
-        # The seam's new failure mode: --list-watched unavailable (script missing
-        # or broken). Contract: exit 0, never break the session, no sync attempted.
-        with tempfile.TemporaryDirectory() as d:
-            r = self._run_claude_hook(d, os.path.join(d, "CATALOG.md"))
-            self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
-            self.assertFalse(os.path.exists(os.path.join(d, "plugin/docs")))
 
     @unittest.skipUnless(shutil.which("bun"), "bun not installed; opencode adapter covered by source pin only")
     def test_opencode_plugin_triggers_on_every_previously_missed_entry(self):
@@ -2797,27 +2743,15 @@ class TestHookTriggerSeam(unittest.TestCase):
     hooks extract hook-JSON fields via the one shared helper instead of each
     embedding an inline-Python one-liner."""
 
-    # The one commit predicate. Both adapters match it as a plain substring
-    # (bash `case *"lit"*`, TS regex test), so they agree iff (a) each pins this
-    # literal and (b) the literal has no regex metacharacters — both asserted below.
+    # The one commit predicate. The gate adapter matches it as a plain substring
+    # (TS regex test), so it stays correct iff (a) the adapter pins this literal
+    # and (b) the literal has no regex metacharacters — both asserted below.
     PREDICATE = "git commit"
-    GATE = ".claude/hooks/audit-gate.sh"
-    HELPER = ".claude/hooks/hook-field.py"
-
     def _source(self, rel):
         with open(os.path.join(ROOT, rel), encoding="utf-8") as f:
             return f.read()
 
     # ---- predicate pins
-    def test_bash_gate_pins_the_commit_predicate(self):
-        # Pin the case ARM (trailing `)`) — a bare substring check could be
-        # satisfied by a comment while the actual predicate drifted.
-        src = self._source(self.GATE)
-        self.assertIn('case "$cmd" in', src,
-                      msg="audit-gate.sh no longer dispatches on the extracted command")
-        self.assertIn(f'*"{self.PREDICATE}"*)', src,
-                      msg="audit-gate.sh commit predicate drifted from the pin")
-
     def test_opencode_gate_pins_the_commit_predicate(self):
         import re
         m = re.search(r"COMMIT_RE = /(.+?)/(\w*)", self._source(".opencode/plugins/commit-gate.ts"))
@@ -2833,85 +2767,13 @@ class TestHookTriggerSeam(unittest.TestCase):
         import re
         self.assertFalse(re.search(r"[\\.^$*+?()\[\]{}|]", self.PREDICATE))
 
-    # ---- shared JSON extraction
-    def test_bash_hooks_share_the_json_helper(self):
-        for rel in (self.GATE, ".claude/hooks/auto-sync.sh"):
-            src = self._source(rel)
-            self.assertIn("hook-field.py", src,
-                          msg=f"{rel} does not use the shared JSON helper")
-            self.assertNotIn("json.load(sys.stdin)", src,
-                             msg=f"{rel} still embeds an inline JSON one-liner")
-
-    def _extract(self, field, payload):
-        return subprocess.run(["python3", os.path.join(ROOT, self.HELPER), field],
-                              input=payload, capture_output=True, text=True, check=False)
-
-    def test_helper_extracts_the_requested_field(self):
-        r = self._extract("command", '{"tool_input": {"command": "git commit -m x"}}')
-        self.assertEqual(r.returncode, 0, msg=r.stderr)
-        self.assertEqual(r.stdout.strip(), "git commit -m x")
-
-    def test_helper_missing_field_prints_empty(self):
-        r = self._extract("file_path", '{"tool_input": {"command": "git status"}}')
-        self.assertEqual(r.returncode, 0, msg=r.stderr)
-        self.assertEqual(r.stdout.strip(), "")
-
-    def test_helper_fails_open_on_garbage_payload(self):
-        r = self._extract("command", "not json at all")
-        self.assertEqual(r.returncode, 0, msg="helper must fail open, not crash")
-        self.assertEqual(r.stdout.strip(), "")
-
-    # ---- gate behavior (the predicate + helper working end-to-end)
-    def _run_gate(self, d, payload):
-        gate = os.path.join(d, "audit-gate.sh")
-        shutil.copy(os.path.join(ROOT, self.GATE), gate)
-        shutil.copy(os.path.join(ROOT, self.HELPER), os.path.join(d, "hook-field.py"))
-        env = {**os.environ, "CLAUDE_PROJECT_DIR": d}
-        return subprocess.run(["bash", gate], input=payload, env=env,
-                              capture_output=True, text=True, check=False)
-
     _FAILING_AUDIT = "import sys; sys.stderr.write('detector X: fail\\n'); sys.exit(1)\n"
 
     def _fixture(self, d, script):
-        """A minimal repo both halves of the gate can run: a fake gate script plus the
-        `check-data` target they now delegate to (#459)."""
+        """A minimal repo the gate can run: a fake gate script plus the `check-data`
+        target it now delegates to (#459)."""
         _write(d, "audit-evals.py", script)
         _write(d, "Makefile", "check-data:\n\tpython3 audit-evals.py --offline\n")
-
-    def test_gate_blocks_commit_when_audit_fails(self):
-        with tempfile.TemporaryDirectory() as d:
-            self._fixture(d, self._FAILING_AUDIT)
-            r = self._run_gate(d, '{"tool_input": {"command": "git commit -m x"}}')
-            self.assertEqual(r.returncode, 2, msg=r.stdout + r.stderr)
-            self.assertIn("BLOCKED", r.stderr)
-
-    def test_gate_passes_non_commit_despite_failing_audit(self):
-        with tempfile.TemporaryDirectory() as d:
-            self._fixture(d, self._FAILING_AUDIT)
-            r = self._run_gate(d, '{"tool_input": {"command": "git status"}}')
-            self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
-
-    def test_gate_passes_commit_when_audit_clean(self):
-        with tempfile.TemporaryDirectory() as d:
-            self._fixture(d, "import sys; sys.exit(0)\n")
-            r = self._run_gate(d, '{"tool_input": {"command": "git commit -m x"}}')
-            self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
-
-    def test_gate_fails_open_on_garbage_payload(self):
-        with tempfile.TemporaryDirectory() as d:
-            self._fixture(d, self._FAILING_AUDIT)
-            r = self._run_gate(d, "not json at all")
-            self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
-
-    def test_gate_fails_open_when_the_target_is_absent(self):
-        # "Could not run" is not "failed" (#319's rule, #459). A tree with no `check-data`
-        # target — someone else's repo, an old checkout — must let the commit through.
-        # Delegating to `make` makes this reachable in a way `python3 script.py` was not,
-        # so it is pinned rather than assumed.
-        with tempfile.TemporaryDirectory() as d:
-            _write(d, "audit-evals.py", self._FAILING_AUDIT)  # no Makefile
-            r = self._run_gate(d, '{"tool_input": {"command": "git commit -m x"}}')
-            self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
 
     @unittest.skipUnless(shutil.which("bun"), "bun not installed; opencode gate covered by the predicate pin only")
     def test_opencode_gate_blocks_commit_and_passes_noncommit(self):
@@ -4600,9 +4462,8 @@ class TestIntegrityMakefile(unittest.TestCase):
         "audit-evals.py --installs",
     ))
 
-    # Both halves of the commit gate, held in lockstep (the same pair TestHookTriggerSeam
-    # pins the commit predicate across).
-    COMMIT_HOOKS = (".claude/hooks/audit-gate.sh", ".opencode/plugins/commit-gate.ts")
+    # The commit gate (its predicate is pinned by TestHookTriggerSeam).
+    COMMIT_HOOKS = (".opencode/plugins/commit-gate.ts",)
 
     # The gates whose `--check` has NO apply-mode counterpart, each with the reason it
     # cannot have one. DECLARED here, and deliberately never counted: the prose used to
@@ -4698,7 +4559,7 @@ class TestIntegrityMakefile(unittest.TestCase):
             self.assertNotIn(excluded, body,
                              msg=f"`make check-data` must not run {excluded}")
 
-    def test_both_commit_hooks_run_the_shared_target(self):
+    def test_the_commit_hook_runs_the_shared_target(self):
         # The hooks ran `audit-evals.py --offline` alone — 1 of the 13 gates — while both
         # described themselves as running "the offline subset of `make check`" (#459).
         # Nothing coupled their list to the Makefile's, so every gate added since #153
@@ -4716,7 +4577,7 @@ class TestIntegrityMakefile(unittest.TestCase):
             self.assertNotIn("audit-evals.py --offline", code,
                              msg=f"{rel} must not keep a private gate list — delegate")
 
-    def test_both_commit_hooks_fail_open_when_the_gate_cannot_run(self):
+    def test_the_commit_hook_fails_open_when_the_gate_cannot_run(self):
         # "Could not run" is not "failed" (detector C's rule, #319, applied to the hooks).
         # A missing toolchain must let the commit through, and `make` cannot signal that
         # through its exit code — it exits non-zero for an absent target and for a real

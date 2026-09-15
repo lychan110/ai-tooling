@@ -1,19 +1,16 @@
 // opencode commit-gate plugin (#153, parent #144).
 //
-// Re-implements the Claude Code `.claude/hooks/audit-gate.sh` PreToolUse(Bash) hook
-// in opencode-native form. Before the `bash` tool runs, if the command is a
+// The commit gate (opencode-native). Before the `bash` tool runs, if the command is a
 // `git commit`, run the repo's offline data gates (`make check-data`). On non-zero
 // exit, BLOCK the commit by rewriting the command to a diagnostic echo so the agent
 // reads the failure and fixes the tree instead of retrying. Fail-open and no-op for
-// any command that is not a commit, and fail-open if the gate itself can't run —
-// exactly mirroring audit-gate.sh's contract.
+// any command that is not a commit, and fail-open if the gate itself can't run.
 //
-// Same target, no gate drift: this calls the identical `make check-data` that Claude
-// Code's hook and CI (`make check`) call, so local opencode / local Claude Code / CI
-// all reference one implementation. It used to run `python3 audit-evals.py --offline`
-// alone — 1 of the 13 gates in that set — while this comment called it "the offline
-// subset of `make check`" (#459); every gate added since then widened the hole
-// silently, because nothing coupled the hook's list to the Makefile's.
+// Same target, no gate drift: this calls the identical `make check-data` that CI
+// (`make check`) calls, so local and CI reference one implementation. It used to run
+// a single detached gate (#459) — 1 of the 13 where the full set belongs — so every
+// gate added since widened the hole silently, because nothing coupled the hook list
+// to the Makefile list.
 //
 // **"Could not run" is not "failed."** The preconditions are probed explicitly — make,
 // python3, the target — and any one of them missing returns without blocking. Exit
@@ -22,9 +19,8 @@
 
 import type { Plugin } from "@opencode-ai/plugin"
 
-// The one commit predicate — pinned in lockstep with .claude/hooks/audit-gate.sh's
-// `case *"git commit"*` by TestHookTriggerSeam in test_automation.py (#202). Keep it
-// metacharacter-free so the regex test stays a plain substring match, same as bash's.
+// The one commit predicate — pinned by TestHookTriggerSeam in test_automation.py
+// (#202). Keep it metacharacter-free so the regex test stays a plain substring match.
 const COMMIT_RE = /git commit/
 const DIAG_TRUNC = 4000
 
