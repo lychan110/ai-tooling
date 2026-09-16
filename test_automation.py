@@ -2443,13 +2443,6 @@ class TestFreshnessHook(unittest.TestCase):
         for dead in ("stat -f", "stat -c", "STALE_DAYS", "cut -d/", "grep -qi"):
             self.assertNotIn(dead, body, msg=f"hook re-answers in bash: {dead!r}")
 
-    def test_session_start_is_async(self):
-        # ~9s of paginated `gh` on startup|clear|compact, previously on the critical path.
-        with open(os.path.join(ROOT, "plugin", "hooks", "hooks.json"), encoding="utf-8") as f:
-            hooks = json.load(f)
-        entry = hooks["hooks"]["SessionStart"][0]["hooks"][0]
-        self.assertTrue(entry["async"], msg="SessionStart hook blocks the session")
-
 
 # ----------------------------------------------------------------- plugin/README.md drift
 class TestPluginFrontDoorSignals(unittest.TestCase):
@@ -8938,51 +8931,6 @@ class TestPluginPackage(unittest.TestCase):
             self._tree(d, manifest=self.MANIFEST)
             self.assertEqual(checkplugin.audit_plugin(d), [])
 
-    def test_a_missing_plugin_manifest_is_a_finding(self):
-        # The exact failure `claude plugin validate ./plugin` reported: the plugin dir
-        # had skills, hooks and docs but no .claude-plugin/plugin.json.
-        with tempfile.TemporaryDirectory() as d:
-            self._tree(d, manifest=None)
-            self.assertIn("MANIFEST", self._kinds(d))
-
-    def test_unparseable_json_is_a_finding_not_a_traceback(self):
-        with tempfile.TemporaryDirectory() as d:
-            self._tree(d, manifest=self.MANIFEST)
-            Path(d, "plugin", ".claude-plugin", "plugin.json").write_text("{oops", encoding="utf-8")
-            self.assertIn("MANIFEST", self._kinds(d))
-
-    def test_a_name_disagreement_is_a_finding(self):
-        with tempfile.TemporaryDirectory() as d:
-            self._tree(d, manifest={**self.MANIFEST, "name": "something-else"})
-            self.assertIn("NAME", self._kinds(d))
-
-    def test_versions_must_agree_across_every_declaration(self):
-        with tempfile.TemporaryDirectory() as d:
-            self._tree(d, manifest={**self.MANIFEST, "version": "2.0.0"})
-            self.assertIn("VERSION", self._kinds(d))
-
-    def test_a_reintroduced_package_json_is_a_third_place_to_drift(self):
-        # #439 deleted plugin/package.json — an npm manifest for a registry this package
-        # is not published to. If one comes back, its version is checked, not ignored.
-        with tempfile.TemporaryDirectory() as d:
-            self._tree(d, manifest=self.MANIFEST)
-            Path(d, "plugin", "package.json").write_text('{"name":"x","version":"9.9.9"}', encoding="utf-8")
-            self.assertIn("VERSION", self._kinds(d))
-
-    def test_a_source_pointing_nowhere_is_a_finding(self):
-        with tempfile.TemporaryDirectory() as d:
-            market = json.loads(json.dumps(self.MARKET))
-            market["plugins"][0]["source"] = "./nope"
-            self._tree(d, market=market, manifest=self.MANIFEST)
-            self.assertIn("SOURCE", self._kinds(d))
-
-    def test_source_resolves_from_the_repo_root(self):
-        # `./plugin` means <repo>/plugin, not <repo>/.claude-plugin/plugin — reading it
-        # the other way reported a healthy package as broken.
-        with tempfile.TemporaryDirectory() as d:
-            self._tree(d, manifest=self.MANIFEST)
-            self.assertNotIn("SOURCE", self._kinds(d))
-
     def test_a_skill_whose_frontmatter_name_differs_is_a_finding(self):
         # The registry keys skills by frontmatter `name:`, not by directory.
         with tempfile.TemporaryDirectory() as d:
@@ -9020,12 +8968,11 @@ class TestPluginPackage(unittest.TestCase):
             Path(d, "plugin", "CLAUDE.md").write_text("# ai-tooling Plugin\n", encoding="utf-8")
             self.assertIn("FRONT-DOOR", self._kinds(d))
 
-    def test_the_plugin_ships_a_readme(self):
-        # The plugin docs name README.md as the documented place for install and usage
-        # instructions, and it is what GitHub renders when someone opens plugin/.
-        readme = Path(ROOT, "plugin", "README.md").read_text(encoding="utf-8")
-        self.assertIn("claude plugin marketplace add", readme)
-        self.assertFalse(os.path.exists(os.path.join(ROOT, "plugin", "CLAUDE.md")))
+    CLAUDE_ONLY = (".claude-plugin", "plugin/.claude-plugin", "plugin/hooks/hooks.json")
+
+    def test_no_claude_install_path_remains(self):
+        for rel in self.CLAUDE_ONLY:
+            self.assertFalse(os.path.exists(os.path.join(ROOT, rel)), msg=rel)
 
     def test_check_flag_gates_and_bare_run_reports(self):
         r = subprocess.run([sys.executable, "check-plugin.py"], cwd=ROOT,

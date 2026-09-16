@@ -1,5 +1,5 @@
 #!/usr/bin/env -S uv run --script
-"""The published plugin package must be structurally valid and internally consistent.
+"""The distributable skills in `plugin/` must be structurally valid and internally consistent.
 
     uv run check-plugin.py            # report-only
     uv run check-plugin.py --check    # gate: exit 1 on any finding
@@ -11,20 +11,14 @@ Install block is the only page here whose purpose is to be executed *by a strang
 this repo's own product*, and nothing checked it — neither of its two commands existed,
 and `claude plugin validate ./plugin` failed outright on a missing manifest (#439).
 
-`claude plugin validate` is the **upstream authority** and this is not equivalent to it.
-It cannot be: CI has no `claude` binary, and the offline-gate invariant forbids depending
-on one. This mirrors offline the parts that are checkable from the tree, and adds the
-cross-file agreements upstream has no way to know about — the plugin name against the
-marketplace entry, every declared version against every other, and the skills list in
-`plugin/README.md` against `plugin/skills/` on disk. That last one is a fact restated in
-a hand-authored file with no generator, which is the shape that put its eval count 87
-behind (#302); the repo's own rule is to gate the shared facts, not the file.
+This mirrors offline the parts of the package that are checkable from the tree. The
+skills list in `plugin/README.md` is a fact restated in a hand-authored file with no
+generator, which is the shape that put its eval count 87 behind (#302); the repo's own
+rule is to gate the shared facts, not the file.
 
-Run `claude plugin validate ./plugin` by hand before publishing. This gate is what keeps
-the tree from drifting between those runs.
+
 """
 import collections
-import json
 import os
 import re
 import sys
@@ -36,17 +30,6 @@ Finding = collections.namedtuple("Finding", "kind detail")
 _FRONTMATTER = re.compile(r"\A---\n(.*?)\n---", re.DOTALL)
 # `plugin/README.md` lists each skill as "- `/name` — description".
 _LISTED_SKILL = re.compile(r"^-\s*`/([a-z0-9][a-z0-9-]*)`", re.MULTILINE)
-
-
-def _load_json(path):
-    """(data, error). A manifest that does not parse is a finding, never a traceback."""
-    if not os.path.exists(path):
-        return None, "missing"
-    try:
-        with open(path, encoding="utf-8") as fh:
-            return json.load(fh), None
-    except (OSError, json.JSONDecodeError) as e:
-        return None, str(e)
 
 
 def skill_dirs(root):
@@ -65,49 +48,9 @@ def frontmatter_field(text, field):
 
 
 def audit_plugin(root=None):
-    """Findings for the published plugin package. Offline; reads only the tree."""
+    """Findings for the plugin package. Offline; reads only the tree."""
     root = root or ROOT
     findings = []
-
-    market, err = _load_json(os.path.join(root, ".claude-plugin", "marketplace.json"))
-    if err:
-        findings.append(Finding("MANIFEST", f".claude-plugin/marketplace.json: {err}"))
-    manifest, err = _load_json(os.path.join(root, "plugin", ".claude-plugin", "plugin.json"))
-    if err:
-        # The exact failure `claude plugin validate ./plugin` reported in #439.
-        findings.append(Finding("MANIFEST", f"plugin/.claude-plugin/plugin.json: {err}"))
-
-    entry = None
-    if market:
-        entries = market.get("plugins") or []
-        entry = entries[0] if entries else None
-        if entry is None:
-            findings.append(Finding("MANIFEST", "marketplace.json declares no plugins"))
-        else:
-            # `source` is resolved from the REPO ROOT, not from `.claude-plugin/` —
-            # `./plugin` means `<repo>/plugin`, which is how the upstream validator reads it.
-            src = os.path.normpath(os.path.join(root, entry.get("source", "")))
-            if not os.path.isdir(src):
-                findings.append(Finding("SOURCE", f"marketplace source {entry.get('source')!r} is not a directory"))
-
-    if manifest and entry and manifest.get("name") != entry.get("name"):
-        findings.append(Finding(
-            "NAME", f"plugin.json name {manifest.get('name')!r} != marketplace entry {entry.get('name')!r}"))
-
-    # Every declared version must agree. `plugin/package.json` used to hold a second copy
-    # for an npm registry this package is not published to; if one comes back, it is a
-    # third place for the number to drift, so it is checked rather than assumed absent.
-    versions = {}
-    if manifest and "version" in manifest:
-        versions["plugin/.claude-plugin/plugin.json"] = manifest["version"]
-    if entry and "version" in entry:
-        versions[".claude-plugin/marketplace.json"] = entry["version"]
-    pkg, err = _load_json(os.path.join(root, "plugin", "package.json"))
-    if pkg and "version" in pkg:
-        versions["plugin/package.json"] = pkg["version"]
-    if len(set(versions.values())) > 1:
-        findings.append(Finding("VERSION", "declared versions disagree: "
-                                + ", ".join(f"{k}={v}" for k, v in sorted(versions.items()))))
 
     on_disk = skill_dirs(root)
     for name in on_disk:
@@ -124,6 +67,9 @@ def audit_plugin(root=None):
             findings.append(Finding("SKILL", f"{name}/SKILL.md declares name {declared!r}"))
         if not frontmatter_field(text, "description"):
             findings.append(Finding("SKILL", f"{name}/SKILL.md declares no `description:` frontmatter"))
+        if "CLAUDE_PLUGIN_ROOT" in text:
+            findings.append(Finding("HARNESS", f"{name}/SKILL.md names ${{CLAUDE_PLUGIN_ROOT}}, "
+                                               "which exists only inside Claude Code"))
 
     # A `CLAUDE.md` back at the plugin root is the mistake returning, not a second
     # front door: `claude plugin validate` warns that Claude Code never loads it (#441).
@@ -151,9 +97,8 @@ def main():
     for f in findings:
         print(f"  {f.kind} {f.detail}")
     if not findings:
-        print("  OK — manifests parse and agree; skills and the front door match the tree")
+        print("  OK — every skill's frontmatter names it and the front door lists every skill")
         return 0
-    print("  run `claude plugin validate ./plugin` for the upstream check too")
     return 1 if check else 0
 
 
