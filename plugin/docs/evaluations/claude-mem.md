@@ -71,6 +71,8 @@ sqlite3 "$RO" "SELECT date(created_at), substr(title,1,60)
 
 The FTS `MATCH` query returned real, dated, project-scoped observation titles (including memory of prior PRs and CI work), and the timeline query returned the most-recent observations ordered by `created_at_epoch` — exactly the keyword-search and temporal-recall behaviours the catalog describes, confirmed against live data rather than the README. Repo metadata (stars 83,792, Apache-2.0, `archived: false`, pushed 2026-06-22) was fetched via `gh api repos/thedotmack/claude-mem`.
 
+Installer host census (SOURCE-ONLY note, read 2026-09-16 from the repo's `docs/public/installation.mdx` via `ctx_git_read`): 8 hosts — Claude Code, Cursor, Windsurf, OpenCode, Codex CLI, Antigravity CLI, Grok Bot, OpenClaw — no Hermes target, matching the `opencode` marking in STACK.md's Install cell.
+
 ## What worked
 
 - **The persistence claim is real and substantial.** 20,772 structured observations across 403 sessions in a 176 MB SQLite store — this is a memory system that has actually been retaining cross-session context, not an empty scaffold.
