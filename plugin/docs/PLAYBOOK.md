@@ -4,13 +4,13 @@ The front door to this repo. If you build software with AI agents and want a set
 
 ## 1. What to install
 
-→ **[STACK.md](STACK.md)** — the curated stack worth installing on every project, tiered by evidence (Tier 1 measured, Tier 2 review-based). The five highest-impact picks from its Quick Start:
+→ **[STACK.md](STACK.md)** — the curated stack worth installing on every project, tiered by evidence (Tier 1 measured, Tier 2 review-based), with install instructions for opencode and Hermes Agent. The five highest-impact picks from its Quick Start:
 
 - **[context7](evaluations/context7.md)** — live docs lookup, so an agent never reasons from stale API info.
 - **[caveman](evaluations/caveman.md)** — output-token compression (~49–59% measured on prose) for cost discipline.
-- **[security-guidance](evaluations/security-guidance.md)** — first-party in-loop security review, not ad-hoc.
+- **[codegraph](evaluations/codegraph.md)** — always-on code-intelligence graph, so agents query structure instead of reading whole files.
 - **[playwright](evaluations/playwright-mcp.md)** — visual, end-to-end verification for UI changes.
-- **[claude-code-action](evaluations/claude-code-action.md)** — CI integration for async, on-every-PR review.
+- **[GSD](evaluations/agent-harnesses.md)** — structured project planning with milestone/phase management (the superpowers framework).
 
 Why a pick is (or isn't) in the stack: **[STACK-LEDGER.md](STACK-LEDGER.md)**.
 

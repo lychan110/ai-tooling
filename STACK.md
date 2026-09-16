@@ -1,26 +1,35 @@
 # Recommended Stack
 
-The 30 tools worth installing on every project, distilled from 914 catalog entries and 941 evaluations. Each tool earned its slot by moving a quality signal — see the Evidence tiers below for how far each one was actually validated.
+The 30 tools worth installing on every project, distilled from 914 catalog entries and 941 evaluations. Each tool earned its slot by moving a quality signal — see the Evidence tiers below for how far each one was actually validated. Install instructions are written for **opencode** and **Hermes Agent**; a pick that exists only as a Claude Code plugin is marked **dropped** rather than given a command that cannot run.
+
+> **Harness key.** `both` — the Install cell runs as written on opencode and Hermes. `opencode` / `Hermes` — that harness only. `dropped` — Claude Code only, with the reason in the cell. The Evidence tiers below answer *how well validated* a pick is, not *what runs on your harness* — the Harness column answers that. MCP servers: opencode takes a block in `opencode.json`'s `mcp` object; Hermes takes `hermes mcp …` on the command line.
+>
+> **Agent skills.** `npx skills add <owner>/<repo> -g` installs into `~/.agents/skills/`, which opencode reads natively. Hermes reads the same directory once `~/.agents/skills` is listed under `skills.external_dirs` in `~/.hermes/config.yaml`.
 
 ## Quick Start — 5 Highest Impact
 
 ```bash
+# Two of the previous five picks — security-guidance and claude-code-action — are Claude Code-only
+# and are dropped here; their replacements (codegraph, GSD) install on both harnesses.
+
 # 1. Live docs lookup (never use stale API info again)
-claude mcp add --transport sse context7 https://mcp.context7.com/sse
+#    opencode: add {"context7": {"type": "remote", "url": "https://mcp.context7.com/mcp"}} to opencode.json
+#    Hermes:   hermes mcp install context7
 
 # 2. Output token compression (~49-59% measured on prose)
-claude plugin marketplace add JuliusBrussee/caveman
-claude plugin install caveman@caveman
+#    both:     npx skills add JuliusBrussee/caveman -g
+#    proxy:    npm i -g @caveman-ai/cli && caveman setup --install   # then wrap: caveman opencode, caveman hermes
 
-# 3. In-loop security review (first-party)
-claude plugin marketplace add anthropics/claude-plugins-official
-claude plugin install security-guidance@claude-plugins-official
+# 3. Always-on code intelligence (agents query structure instead of reading whole files)
+#    both:     npm i -g @colbymchenry/codegraph && codegraph install && codegraph init
 
 # 4. Visual verification for UI changes
-claude mcp add playwright -- npx @playwright/mcp@latest
+#    opencode: add {"playwright": {"type": "local", "command": ["npx", "@playwright/mcp@latest"]}} to opencode.json
+#    Hermes:   hermes mcp add playwright --command npx --args @playwright/mcp@latest
 
-# 5. CI integration for async review
-# Add .github/workflows/claude.yml — see evaluations/claude-code-action.md
+# 5. Project planning with milestone/phase management (GSD / superpowers)
+#    opencode: follow the install at the .opencode/INSTALL.md path in obra/superpowers
+#    Hermes:   hermes plugins install obra/superpowers --enable
 ```
 
 ---
@@ -43,71 +52,77 @@ agent-skills (REVIEW)
 
 ## Plan
 
-| Tool | What it does | Install | Signal |
-|------|-------------|---------|--------|
-| [context7](https://github.com/upstash/context7) | Live documentation lookup — current APIs, not stale training data | `claude mcp add --transport sse context7 https://mcp.context7.com/sse` | Correctness |
-| [GSD](https://github.com/obra/superpowers) | Structured project planning with milestone/phase management | `claude plugin marketplace add obra/superpowers && claude plugin install superpowers@superpowers-dev` | Correctness, Speed |
-| [feature-dev](https://github.com/anthropics/claude-plugins-official) | 7-phase guided feature development for single features | `claude plugin marketplace add anthropics/claude-plugins-official && claude plugin install feature-dev@claude-plugins-official` | Correctness |
-| [github-mcp-server](https://github.com/github/github-mcp-server) | GitHub's official MCP server — repos, issues, PRs, actions, search | `claude mcp add --transport http github https://api.githubcopilot.com/mcp/` | Speed, Correctness |
-| [codegraph](https://github.com/colbymchenry/codegraph) | Always-on code-intelligence graph — agents query structure instead of reading whole files | `npm install -g @colbymchenry/codegraph` (then it auto-wires the MCP server into Claude Code) | Speed, Cost Efficiency |
-| [markitdown](https://github.com/microsoft/markitdown) | Converts PDF/Office/images/audio/HTML to clean Markdown so agents can actually read binary docs | `pip install 'markitdown[all]'` | Correctness, Cost Efficiency |
+| Tool | What it does | Install | Harness | Signal |
+|------|-------------|---------|---------|--------|
+| [context7](https://github.com/upstash/context7) | Live documentation lookup — current APIs, not stale training data | opencode: `"context7": {"type": "remote", "url": "https://mcp.context7.com/mcp"}` in `opencode.json` · Hermes: `hermes mcp install context7` | both | Correctness |
+| [GSD](https://github.com/obra/superpowers) | Structured project planning with milestone/phase management | opencode: follow the `obra/superpowers` `.opencode/INSTALL.md` · Hermes: `hermes plugins install obra/superpowers --enable` | both | Correctness, Speed |
+| [feature-dev](https://github.com/anthropics/claude-plugins-official) | 7-phase guided feature development for single features | dropped — ships only as a Claude Code plugin (`claude-plugins-official`); no opencode or Hermes install path | dropped | Correctness |
+| [github-mcp-server](https://github.com/github/github-mcp-server) | GitHub's official MCP server — repos, issues, PRs, actions, search | opencode: `"github": {"type": "remote", "url": "https://api.githubcopilot.com/mcp/"}` in `opencode.json` · Hermes: `hermes mcp add github --url https://api.githubcopilot.com/mcp/ --auth oauth` | both | Speed, Correctness |
+| [codegraph](https://github.com/colbymchenry/codegraph) | Always-on code-intelligence graph — agents query structure instead of reading whole files | `npm i -g @colbymchenry/codegraph`, then `codegraph install` (wires the MCP server into opencode and Hermes) and `codegraph init` per project | both | Speed, Cost Efficiency |
+| [markitdown](https://github.com/microsoft/markitdown) | Converts PDF/Office/images/audio/HTML to clean Markdown so agents can actually read binary docs | `pip install 'markitdown[all]'` | both | Correctness, Cost Efficiency |
 
-> **Lifecycle frameworks — pick one as primary.** GSD (project/milestone), feature-dev (single feature), and agent-skills (/spec→/ship) overlap. Run one as your default loop and pull the others in only when their scale fits, rather than layering all three.
+> **Lifecycle frameworks — pick one as primary.** GSD (project/milestone) and agent-skills (/spec→/ship) overlap. Run one as your default loop and pull the other in only when its scale fits, rather than layering both. **feature-dev** was the third option here and is dropped: it ships only as a Claude Code plugin.
 
 ## Implement
 
-| Tool | What it does | Install | Signal |
-|------|-------------|---------|--------|
-| [agent-skills](https://github.com/addyosmani/agent-skills) | Full lifecycle skills: /spec → /plan → /build → /test → /review → /ship, with autonomous mode | `npx skills add addyosmani/agent-skills -g -y` | Correctness, Speed |
-| [caveman](https://github.com/JuliusBrussee/caveman) | ~49–59% output token reduction on prose (measured), no accuracy loss | `claude plugin marketplace add JuliusBrussee/caveman && claude plugin install caveman@caveman` | Cost Efficiency, Speed |
-| [headroom](https://github.com/headroomlabs-ai/headroom) | Compresses tool output before it reaches context window | `pip install "headroom-ai[all]"` (or `npm install headroom-ai`) | Cost Efficiency |
-| [claude-squad](https://github.com/smtg-ai/claude-squad) | TUI for managing parallel agent sessions | `go install github.com/smtg-ai/claude-squad@latest` | Speed |
-| [beads](https://github.com/gastownhall/beads) | Work coordination ledger — prevents duplicate agent effort | `npm install -g @beads/bd` | Correctness, Speed |
-| [mattpocock/skills](https://github.com/mattpocock/skills) | Skills for Real Engineers — TDD, debugging, planning skills from a working dev | `npx skills add mattpocock/skills -g -y` | Correctness, Speed |
+| Tool | What it does | Install | Harness | Signal |
+|------|-------------|---------|---------|--------|
+| [agent-skills](https://github.com/addyosmani/agent-skills) | Full lifecycle skills: /spec → /plan → /build → /test → /review → /ship, with autonomous mode | `npx skills add addyosmani/agent-skills -g -y` | both | Correctness, Speed |
+| [caveman](https://github.com/JuliusBrussee/caveman) | ~49–59% output token reduction on prose (measured), no accuracy loss | skill: `npx skills add JuliusBrussee/caveman -g` · proxy: `npm i -g @caveman-ai/cli`, then wrap with `caveman opencode` / `caveman hermes` | both | Cost Efficiency, Speed |
+| [headroom](https://github.com/headroomlabs-ai/headroom) | Compresses tool output before it reaches context window | `pip install "headroom-ai[all]"` (or `npm install headroom-ai`) | both | Cost Efficiency |
+| [claude-squad](https://github.com/smtg-ai/claude-squad) | TUI for managing parallel agent sessions (tmux + git worktrees per task) | `brew install claude-squad`, then launch a session with `cs -p opencode` or `cs -p hermes` | both | Speed |
+| [beads](https://github.com/gastownhall/beads) | Work coordination ledger — prevents duplicate agent effort | `npm install -g @beads/bd` | both | Correctness, Speed |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | Skills for Real Engineers — TDD, debugging, planning skills from a working dev | `npx skills add mattpocock/skills -g -y` | both | Correctness, Speed |
 
 ## Verify
 
-| Tool | What it does | Install | Signal |
-|------|-------------|---------|--------|
-| [playwright](https://github.com/microsoft/playwright-mcp) | Browser automation and visual verification via MCP — drives real browsers; text accessibility snapshots are cheaper per-action than screenshots | `claude mcp add playwright -- npx @playwright/mcp@latest` | Correctness |
-| [stryker-js](https://github.com/stryker-mutator/stryker-js) | Mutation testing — tests the quality of your tests | `npm install -D @stryker-mutator/core` | Correctness |
+| Tool | What it does | Install | Harness | Signal |
+|------|-------------|---------|---------|--------|
+| [playwright](https://github.com/microsoft/playwright-mcp) | Browser automation and visual verification via MCP — drives real browsers; text accessibility snapshots are cheaper per-action than screenshots | opencode: `"playwright": {"type": "local", "command": ["npx", "@playwright/mcp@latest"]}` in `opencode.json` · Hermes: `hermes mcp add playwright --command npx --args @playwright/mcp@latest` | both | Correctness |
+| [stryker-js](https://github.com/stryker-mutator/stryker-js) | Mutation testing — tests the quality of your tests | `npm install -D @stryker-mutator/core` | both | Correctness |
 
 ## Review
 
-| Tool | What it does | Install | Signal |
-|------|-------------|---------|--------|
-| [code-review](https://github.com/anthropics/claude-plugins-official) | 4-agent parallel PR review with confidence scoring | `claude plugin marketplace add anthropics/claude-plugins-official && claude plugin install code-review@claude-plugins-official` | Correctness, Safety |
-| [pr-review-toolkit](https://github.com/anthropics/claude-plugins-official) | 6 dimension-specific review agents (silent failures, type design, etc.) | Included in claude-plugins-official | Correctness, Safety |
-| [security-guidance](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/security-guidance) | First-party in-loop security review (regex + LLM diff review + commit-time cross-file) with self-correction before output | `claude plugin marketplace add anthropics/claude-plugins-official && claude plugin install security-guidance@claude-plugins-official` | Safety |
+| Tool | What it does | Install | Harness | Signal |
+|------|-------------|---------|---------|--------|
+| [code-review](https://github.com/anthropics/claude-plugins-official) | 4-agent parallel PR review with confidence scoring | dropped — Claude Code plugin only; review on opencode/Hermes comes from your own agents and skills, not this plugin | dropped | Correctness, Safety |
+| [pr-review-toolkit](https://github.com/anthropics/claude-plugins-official) | 6 dimension-specific review agents (silent failures, type design, etc.) | dropped — ships inside the Claude Code `claude-plugins-official` marketplace only | dropped | Correctness, Safety |
+| [security-guidance](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/security-guidance) | First-party in-loop security review (regex + LLM diff review + commit-time cross-file) with self-correction before output | dropped — Claude Code plugin only (no opencode or Hermes install path) | dropped | Safety |
 
 ## Ship
 
-| Tool | What it does | Install | Signal |
-|------|-------------|---------|--------|
-| [claude-code-action](https://github.com/anthropics/claude-code-action) | @claude in GitHub PRs/issues for async review and fixes | Add GitHub Actions workflow YAML | Speed, Correctness |
-| [resolving-merge-conflicts](https://github.com/mattpocock/skills) | Intent-preserving merge resolution — trace both sides, resolve, run checks | `npx skills add mattpocock/skills@resolving-merge-conflicts -g -y` | Correctness, Safety |
+| Tool | What it does | Install | Harness | Signal |
+|------|-------------|---------|---------|--------|
+| [claude-code-action](https://github.com/anthropics/claude-code-action) | @claude in GitHub PRs/issues for async review and fixes | dropped — a GitHub Action that installs and runs Claude Code in CI; no opencode/Hermes runner is documented for it | dropped | Speed, Correctness |
+| [resolving-merge-conflicts](https://github.com/mattpocock/skills) | Intent-preserving merge resolution — trace both sides, resolve, run checks | `npx skills add mattpocock/skills@resolving-merge-conflicts -g -y` | both | Correctness, Safety |
 
 ## Reflect
 
-| Tool | What it does | Install | Signal |
-|------|-------------|---------|--------|
-| [claude-reflect](https://github.com/BayramAnnakov/claude-reflect) | Turns session corrections into persistent CLAUDE.md rules | `claude plugin marketplace add BayramAnnakov/claude-reflect && claude plugin install claude-reflect@claude-reflect-marketplace` | Speed, Maintainability |
-| [documentation-and-adrs](https://github.com/addyosmani/agent-skills) | Diátaxis docs + ADR templates and agent-context guidelines (ships in agent-skills, already installed) | `npx skills add addyosmani/agent-skills@documentation-and-adrs -g -y` | Maintainability |
+| Tool | What it does | Install | Harness | Signal |
+|------|-------------|---------|---------|--------|
+| [claude-reflect](https://github.com/BayramAnnakov/claude-reflect) | Turns session corrections into persistent CLAUDE.md rules | dropped — Claude Code plugin writing `CLAUDE.md` rules; neither harness reads that file as its own rulebook (`AGENTS.md` is the shared one) | dropped | Speed, Maintainability |
+| [documentation-and-adrs](https://github.com/addyosmani/agent-skills) | Diátaxis docs + ADR templates and agent-context guidelines (ships in agent-skills, already installed) | `npx skills add addyosmani/agent-skills@documentation-and-adrs -g -y` | both | Maintainability |
 
 > **documentation-writer** (ADOPT/MEASURED) is deliberately *not* listed here: it overlaps documentation-and-adrs, the installed Diátaxis/ADR pick — recorded in the [stack exclusion ledger](STACK-LEDGER.md). The #188 audit flagged the omission; it's a decision, not drift.
 
 ## Memory
 
-| Tool | What it does | Install | Signal |
-|------|-------------|---------|--------|
-| [claude-mem](https://github.com/thedotmack/claude-mem) | Persistent memory with semantic search, timeline, and knowledge-graph recall across sessions | `claude plugin marketplace add thedotmack/claude-mem && claude plugin install claude-mem@thedotmack` | Maintainability, Speed |
+| Tool | What it does | Install | Harness | Signal |
+|------|-------------|---------|---------|--------|
+| [claude-mem](https://github.com/thedotmack/claude-mem) | Persistent memory with semantic search, timeline, and knowledge-graph recall across sessions (now branded Grok Mem; the package name is still `claude-mem`) | `npx claude-mem install --ide opencode` — its installer covers Claude Code, Cursor, Windsurf, OpenCode, Codex CLI, Antigravity, Grok Bot and OpenClaw; Hermes is not one of its hosts | opencode | Maintainability, Speed |
 
 ## Outer Loop
 
-| Tool | What it does | Install | Signal |
-|------|-------------|---------|--------|
-| [abtop](https://github.com/graykode/abtop) | Live token/cost TUI for comparing agent session efficiency | `curl --proto '=https' --tlsv1.2 -LsSf https://github.com/graykode/abtop/releases/latest/download/abtop-installer.sh \| sh` | Cost Efficiency |
-| [ccusage](https://github.com/ccusage/ccusage) | Parses local coding-agent session logs into daily/monthly/session/model token & cost reports | `npx ccusage@latest` | Cost Efficiency |
+| Tool | What it does | Install | Harness | Signal |
+|------|-------------|---------|---------|--------|
+| [abtop](https://github.com/graykode/abtop) | Live token/cost TUI for comparing agent session efficiency — reads Claude Code, Codex CLI and OpenCode session state | installer one-liner — see the code block below this table (Linux needs `sqlite3` on `PATH` for OpenCode sessions) | opencode | Cost Efficiency |
+| [ccusage](https://github.com/ccusage/ccusage) | Parses local coding-agent session logs into daily/monthly/session/model token & cost reports | `npx ccusage@latest` — per-harness views: `ccusage opencode daily`, `ccusage hermes daily` | both | Cost Efficiency |
+
+abtop's installer is a piped one-liner; it lives here rather than in the table so no cell needs an escaped pipe:
+
+```bash
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/graykode/abtop/releases/latest/download/abtop-installer.sh | sh
+```
 
 ### Outer loop work stages — pointers
 
@@ -118,16 +133,16 @@ The table above covers outer-loop *observability*. The outer loop's *work* stage
 | Discover | [last30days](https://github.com/mvanhorn/last30days-skill) engagement-weighted research; [GSD](https://github.com/obra/superpowers) discovery discussion | Research; Plan |
 | Architect | [GSD](https://github.com/obra/superpowers) planning + [graphify](https://github.com/Graphify-Labs/graphify) knowledge-graph views (CONDITIONAL/MEASURED — see [evaluations/](evaluations/)) | Plan (GSD); graphify is not in STACK — evaluations/ only |
 | Decompose | [GSD](https://github.com/obra/superpowers) milestone/phase breakdown; [mattpocock/skills](https://github.com/mattpocock/skills) `to-issues` vertical slicing | Plan; Implement |
-| Integrate | [claude-squad](https://github.com/smtg-ai/claude-squad) parallel-session management (worktrunk is a candidate pending a hands-on eval — #188 Gap 4) | Implement |
-| Retrospect | [claude-mem](https://github.com/thedotmack/claude-mem) timeline + semantic recall across sessions | Memory |
+| Integrate | [claude-squad](https://github.com/smtg-ai/claude-squad) parallel-session management — launch each session with `cs -p opencode` or `cs -p hermes` (worktrunk is a candidate pending a hands-on eval — #188 Gap 4) | Implement |
+| Retrospect | [claude-mem](https://github.com/thedotmack/claude-mem) timeline + semantic recall across sessions (OpenCode host only — its installer has no Hermes target) | Memory |
 
 ---
 
 ## Research
 
-| Tool | What it does | Install | Signal |
-|------|-------------|---------|--------|
-| [last30days](https://github.com/mvanhorn/last30days-skill) | Research any topic across Reddit, X, YouTube, HN, Polymarket — engagement-weighted | `npx skills add mvanhorn/last30days-skill -g -y` | Speed, Correctness |
+| Tool | What it does | Install | Harness | Signal |
+|------|-------------|---------|---------|--------|
+| [last30days](https://github.com/mvanhorn/last30days-skill) | Research any topic across Reddit, X, YouTube, HN, Polymarket — engagement-weighted | `npx skills add mvanhorn/last30days-skill -g -y` | both | Speed, Correctness |
 
 ## Conditional — install when the project calls for it
 
@@ -135,19 +150,20 @@ Valuable but situational, so they're not in the every-project default above (#46
 
 > For choosing among the token monitoring & optimization tools (abtop, ccusage, codeburn, caveman, tokencost), see WORKFLOW.md's [Token tooling: four jobs, four picks](WORKFLOW.md#cross-cutting-token-tooling--four-jobs-four-picks) guide.
 
-| Tool | Install when | Install |
-|------|-------------|---------|
-| [serena](https://github.com/oraios/serena) | Heavy refactoring / cross-file renames — LSP symbol-level retrieval + edits. Scope per-project; keep `execute_shell_command` off where the harness already has shell. (codegraph covers read-only navigation in the default.) | `claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena start-mcp-server` |
-| [web-quality-skills](https://github.com/addyosmani/web-quality-skills) | Web/UI projects — accessibility, SEO, perf, Core Web Vitals audits | `npx skills add addyosmani/web-quality-skills -g -y` |
-| [fastmcp](https://github.com/PrefectHQ/fastmcp) | Building your own MCP servers in Python | `pip install fastmcp` |
-| [skill-creator](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/skill-creator) | Authoring/optimizing skills | `claude plugin marketplace add anthropics/claude-plugins-official && claude plugin install skill-creator@claude-plugins-official` |
-| [SkillSpector](https://github.com/NVIDIA/SkillSpector) | Installing third-party skills you want to scan for prompt injection | `git clone https://github.com/NVIDIA/skillspector` (no PyPI package) |
+| Tool | Install when | Install | Harness |
+|------|-------------|---------|---------|
+| [serena](https://github.com/oraios/serena) | Heavy refactoring / cross-file renames — LSP symbol-level retrieval + edits. Scope per-project; keep `execute_shell_command` off where the harness already has shell. (codegraph covers read-only navigation in the default.) | opencode: `"serena": {"type": "local", "command": ["uvx", "--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server"]}` in `opencode.json` · Hermes: `hermes mcp add serena --command uvx --args --from git+https://github.com/oraios/serena serena start-mcp-server` | both |
+| [web-quality-skills](https://github.com/addyosmani/web-quality-skills) | Web/UI projects — accessibility, SEO, perf, Core Web Vitals audits | `npx skills add addyosmani/web-quality-skills -g -y` | both |
+| [fastmcp](https://github.com/PrefectHQ/fastmcp) | Building your own MCP servers in Python | `pip install fastmcp` | both |
+| [skill-creator](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/skill-creator) | Authoring/optimizing skills | dropped — Claude Code plugin only; both harnesses author skills natively from a `SKILL.md` | dropped |
+| [SkillSpector](https://github.com/NVIDIA/SkillSpector) | Installing third-party skills you want to scan for prompt injection | `uv tool install "git+https://github.com/NVIDIA/SkillSpector.git@v2.9.5"` (no PyPI package; Hermes runs it as its Tier-1 advisory scanner) | both |
 
 ## What's NOT here
 
 - **914 tools** are cataloged in [CATALOG.md](CATALOG.md) — this page is the curated subset
 - **CONDITIONAL tools** (context-mode, shadcn/improve, ralph-claude-code, etc.) are documented in [evaluations/](evaluations/) with guidance on when they're worth it
 - **Unevaluated tools** are tracked in [COMPARISON.md](COMPARISON.md) with evaluation coverage by stage
+- **7 Claude Code-only picks** — feature-dev, code-review, pr-review-toolkit, security-guidance, claude-code-action, claude-reflect and skill-creator — are marked **dropped** in the tables above: they ship only as Claude Code plugins, with no opencode or Hermes install path.
 - **2026-06-19 batch (19 tools), assessed for STACK — excluded (#37).** None met the bar (*"earned its slot by moving a quality signal in real testing"*): all were evaluated **source-grounded, not run hands-on**. Two fill genuine gaps and are flagged for a hands-on eval before any promotion — [code-on-incus](https://github.com/mensfeld/code-on-incus) (per-agent isolation + active defense; Security/Safety) and [brooks-lint](https://github.com/hyhmrright/brooks-lint) (design-decay reviewer; Review). The rest are niche, overlapping, or methodology-not-tool.
 
 Why each ADOPT/KEEP-verdict tool is or isn't on this page is recorded as data in the [stack exclusion ledger](STACK-LEDGER.md).
