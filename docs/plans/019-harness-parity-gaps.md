@@ -397,10 +397,20 @@ uv run audit-evals.py --hermes-verbs
 ```
 
 Expected: `== AM. hermes verb (report-only) — 0 of M `hermes <word>` command(s) name an
-unrecognized subcommand ==` with **M ≥ 8** (STACK.md alone carries eight span-initial
-`hermes …` commands — lines 17, 28, 32, 57, 58, 60, 81, 155), then `OK — every `hermes <word>`
-command names a declared subcommand or a flag`. Two ways this run can be wrong, both
-diagnosable from its own output:
+unrecognized subcommand ==` with **M = 7** on the current tree, then
+`OK — every `hermes <word>` command names a declared subcommand or a flag`. The census this
+plan first published (`M ≥ 8`, eight STACK.md lines) was **wrong**: extraction runs on
+backticked spans only, and STACK.md's Quick Start block (lines 17, 28, 32) writes its three
+`hermes …` commands as `#` comments inside a ```` ```bash ```` fence — no backticks, no spans.
+The real population is the six span-initial commands in STACK.md (lines 5, 57, 58, 60, 81,
+155) plus one in `evaluations/`.
+
+> **Known coverage limit, deliberately out of scope.** Those three fenced Quick Start commands
+> are outside AM's population, so a fabricated verb written there would go unreported.
+> Extending extraction to ```` ```bash ```` fence bodies is a detector-design change (it would
+> move AL's population too), so it is recorded here rather than smuggled into this task.
+
+Two ways this run can be wrong, both diagnosable from its own output:
 
 - **0 findings is required.** A finding naming `daily` means the span anchor is missing and
   `ccusage hermes daily` (STACK.md:119) is being read as a `hermes` command;
