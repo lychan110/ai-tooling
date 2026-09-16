@@ -16,6 +16,8 @@ decoupling plan 016 started. Plan 018 — the Claude marketplace packaging goes,
 `install-harness.sh` renders the same five skills into opencode's and Hermes's global
 skill directories.
 
+**Run 6** — harness-parity gaps, 2026-09-16 (audit at commit `ff6f7a0`). Focus: close the gaps PR #11's Harness column introduced. Plan 019 — teach detector A the four install forms the column added, add the report-only `hermes`-verb detector (AM), and split the tier block so picks the column marks `dropped` stop counting as installable.
+
 Execute in the order below unless dependencies say otherwise. Each executor: read the plan fully before starting, honor its STOP conditions, and update your row when done.
 
 ## Execution order & status
@@ -40,6 +42,7 @@ Execute in the order below unless dependencies say otherwise. Each executor: rea
 | [016](016-decouple-from-claude-code.md) | Decouple from Claude Code — harness-agnostic instructions, skills, hooks | P1 | L | — | TODO |
 | [017](../docs/plans/017-hermes-harness-support.md) | Support Hermes Agent alongside opencode | P1 | M | — | IN PROGRESS 2026-09-15 |
 | [018](../docs/plans/018-opencode-hermes-distribution.md) | Install on opencode and Hermes; delete the Claude Code marketplace | P1 | M | 016 | IN PROGRESS 2026-09-15 |
+| [019](../docs/plans/019-harness-parity-gaps.md) | Check the install verbs and the dropped picks the harness column introduced | P1 | M | 11 | IN PROGRESS 2026-09-16 |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJECTED (with one-line rationale)
 
