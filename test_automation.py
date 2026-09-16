@@ -3050,6 +3050,44 @@ class TestHermesHarnessAdapter(unittest.TestCase):
     # The "derives its trigger set from --list-watched" pin for THIS adapter lives in
     # TestWatchListSeam.test_adapter_derives_from_list_watched (T4.4), which loops over
     # every adapter: two copies of one assertion is the drift shape this repo fights.
+# ----------------------------------------------------- install-harness.sh
+class TestInstallHarness(unittest.TestCase):
+    """install-harness.sh renders plugin/skills/ into a harness's global dirs.
+
+    HOME is redirected to a temp dir, so this is offline and touches nothing real.
+    """
+
+    def _run(self, *args, home):
+        # `bash <script>` rather than `./<script>`: chmod is deny-ruled on the authoring
+        # host, so a file created through ctx_patch has no exec bit.
+        return subprocess.run(["bash", os.path.join(ROOT, "install-harness.sh"), *args],
+                              capture_output=True, text=True, check=False,
+                              env={**os.environ, "HOME": home,
+                                   "XDG_DATA_HOME": os.path.join(home, ".local", "share")})
+
+    def test_install_renders_both_harnesses_and_the_pointer_resolves(self):
+        """The one e2e case: run the real script, then follow the pointer it wrote."""
+        with tempfile.TemporaryDirectory() as home:
+            # Guard the target before mutating anything (real-subprocess-e2e-testing).
+            self.assertTrue(os.path.realpath(home).startswith(os.path.realpath(tempfile.gettempdir())))
+
+            for harness, rel in (("opencode", ".agents/skills"), ("hermes", ".hermes/skills")):
+                r = self._run(harness, home=home)
+                self.assertEqual(r.returncode, 0, msg=r.stderr)
+
+                text = Path(home, rel, "setup-workflow", "SKILL.md").read_text(encoding="utf-8")
+                self.assertNotIn("${AI_TOOLING_DOCS}", text, msg="token left unresolved")
+
+                # Follow the rendered pointer: the doc the skill names must exist on disk.
+                pointer = re.search(r"/\S*/ai-tooling/docs/STACK\.md", text)
+                self.assertIsNotNone(pointer, msg="no resolved docs pointer in the skill")
+                self.assertTrue(Path(pointer.group(0)).is_file(), msg=pointer.group(0))
+                self.assertTrue(os.path.realpath(pointer.group(0)).startswith(os.path.realpath(home)),
+                                msg="install escaped the temp HOME: " + pointer.group(0))
+
+    # The other cases a unit-minded author would write — a bad argument exiting non-zero,
+    # --check on an empty HOME, per-harness destination paths — are self-evident from the
+    # script and are deliberately not tested.
 
 # ----------------------------------------------------------------- detector I (evidence field, #62)
 class TestEvidenceField(unittest.TestCase):
