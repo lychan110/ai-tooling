@@ -15,7 +15,7 @@ Maintain a high-signal inventory and evaluation of AI tools, skills, agents, har
 - `STACK-LEDGER.md` — machine-readable ADOPT/KEEP exclusions.
 - `evaluations/` — hands-on evaluations and discovery logs.
 - `docs/agents/` — detailed agent procedures and rationale.
-- `plugin/` — Claude Code marketplace packaging for the same skills; generated docs must not be edited directly.
+- `plugin/` — the distributable: the five installable skills plus the rendered docs; generated docs must not be edited directly.
 
 ## Source of truth
 
@@ -42,6 +42,11 @@ Catalog rows have six cells: Name, Type, One-liner, Problem it solves, Overlaps 
 - Derived facts have one parser and one source of truth; do not duplicate extraction logic.
 - Unknown/unreachable is not the same as absent/broken. Never fail a gate for external uncertainty.
 - Every detector reports the population it examined; `0 findings` is not `0 examined`.
+- Tests are end-to-end and deliberately few: exercise the real artifact against a
+  throwaway target, then assert the result a user would see. No unit tests for internal
+  helpers, no smoke tests, and no assertions of the obvious (a file exists because the
+  previous line created it; a bad argument exits non-zero). The only test worth adding is
+  one that would fail if the behaviour regressed.
 
 ## Canonical commands
 
@@ -51,6 +56,7 @@ Catalog rows have six cells: Name, Type, One-liner, Problem it solves, Overlaps 
 - `uv run audit-evals.py --offline` — run offline evaluation detectors.
 - `uv run triage.py` — regenerate `NEXT-EVALS.md`.
 - `uv run refresh-metadata.py` — refresh GitHub metadata when needed.
+- `bash install-harness.sh --check` — verify the opencode/Hermes skill install.
 
 ## Agent workflow
 
