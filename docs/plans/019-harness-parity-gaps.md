@@ -584,14 +584,16 @@ added.
    it with the GitHub MCP `issue_write` tool — **not** `gh`, which a `gh *` deny rule blocks
    for the agent on this host:
 
-> **Issue not filed — the tracker is disabled (2026-09-16).** The create call returns
-> `410 Issues has been disabled in this repository` for `lychan110/ai-tooling`, and a listing
-> returns zero issues, while `docs/agents/issue-tracker.md` still documents GitHub Issues as
-> this repo's tracker and `AGENTS.md` still points new scans at `scan`-labelled issues. So the
-> documented intake is dead, not merely empty. The gap is recorded in STACK.md's Ship note
-> until the channel is restored or replaced; nothing is invented in its place. Plan 019's
-> older registry rows link to `mattbutlerengineering/ai-tooling` issues, which is likely why
-> this repository has them off.
+> **Filed late, after a detour (2026-09-16).** The first create call returned
+> `410 Issues has been disabled in this repository` for `lychan110/ai-tooling`, while
+> `docs/agents/issue-tracker.md` and `AGENTS.md` both still pointed new scans at GitHub Issues —
+> so the documented intake was disabled, not merely empty, and the finding was recorded rather
+> than routed around. Issues were then re-enabled and the discovery was filed as
+> [#16](https://github.com/lychan110/ai-tooling/issues/16), labelled `scan`, carrying the bar:
+> it must run a review pass on opencode or Hermes, and be run hands-on before it can touch
+> STACK.md. Both docs are accurate again now the tracker is on; the one remaining friction is
+> that `docs/agents/issue-tracker.md` prescribes the `gh` CLI, which a `gh *` deny rule blocks
+> for the agent on this host — the GitHub MCP `issue_write` tool is the working path.
    - title: `Discovery: CI-review runner for opencode and Hermes (claude-code-action equivalent)`
    - labels: `scan`
    - body: the reason above, the two harnesses, and the bar — it must be run hands-on before
