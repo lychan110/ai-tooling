@@ -100,6 +100,12 @@ feature-dev (MEASURED), code-review (MEASURED), pr-review-toolkit (MEASURED), se
 | [claude-code-action](https://github.com/anthropics/claude-code-action) | @claude in GitHub PRs/issues for async review and fixes | dropped — a GitHub Action that installs and runs Claude Code in CI; no opencode/Hermes runner is documented for it | dropped | Speed, Correctness |
 | [resolving-merge-conflicts](https://github.com/mattpocock/skills) | Intent-preserving merge resolution — trace both sides, resolve, run checks | `npx skills add mattpocock/skills@resolving-merge-conflicts -g -y` | both | Correctness, Safety |
 
+> **CI review on opencode or Hermes is an open slot.** `claude-code-action` is dropped
+> above: it installs and runs Claude Code in CI, and no equivalent runner is documented for
+> either harness this page supports. Nothing is guessed into the gap — a candidate has to be
+> evaluated hands-on first (WORKFLOW.md's adoption rule), so the slot stays visibly empty
+> rather than filled with a plausible-looking action nobody has run.
+
 ## Reflect
 
 | Tool | What it does | Install | Harness | Signal |
