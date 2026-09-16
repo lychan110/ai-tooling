@@ -583,6 +583,15 @@ added.
 2. A `scan`-labelled tracking issue, per `AGENTS.md` (new scans are GitHub Issues). Create
    it with the GitHub MCP `issue_write` tool — **not** `gh`, which a `gh *` deny rule blocks
    for the agent on this host:
+
+> **Issue not filed — the tracker is disabled (2026-09-16).** The create call returns
+> `410 Issues has been disabled in this repository` for `lychan110/ai-tooling`, and a listing
+> returns zero issues, while `docs/agents/issue-tracker.md` still documents GitHub Issues as
+> this repo's tracker and `AGENTS.md` still points new scans at `scan`-labelled issues. So the
+> documented intake is dead, not merely empty. The gap is recorded in STACK.md's Ship note
+> until the channel is restored or replaced; nothing is invented in its place. Plan 019's
+> older registry rows link to `mattbutlerengineering/ai-tooling` issues, which is likely why
+> this repository has them off.
    - title: `Discovery: CI-review runner for opencode and Hermes (claude-code-action equivalent)`
    - labels: `scan`
    - body: the reason above, the two harnesses, and the bar — it must be run hands-on before
