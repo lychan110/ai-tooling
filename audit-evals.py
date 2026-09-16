@@ -729,7 +729,40 @@ def gh_repo_exists(slug):
 def pypi_exists(pkg):   return http_status(f"https://pypi.org/pypi/{pkg}/json")
 def crates_exists(pkg): return http_status(f"https://crates.io/api/v1/crates/{pkg}")
 
+def brew_formula_exists(pkg):
+    return http_status(f"https://formulae.brew.sh/api/formula/{pkg}.json")
+
+def brew_cask_exists(pkg):
+    """Casks are a separate registry: `api/cask/...`, not `api/formula/...`.
+
+    `brew install --cask ping-island` was resolved against the formula API, which has no
+    cask entry, so a page that is correct read BROKEN. Same 404-means-gone rule as the
+    formula checker — only a 404 is `dead`, everything else is `unknown:<reason>`."""
+    return http_status(f"https://formulae.brew.sh/api/cask/{pkg}.json")
+
+def brew_tap_exists(triple):
+    """`owner/tap/name` — the tap itself is the GitHub repo `owner/homebrew-<tap>`.
+
+    A tap has no core-formula entry at all, so the formula API cannot answer for it.
+    Homebrew's convention is that a tap lives at `owner/homebrew-<tap>` on GitHub, and
+    that repo is the authority on whether the tap exists. Reuses `gh_repo_exists` rather
+    than adding a second GitHub probe. The finding is reported against the token the page
+    writes (`Kilo-Org/tap/kilo`), not the repo slug derived from it."""
+    owner, tap, _name = triple.split("/", 2)
+    return gh_repo_exists(f"{owner}/homebrew-{tap}")
+
 # ---------------------------------------------------------------- A. installs
+# Resolvable forms: pip/pipx, npm, brew, cargo, generic npx (incl. `npx skills add
+# <owner>/<repo>`), hermes plugins install <owner>/<repo>, and uv tool install
+# git+https://github.com/<owner>/<repo>. A catalog name — `hermes mcp install context7` —
+# has no offline authority, so it is checked by detector AM's verb snapshot and never
+# looked up as a package.
+#
+# `brew` is three registry families, not one, and each resolves against its own
+# authority: a core FORMULA against formulae.brew.sh's formula API, a CASK
+# (`brew install --cask <token>`) against the separate cask API, and a TAP triple
+# `owner/tap/name` against the GitHub repo `owner/homebrew-<tap>`. Only the formula API
+# answers for a formula, so pointing all three at it 404s every correct cask and tap.
 PKG_CLEAN = lambda s: re.sub(r"[<>=].*|\[.*?\]|['\"]|@latest$", "", s).strip()
 
 # A package token that is really a placeholder / prose fragment, not installable.
@@ -749,6 +782,21 @@ _PKG_TOKEN = re.compile(r"^@?[A-Za-z0-9._][A-Za-z0-9._/-]*$")
 # 10 real install commands invisible to a GATE whose headline read "86/86 checked" (#485).
 _NPM_INSTALL = re.compile(r"^npm +(?:install|i|add) +(.*)$")
 _PIP_INSTALL = re.compile(r"^pip(?:x| install| ) *install +(.*)$")
+
+# `brew install a b c` installs three formulae and the single-token form would check only
+# `a`. Homebrew's formula API is one HTTPS GET, so this needs no brew binary on the runner.
+_BREW_INSTALL = re.compile(r"^brew +(?:install|reinstall) +(.*)$")
+
+# Homebrew's three registries are separate authorities, and a token resolves against
+# exactly one of them. Core formulae are in the formula API. A cask — `brew install
+# --cask ping-island` — is in a DIFFERENT registry with its own API, so asking the formula
+# API about a cask 404s a page that is correct. A tap triple `owner/tap/name` is in
+# NEITHER: Homebrew's convention puts a tap in the GitHub repo `owner/homebrew-<tap>`,
+# which is the only authority on whether the tap exists at all. These two patterns
+# classify each ARGUMENT, which is what keeps the three kinds mutually exclusive — a
+# triple is a tap even on a `--cask` line, so it can never land on `cask` or `brew`.
+_BREW_CASK_ARG = re.compile(r"^--cask$")
+_BREW_TAP_ARG = re.compile(r"^[A-Za-z0-9._-]+/[A-Za-z0-9._-]+/[A-Za-z0-9._-]+$")
 
 
 def _install_packages(rest):
@@ -780,6 +828,35 @@ def _install_packages(rest):
     return out
 
 
+def _brew_packages(rest):
+    """(kind, package) for every package on the tail of a `brew install` command.
+
+    Three registries, three kinds, and the KIND is what decides which authority can
+    answer:
+
+      * `owner/tap/name` (two slashes) is a TAP, and Homebrew's convention puts the tap
+        in the GitHub repo `owner/homebrew-<tap>` — see `brew_tap_exists`. A triple is a
+        tap even when the line also carries `--cask`: `brew install --cask
+        owner/tap/formula` names a cask *in* that tap, and the tap's repo is still the
+        thing that says the tap exists.
+      * any other package on a `--cask` line is a CASK, which lives in the cask registry.
+      * otherwise it is a core FORMULA.
+
+    The token list comes from `_install_packages` rather than a second copy of its rules,
+    so the packages seen here are exactly the packages the formula-only version saw: the
+    `-flag` skip, the stop-at-the-first-non-package rule, the quote/extras/pin strip and
+    the termination on a shell operator all stay in one place. Classifying per TOKEN is
+    also what keeps one target per token — a `--cask` line yields cask targets and never
+    a formula target for the same token.
+    """
+    cask = any(_BREW_CASK_ARG.match(t) for t in rest.split())
+    for pkg in _install_packages(rest):
+        if _BREW_TAP_ARG.match(pkg):
+            yield "tap", pkg
+        else:
+            yield ("cask" if cask else "brew"), pkg
+
+
 def extract_installs(text):
     """Yield (kind, package) from install-like commands in markdown."""
     for m in re.finditer(r"`([^`]*)`", text):
@@ -788,7 +865,14 @@ def extract_installs(text):
         window = text[max(0, m.start() - 70):m.end() + 60]
         if NEGATION.search(window):
             continue
-        # Multi-package forms first: these consume the whole tail of the command.
+        # brew first: it is three registries, so its arguments need per-token
+        # classification instead of one kind for the whole tail.
+        mm = _BREW_INSTALL.match(cmd)
+        if mm:
+            for kind, pkg in _brew_packages(mm.group(1)):
+                yield kind, pkg
+            continue
+        # Multi-package forms: these consume the whole tail of the command.
         multi = ((_PIP_INSTALL, "pypi"), (_NPM_INSTALL, "npm"))
         matched = False
         for pat, kind in multi:
@@ -801,6 +885,16 @@ def extract_installs(text):
         if matched:
             continue
         for pat, kind in [
+            # `hermes plugins install owner/repo` — the argument is a GitHub repo, exactly
+            # like the claude marketplace form below; `plugins` is the declared verb.
+            (r"hermes +plugins? +install +([A-Za-z0-9._-]+/[A-Za-z0-9._-]+)", "gh"),
+            # The skills CLI is the install unit for skills, and `skills` is in
+            # PLACEHOLDER, so every `npx skills add owner/repo` in the corpus was invisible
+            # to a gate whose headline read "every install target resolves".
+            (r"npx +(?:-y +)?skills add +([A-Za-z0-9._-]+/[A-Za-z0-9._-]+)(?:@[A-Za-z0-9._-]+)?", "gh"),
+            # `uv tool install git+https://github.com/owner/repo[.git][@ref]` — anchored on
+            # `$` so the non-greedy repo group cannot stop after a single character.
+            (r"uv +tool +install +['\"]?git\+https://github\.com/([A-Za-z0-9._-]+/[A-Za-z0-9._-]+?)(?:\.git)?(?:@[A-Za-z0-9._-]+)?['\"]?\s*$", "gh"),
             (r"^cargo install +([A-Za-z0-9._-]+)", "crates"),
             (r"^npx +(?:-y +)?(@?[A-Za-z0-9._/-]+)", "npm"),
             # `claude plugin marketplace add <owner/repo>` is the real form. `claude
@@ -830,10 +924,27 @@ def audit_installs(ctx):
     depend on each other, so this mirrors audit_links' ThreadPoolExecutor. Mentions are
     collected first and filtered afterwards, which keeps the reported order and the
     per-occurrence shape exactly as they were: lookups DEDUPE, findings do NOT, so a
-    broken package cited in three evals is still three findings."""
+    broken package cited in three evals is still three findings.
+
+    Resolvable forms: pip/pipx, npm, brew, cargo, generic npx (incl. `npx skills add
+    <owner>/<repo>`), hermes plugins install <owner>/<repo>, uv tool install
+    git+https://github.com/<owner>/<repo>, and claude plugins marketplace add. A catalog
+    name (`hermes mcp install context7`) has no offline authority, so it is checked by
+    detector AM's verb snapshot and never looked up as a package.
+
+    `brew` is three registry families and each resolves against its own authority: a core
+    FORMULA against the formula API, a CASK (`brew install --cask <token>`) against the
+    separate cask API, and a TAP triple `owner/tap/name` against the GitHub repo
+    `owner/homebrew-<tap>`. A tap has no formula-API entry at all, so the tap's repo —
+    where Homebrew's convention puts the tap — is the only authority that answers for it,
+    reached through the existing `gh_repo_exists` rather than a second GitHub check.
+    Findings name the token the page writes, so a tap failure reads
+    `[tap] owner/tap/name`, not the repo slug derived from it."""
     import concurrent.futures
     files = ["STACK.md", "CATALOG.md", *sorted(glob.glob("evaluations/*.md", root_dir=ctx.root))]
-    checkers = {"pypi": pypi_exists, "crates": crates_exists, "npm": npm_exists, "gh": gh_repo_exists}
+    checkers = {"pypi": pypi_exists, "crates": crates_exists, "npm": npm_exists,
+                "gh": gh_repo_exists, "brew": brew_formula_exists,
+                "cask": brew_cask_exists, "tap": brew_tap_exists}
     mentions = []  # (rel, kind, pkg) in file order — this IS the reported order
     for rel in files:
         if not os.path.exists(ctx.path(rel)): continue

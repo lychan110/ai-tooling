@@ -9030,3 +9030,48 @@ class TestPluginPackage(unittest.TestCase):
             self.assertNotIn("claude plugin install", text, msg=rel)
             self.assertNotIn("CLAUDE_PLUGIN_ROOT", text, msg=rel)
             self.assertIn("install-harness.sh", text, msg=rel)
+
+
+class TestHarnessGapDetectors(unittest.TestCase):
+    """The two behaviours this PR adds, through the real CLI against a throwaway tree.
+
+    Needs `gh` on PATH and authenticated, and a working HTTPS client — the same requirement
+    `make check`'s `audit-evals.py --installs` already carries.
+    """
+
+    def _run(self, d, argv, stack):
+        _write(d, "STACK.md", stack)
+        for script in ("audit-evals.py", "catalog_lib.py"):
+            shutil.copy(os.path.join(ROOT, script), d)
+        return subprocess.run([sys.executable, *argv], capture_output=True, text=True,
+                              check=False, cwd=d)
+
+    def test_the_new_install_forms_are_resolved_by_the_gate(self):
+        """One fabricated target per new form: seven unique targets, seven findings, exit 1.
+
+        The three added brew lines pin detector A's registry families against their own
+        APIs — core formula, cask registry, tap GitHub repo — and the `--cask` triple
+        pins the rule that a triple token ALWAYS lands on kind `tap`, so one command
+        yields one target rather than both a cask and a tap.
+        """
+        with tempfile.TemporaryDirectory() as d:
+            # Guard the target before running anything (real-subprocess-e2e-testing).
+            self.assertTrue(os.path.realpath(d).startswith(os.path.realpath(tempfile.gettempdir())))
+            r = self._run(d, ["audit-evals.py", "--installs"],
+                          "# Stack\n\n"
+                          "`hermes plugins install owner/aitooling-nope-plugins`\n"
+                          "`npx skills add owner/aitooling-nope-skills -g -y`\n"
+                          "`brew install aitooling-nope-formula`\n"
+                          '`uv tool install "git+https://github.com/owner/aitooling-nope-uv"`\n'
+                          "`brew install --cask aitooling-nope-cask`\n"
+                          "`brew install owner/aitooling-nope-tap/formula`\n"
+                          "`brew install --cask --no-quarantine owner/aitooling-nope-casktap/cask`\n")
+            self.assertIn("7/7 target(s) checked", r.stdout, msg=r.stdout + r.stderr)
+            self.assertIn("BROKEN [brew] aitooling-nope-formula", r.stdout)
+            self.assertIn("BROKEN [cask] aitooling-nope-cask", r.stdout)
+            self.assertIn("BROKEN [tap] owner/aitooling-nope-tap/formula", r.stdout)
+            self.assertIn("BROKEN [tap] owner/aitooling-nope-casktap/cask", r.stdout)
+            self.assertIn("BROKEN [gh] owner/aitooling-nope-plugins", r.stdout)
+            self.assertIn("BROKEN [gh] owner/aitooling-nope-skills", r.stdout)
+            self.assertIn("BROKEN [gh] owner/aitooling-nope-uv", r.stdout)
+            self.assertEqual(r.returncode, 1, msg=r.stdout)
