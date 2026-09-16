@@ -6,27 +6,22 @@ Evaluates tools against six quality signals (Correctness, Speed, Maintainability
 
 ## Install
 
-This repo's agent surface is written for opencode and Hermes Agent:
+Built for opencode and Hermes Agent — there is no marketplace and no account.
 
-- **opencode** reads `AGENTS.md` and `.agents/skills/` from the checkout — nothing to wire.
-  `opencode.json` carries the permission block and the `check` / `fix` / `sync` commands.
-- **Hermes Agent** loads `AGENTS.md` as project context and discovers `.agents/skills/`, but
-  does not auto-trust procedures from a cloned repo — run `hermes skills trust` once in the
-  checkout. The project-local plugin (`.hermes/plugins/ai-tooling-harness/`) carries the
-  commit gate and the `plugin/docs/` auto-sync; see
-  [docs/agents/hermes-harness.md](docs/agents/hermes-harness.md).
+**opencode** reads `AGENTS.md`, `.agents/skills/` and `opencode.json` straight from the
+checkout. To use the five distributable skills from any project on the machine:
 
-Both harnesses drive the same gates: `make check`, `make fix`, `./sync-plugin-docs.sh`.
+    bash install-harness.sh opencode
 
-The same five skills are also packaged as a Claude Code marketplace:
+**Hermes Agent** loads `AGENTS.md` as project context and discovers `.agents/skills/` after a
+one-time trust:
 
-```bash
-claude plugin marketplace add mattbutlerengineering/ai-tooling
-claude plugin install ai-tooling@ai-tooling
-```
+    bash install-harness.sh hermes
+    hermes skills trust "$PWD"      # only needed to use the repo-local skills in place
 
-Or from inside a Claude Code session: `/plugin marketplace add mattbutlerengineering/ai-tooling`
-then `/plugin install ai-tooling@ai-tooling`.
+Both harnesses drive the same gates: `make check`, `make fix`, `./sync-plugin-docs.sh`. See
+[docs/agents/harness-install.md](docs/agents/harness-install.md) for exactly what each
+installer writes, how to verify it, and how to remove it.
 
 The five skills:
 
