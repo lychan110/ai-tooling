@@ -1,20 +1,19 @@
-# ai-tooling Plugin
+# ai-tooling skills
 
-## Install
+Five skills for bootstrapping and maintaining an AI-assisted workflow, installable on
+opencode or Hermes Agent. No marketplace, no account, no plugin registry.
 
-```bash
-claude plugin marketplace add mattbutlerengineering/ai-tooling
-claude plugin install ai-tooling@ai-tooling
-```
+    git clone https://github.com/lychan110/ai-tooling && cd ai-tooling
+    bash install-harness.sh opencode     # or: bash install-harness.sh hermes
 
-Or from inside a session: `/plugin marketplace add mattbutlerengineering/ai-tooling`
-then `/plugin install ai-tooling@ai-tooling`.
+Each skill reads the reference documents in `docs/`; the installer renders them once to
+`~/.local/share/ai-tooling/docs/` and points every installed skill at that directory, so the
+skills work from any project without the checkout being your working directory.
 
 AI workflow toolkit organized around inner/outer dev loop stages and six quality signals (Correctness, Speed, Maintainability, Safety, Cost Efficiency, Verifiability).
 
 Under opencode or Hermes Agent the marketplace is not needed: clone the repo and the skills
-load from `.agents/skills/` (run `hermes skills trust` once, for Hermes). The commands below
-are the Claude Code packaging of those same five skills.
+load from `.agents/skills/` (run `hermes skills trust` once, for Hermes).
 
 ## Skills
 
@@ -31,20 +30,17 @@ The plugin includes reference documents under `docs/`:
 - `WORKFLOW.md` — inner/outer dev loop stages, tools per stage, quality signals, adoption guide
 - `evaluations/` — 941 evaluation and comparison files
 
-Skills reference these docs via `${CLAUDE_PLUGIN_ROOT}/docs/` paths.
+Skills reference these docs through the installer-resolved `~/.local/share/ai-tooling/docs/` path.
 
 ## Hooks
 
-A SessionStart hook and a PostToolUse hook run automatically:
+Two portable scripts in `hooks/` remain for harnesses that wire hooks up:
 
-**SessionStart:**
-- Checks if any evaluation file is >30 days old → prompts to run `/update-catalog`
-- Checks for new GitHub stars not in the catalog → prompts to run `/update-catalog`
-- Outputs nothing if everything is current (suppressed)
+- `check-freshness.sh` — surfaces catalog maintenance: evaluations past their threshold,
+  and starred repos missing from the catalog, using the repo's own `freshness.py`.
+- `validate-counts.sh` — runs the repo's own count and sync gates after an edit, and
+  surfaces whatever they report.
 
-**PostToolUse (on Edit/Write):**
-- Runs the repo's own canonical gates — `reconcile-counts.py --check` (catalog total,
-  eval count and composition) and `sync-plugin-docs.sh --check` (`plugin/docs/` and
-  `skills/` against root) — and surfaces whatever they report
-- Alerts on drift so counts stay consistent across commits
-- Silent no-op in a repo that doesn't carry those scripts
+Both resolve the repo root with `git rev-parse --show-toplevel` and stay a silent no-op in a
+repo that carries neither script. Nothing here runs them automatically: the SessionStart and
+PostToolUse wiring was deleted with the Claude Code package.

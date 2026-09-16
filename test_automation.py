@@ -9023,11 +9023,10 @@ class TestPluginPackage(unittest.TestCase):
     def test_live_package_is_clean(self):
         self.assertEqual([f"{f.kind} {f.detail}" for f in checkplugin.audit_plugin(ROOT)], [])
 
-    def test_readme_install_commands_use_real_subcommands(self):
-        # Both README commands were invented (`claude plugins:add-marketplace`), and
-        # `claude` accepts an unrecognized first arg AS A PROMPT — so the broken command
-        # launches a session instead of erroring, which is why it survived.
-        readme = Path(ROOT, "README.md").read_text(encoding="utf-8")
-        self.assertNotIn("plugins:", readme)
-        self.assertIn("claude plugin marketplace add", readme)
-        self.assertIn("claude plugin install", readme)
+    def test_the_public_docs_teach_harness_installs_not_a_marketplace(self):
+        for rel in ("README.md", "plugin/README.md"):
+            text = Path(ROOT, rel).read_text(encoding="utf-8")
+            self.assertNotIn("claude plugin marketplace add", text, msg=rel)
+            self.assertNotIn("claude plugin install", text, msg=rel)
+            self.assertNotIn("CLAUDE_PLUGIN_ROOT", text, msg=rel)
+            self.assertIn("install-harness.sh", text, msg=rel)
