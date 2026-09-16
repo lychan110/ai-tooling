@@ -605,3 +605,30 @@ def distinct_stack_picks(stack_text):
             seen.add(pick.text)
             out.append(pick)
     return out
+
+
+HARNESS_TOKENS = ("both", "opencode", "Hermes", "dropped")
+
+
+def stack_pick_harness(stack_text):
+    """{display text: harness token} for the rows `distinct_stack_picks` returns.
+
+    The cell is found by TOKEN, never by position: the stage tables are five columns
+    (… | Install | Harness | Signal) and the Conditional table is four (Tool | Install when
+    | Install | Harness), so `cells[-2]` is right for one shape and wrong for the other. A
+    row with no token is simply absent from the map — the caller reads that as "installs
+    everywhere" rather than guessing a harness out of an Install cell.
+    """
+    out = {}
+    for line in stack_text.splitlines():
+        row = line.lstrip()
+        if not row.startswith("|"):
+            continue
+        m = _STACK_PICK.match(row)
+        if not m:
+            continue
+        cells = [c.strip() for c in row.strip().strip("|").split("|")]
+        tok = next((c for c in reversed(cells) if c in HARNESS_TOKENS), None)
+        if tok:
+            out.setdefault(m.group(1), tok)
+    return out

@@ -10,6 +10,9 @@ hand-assigned:
   Tier 1 — measured: ran hands-on, with metrics (MEASURED) or a smoke test (RUN).
   Tier 2 — review-based: read docs/source (REVIEW) or catalog-inferred (SOURCE-ONLY),
            not run hands-on. Graduating an eval (#68) promotes a tool to Tier 1.
+  Dropped — Claude Code only: STACK.md's Harness column marks the pick `dropped`, so no
+           Install cell runs on opencode or Hermes. Bucketed separately, and still tiered:
+           this block reports how well validated a pick is, not whether it installs here.
 
 The tier block lives between the TIERS markers in STACK.md and is fully regenerated
 from data each run, so it cannot drift from the evidence. Place the markers once by
@@ -39,23 +42,28 @@ TIER1 = ("MEASURED", "RUN")
 
 
 def stack_tiers(text, amap=None):
-    """(tier1, tier2) lists of (tool, evidence), in STACK appearance order. Evidence
-    comes from catalog_lib.evidence_lookup over the shared evidence_alias_map
+    """(tier1, tier2, dropped) lists of (tool, evidence), in STACK appearance order.
+    Evidence comes from catalog_lib.evidence_lookup over the shared evidence_alias_map
     (injectable for tests — #199/#201); a STACK tool with no eval resolves to
-    SOURCE-ONLY → Tier 2."""
+    SOURCE-ONLY → Tier 2. `dropped` holds the picks whose Harness cell says they have no
+    install path on either harness the page supports."""
     if amap is None:
         amap = ae.DetectorContext(ROOT).evidence_alias_map
-    tier1, tier2 = [], []
+    hmap = catalog_lib.stack_pick_harness(text)
+    tier1, tier2, dropped = [], [], []
     # The ONE definition of a STACK pick (#469), and since #502 of how many the page
     # recommends: the dedup-by-display-text used to live here, so `reconcile-counts.py`
     # had no way to state the same population and the prose count drifted alone.
     for pick in catalog_lib.distinct_stack_picks(text):
         ev = catalog_lib.evidence_lookup(amap, pick.text, pick.url)
-        (tier1 if ev in TIER1 else tier2).append((pick.text, ev))
-    return tier1, tier2
+        if hmap.get(pick.text) == "dropped":
+            dropped.append((pick.text, ev))
+        else:
+            (tier1 if ev in TIER1 else tier2).append((pick.text, ev))
+    return tier1, tier2, dropped
 
 
-def render(tier1, tier2):
+def render(tier1, tier2, dropped):
     fmt = lambda items: ", ".join(f"{t} ({e})" for t, e in items) if items else "_none_"
     return (
         f"{START}\n"
@@ -71,7 +79,11 @@ def render(tier1, tier2):
         "docs/source (`REVIEW`) or inferred from catalog metadata (`SOURCE-ONLY`), not run "
         "hands-on — graduating an eval ([#68](https://github.com/mattbutlerengineering/ai-tooling/issues/68)) "
         "promotes a tool to Tier 1.\n\n"
-        f"{fmt(tier2)}\n"
+        f"{fmt(tier2)}\n\n"
+        f"**Dropped — Claude Code only ({len(dropped)}): not installable on opencode or "
+        "Hermes.** The Harness column above says why for each one; this block still reports "
+        "how well validated it is.\n\n"
+        f"{fmt(dropped)}\n"
         f"{END}"
     )
 
