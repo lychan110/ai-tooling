@@ -119,9 +119,15 @@ class TestHarnessGapDetectors(unittest.TestCase):
                           "`hermes plugins install owner/aitooling-nope-plugins`\n"
                           "`npx skills add owner/aitooling-nope-skills -g -y`\n"
                           "`brew install aitooling-nope-formula`\n"
-                          '`uv tool install "git+https://github.com/owner/aitooling-nope-uv"`\n')
-            self.assertIn("4/4 target(s) checked", r.stdout, msg=r.stdout + r.stderr)
+                          '`uv tool install "git+https://github.com/owner/aitooling-nope-uv"`\n'
+                          "`brew install --cask aitooling-nope-cask`\n"
+                          "`brew install owner/aitooling-nope-tap/formula`\n"
+                          "`brew install --cask --no-quarantine owner/aitooling-nope-casktap/cask`\n")
+            self.assertIn("7/7 target(s) checked", r.stdout, msg=r.stdout + r.stderr)
             self.assertIn("BROKEN [brew] aitooling-nope-formula", r.stdout)
+            self.assertIn("BROKEN [cask] aitooling-nope-cask", r.stdout)
+            self.assertIn("BROKEN [tap] owner/aitooling-nope-tap/formula", r.stdout)
+            self.assertIn("BROKEN [tap] owner/aitooling-nope-casktap/cask", r.stdout)
             self.assertIn("BROKEN [gh] owner/aitooling-nope-plugins", r.stdout)
             self.assertIn("BROKEN [gh] owner/aitooling-nope-skills", r.stdout)
             self.assertIn("BROKEN [gh] owner/aitooling-nope-uv", r.stdout)
@@ -194,6 +200,18 @@ splits OK/DEAD the way the other kinds do and a 429/5xx stays UNCHECKED.
    context7`) has no offline authority, so it is checked by detector AM's verb snapshot and
    never looked up as a package.
 
+> **Correction at implementation (2026-09-16).** The single brew pattern above is incomplete.
+> The census this plan asked for found one `--cask` line and three `owner/tap/name` lines in
+> `evaluations/`, and the core formula API answers all four with 404 — four false `BROKEN`
+> lines on four correct pages, gate exit 1. Shipped instead: three mutually exclusive brew
+> patterns plus two kinds — `cask` (`https://formulae.brew.sh/api/cask/<pkg>.json`, verified
+> 200 for `ping-island`) and `tap` (the target stays the page's `owner/tap/name` token and the
+> checker delegates to the existing `gh_repo_exists("<owner>/homebrew-<tap>")`; all three tap
+> repos were verified to exist). One command still yields exactly one target, and the real-tree
+> population is unchanged at **128** — the fix reclassifies four existing targets and discovers
+> nothing new. The e2e fixture below therefore carries three brew lines as well, which is where
+> the one-target-per-command rule gets pinned.
+
 **Verify (GREEN).**
 
 ```bash
@@ -201,10 +219,12 @@ uv run -m unittest test_automation.TestHarnessGapDetectors -v   # expect: OK, 0 
 uv run audit-evals.py --installs
 ```
 
-Expected: `== A. install resolver — N/N target(s) checked ==` with **N > 97**, then
+Expected: `== A. install resolver — 128/128 target(s) checked ==` — the value measured at
+implementation, 31 new targets over the 97 baseline, every one reachable — then
 `OK — every install target resolves`. If a `BROKEN` line appears, **STOP and report it**: a
 real 404 means the page tells a reader to install something that does not exist. Do not
-loosen a pattern to make it go away.
+loosen a pattern to make it go away — a false 404 from the wrong registry is fixed by fixing
+the registry (see the correction note above), never by widening the pattern back.
 
 Commit: `feat(audit): resolve the hermes, skills-CLI, brew and uv-tool install forms`
 
@@ -579,9 +599,9 @@ make fix            # apply-mode fixers, then re-runs check — the tree must en
 
 `make check` is exactly what CI runs (`integrity.yml` → `make check`), so a green local run
 is the bar. PR #11's body records the baseline: **97/97** install targets and **748** unit
-tests. The target count must go **up** (that is the point of Task 1), and the suite grows by
-exactly **two** cases — the e2e pair in `TestHarnessGapDetectors` — plus two edits to existing
-tests in Task 3. Nothing is added for an internal helper, and the structural page check a
+tests. The target count goes **up, 97 → 128**, and every new target must still resolve (that is the
+point of Task 1); the suite grows by exactly **two** cases — the e2e pair in
+`TestHarnessGapDetectors` — plus two edits to existing tests in Task 3. Nothing is added for an internal helper, and the structural page check a
 first draft would add is deliberately dropped (Task 4).
 
 ## Risks, tradeoffs, and open questions
@@ -590,9 +610,16 @@ first draft would add is deliberately dropped (Task 4).
   gating targets: a renamed repo or a removed formula goes red on a page that looks healthy.
   That is the intended behaviour (it is how `obra/superpowers` was caught), but the remedy is
   to fix the page — never to widen a pattern back.
-- **`brew install --cask …` would be checked against the formula API.** No `--cask` line
-  exists in the scanned corpus today; if one appears, the formula lookup is the wrong
-  registry and the pattern needs a guard. Census it before assuming.
+- **`brew install --cask …` is a different registry — the census proved it, and the guard is in.**
+  The plan's first cut resolved every brew token against the core formula API, which turned four
+  correct pages into false `BROKEN` lines (`ping-island`, `humanlayer/humanlayer/codelayer`,
+  `Kilo-Org/tap/kilo`, `esengine/reasonix/reasonix` — exit 1). Verified at implementation:
+  `api/formula/ping-island.json` is 404 while `api/cask/ping-island.json` is 200, and the three
+  `owner/tap/name` forms map to `owner/homebrew-<tap>` GitHub repos that all exist. The shipped
+  fix is two extra kinds — `cask` (the cask API) and `tap` (the tap's GitHub repo, delegating to
+  the existing `gh_repo_exists`) — with mutually exclusive patterns so one command still yields
+  exactly one target. This is why the census line below mattered: the plan asserted no `--cask`
+  line existed, and the corpus contained one plus three tap forms.
 - **`stack_tiers`' arity changes from 2 to 3.** Its docstring claims two tiers, `apply()`
   splats it, and `TestTierStack` unpacks it — all three are named in Task 3. The alternative
   (filtering the population instead of bucketing it) would move the page's "30 tools"
