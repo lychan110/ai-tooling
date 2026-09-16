@@ -27,7 +27,7 @@ cat opencode.json ~/.config/opencode/opencode.json 2>/dev/null
 
 ### 2. Diff against catalog
 
-Read `${CLAUDE_PLUGIN_ROOT}/docs/CATALOG.md`. Compare:
+Read `${AI_TOOLING_DOCS}/CATALOG.md`. Compare:
 - **New stars not in catalog** — research each one and classify as AI_DEV_TOOL or NOT_RELEVANT
 - **Unstarred repos still in catalog** — flag but don't remove (may still be relevant)
 - **New local installs not in catalog** — add them
@@ -45,9 +45,9 @@ Determine: name, type, category, one-liner, problem it solves, overlaps with.
 
 ### 4. Update
 
-- Add new entries to the correct category table in `${CLAUDE_PLUGIN_ROOT}/docs/CATALOG.md`
+- Add new entries to the correct category table in `${AI_TOOLING_DOCS}/CATALOG.md`
 - Fill "Overlaps with" by checking existing entries in the same category
-- If a new entry overlaps with a tool in `${CLAUDE_PLUGIN_ROOT}/docs/WORKFLOW.md`, flag it for review
+- If a new entry overlaps with a tool in `${AI_TOOLING_DOCS}/WORKFLOW.md`, flag it for review
 
 ### 5. Report
 

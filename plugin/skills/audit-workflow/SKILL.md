@@ -33,7 +33,7 @@ ls AGENTS.md opencode.json .agents/skills/ 2>/dev/null
 
 ### 2. Map against WORKFLOW.md
 
-Read `${CLAUDE_PLUGIN_ROOT}/docs/WORKFLOW.md`. For each dev loop stage (inner: Plan, Implement, Verify, Review, Ship, Reflect; outer: Discover, Architect, Decompose, Integrate, Retrospect), check which recommended tools are installed and which are missing. Also check cross-cutting sections (Cost Efficiency, Security).
+Read `${AI_TOOLING_DOCS}/WORKFLOW.md`. For each dev loop stage (inner: Plan, Implement, Verify, Review, Ship, Reflect; outer: Discover, Architect, Decompose, Integrate, Retrospect), check which recommended tools are installed and which are missing. Also check cross-cutting sections (Cost Efficiency, Security).
 
 ### 3. Check for anti-patterns
 

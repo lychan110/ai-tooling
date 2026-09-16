@@ -65,11 +65,11 @@ done
 # broken here, so check-links.py keeps reporting it where the fix belongs.
 uv run "$REPO_ROOT/rewrite-doc-links.py" "$DEST_DOCS" > /dev/null
 
-# --- Skills: plugin/skills/ → DEST_SKILLS (strip ${CLAUDE_PLUGIN_ROOT}/docs/ paths) ---
+# --- Skills: plugin/skills/ → DEST_SKILLS (strip ${AI_TOOLING_DOCS}/ paths) ---
 for skill_dir in "$PLUGIN_SKILLS"/*/; do
   skill_name=$(basename "$skill_dir")
   mkdir -p "$DEST_SKILLS/$skill_name"
-  sed 's|\${CLAUDE_PLUGIN_ROOT}/docs/||g' "$skill_dir/SKILL.md" > "$DEST_SKILLS/$skill_name/SKILL.md"
+  sed 's|\${AI_TOOLING_DOCS}/||g' "$skill_dir/SKILL.md" > "$DEST_SKILLS/$skill_name/SKILL.md"
 done
 
 # --- Check mode: diff the freshly-synced scratch tree against the committed copies ---

@@ -30,14 +30,14 @@ Determine:
 
 ### 2. Check for overlap
 
-Read the catalog at `${CLAUDE_PLUGIN_ROOT}/docs/CATALOG.md` and find entries in the same category. For each overlapping tool:
+Read the catalog at `${AI_TOOLING_DOCS}/CATALOG.md` and find entries in the same category. For each overlapping tool:
 - Is the new tool strictly better, or just different?
 - Does it replace something already in the workflow, or add alongside it?
 - Would adopting it mean running two tools that solve the same problem?
 
 ### 3. Assess dev loop stage and quality signal fit
 
-Read `${CLAUDE_PLUGIN_ROOT}/docs/WORKFLOW.md`. Determine:
+Read `${AI_TOOLING_DOCS}/WORKFLOW.md`. Determine:
 - Which dev loop stage does this tool serve? (Inner: Plan, Implement, Verify, Review, Ship, Reflect; Outer: Discover, Architect, Decompose, Integrate, Retrospect)
 - Which quality signals does it improve? (Correctness, Speed, Maintainability, Safety, Cost Efficiency, Verifiability)
 - For Verifiability specifically: does the tool make its own output easier or harder to check? A tool that emits more code at unchanged quality is negative here even when it scores well on Speed.
@@ -74,4 +74,4 @@ Output a structured evaluation:
 
 ### 5. Update catalog
 
-If the recommendation is ADOPT or REPLACE, offer to add the entry to `${CLAUDE_PLUGIN_ROOT}/docs/CATALOG.md` and update `${CLAUDE_PLUGIN_ROOT}/docs/WORKFLOW.md`.
+If the recommendation is ADOPT or REPLACE, offer to add the entry to `${AI_TOOLING_DOCS}/CATALOG.md` and update `${AI_TOOLING_DOCS}/WORKFLOW.md`.
