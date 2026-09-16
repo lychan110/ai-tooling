@@ -105,8 +105,9 @@ keep `.opencode/agents/eval-runner.md` canonical. Verify: `make check`.
 **S5 — Decide the `plugin/` question (STOP: needs a human).** `plugin/` is a
 *published Claude Code marketplace artifact*, not a dependency. Removing the
 dependency does not require removing distribution. Decide: keep shipping a Claude
-Code plugin, add a package for another harness, or drop `plugin/` entirely. Do not
-guess — see STOP conditions.
+Code plugin, add a package for another harness, or drop `plugin/` entirely. Decided
+2026-09-15 by the owner: the Claude Code marketplace goes, and plan 018 ships the
+opencode and Hermes installs instead.
 
 ## Verification
 
