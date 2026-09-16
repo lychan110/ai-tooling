@@ -40,7 +40,7 @@ To bootstrap any repo with these conventions, run `/setup-workflow`.
 - **[NEXT-EVALS.md](NEXT-EVALS.md)** — the ranked *evaluate-next* queue: which not-yet-evaluated tools to run first, derived from overlap pressure and per-stage gaps.
 - **[WATCHLIST.md](WATCHLIST.md)** — the *revisit* page: deferred verdicts and their triggers, stale evals, candidates flagged for a hands-on eval, and unverified claims — all derived.
 - **[LEARNING.md](https://github.com/mattbutlerengineering/ai-tooling/blob/main/LEARNING.md)** — passive learning: channels, talks, and references worth following.
-- **Scan intake** — newly-found tools arrive as [GitHub issues labeled `scan`](https://github.com/mattbutlerengineering/ai-tooling/issues?q=is%3Aissue+label%3Ascan), triaged into the catalog.
+- **Scan intake** — newly-found tools arrive as [GitHub issues labeled `scan`](https://github.com/lychan110/ai-tooling/issues?q=is%3Aissue+label%3Ascan), triaged into the catalog.
 
 ## How this stays honest
 
