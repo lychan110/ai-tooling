@@ -59,7 +59,7 @@ Use inner/outer loop vocabulary: Plan, Implement, Verify, Review, Ship, Reflect.
 ## Skills and routines
 
 - `/add-catalog-entry` runs the catalog, comparison, count, sync, and audit workflow.
-- Issue tracker: GitHub Issues on `mattbutlerengineering/ai-tooling`; see `docs/agents/issue-tracker.md`.
+- Issue tracker: GitHub Issues on `lychan110/ai-tooling`; see `docs/agents/issue-tracker.md`.
 - Labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`.
 - Scheduled routines land their own PR only after CI is green; eliminate-only still applies.
 
