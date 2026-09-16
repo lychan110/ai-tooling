@@ -44,6 +44,8 @@ tar -xf abtop.tar.xz
 ./abtop --json | python3 -c 'import sys,json; json.load(sys.stdin)'   # valid; exit 0
 ```
 
+Installer host census (SOURCE-ONLY note, read 2026-09-16 from the repo README's "Supported Agents" table via `ctx_url_read`): 3 host agents — Claude Code, Codex CLI, OpenCode — no Hermes target, matching the `opencode` marking in STACK.md's Install cell.
+
 ## What worked
 
 - **Zero-config, zero-auth discovery.** With nothing configured, abtop found both live agent sessions on the box and produced an accurate snapshot. No API key, no login, no setup step needed for read-only monitoring.
