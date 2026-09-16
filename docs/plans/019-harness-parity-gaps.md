@@ -431,10 +431,11 @@ reads "install with confidence" covers seven things nobody can install. The popu
 the bucketing changes.
 
 **RED.** No new test class: the invariant this change needs already exists and must be
-widened, not duplicated. Two existing tests in `test_automation.py` need edits, and a unit
-case over hand-built rows is deliberately **not** added (`AGENTS.md`: no unit tests for
-internal helpers; the only test worth adding is one that would fail if the behaviour
-regressed).
+widened, not duplicated. **Four** existing call sites in `test_automation.py` need edits — the
+arity change from two return values to three breaks every unpacking, not only the one in
+`TestTierStack` — and a unit case over hand-built rows is deliberately **not** added
+(`AGENTS.md`: no unit tests for internal helpers; the only test worth adding is one that would
+fail if the behaviour regressed).
 
 1. `test_tiering_split_derived_from_evidence` (~line 4164) unpacks two values — make it three:
 
@@ -454,6 +455,12 @@ regressed).
         self.assertEqual(len(tiers), 3, "STACK.md should render two tiers plus the dropped group")
         self.assertEqual(sum(tiers), n)
 ```
+
+3. `TestStackCount.test_the_two_consumers_render_the_same_population` (~line 4256) unpacks the
+   same two values; unpack three and keep summing every group, so the population assertion
+   still holds.
+4. `TestWorkflowDrift.test_every_consumer_reads_one_definition` (~line 5162) unpacks them too;
+   unpack three and flatten `[*t1, *t2, *dropped]` so the one-definition claim survives.
 
 Leave that test's `assertIn(f"The {n} tools worth installing", text)` line alone — it is the
 reason the population must not shrink.
@@ -630,10 +637,12 @@ first draft would add is deliberately dropped (Task 4).
   the existing `gh_repo_exists`) — with mutually exclusive patterns so one command still yields
   exactly one target. This is why the census line below mattered: the plan asserted no `--cask`
   line existed, and the corpus contained one plus three tap forms.
-- **`stack_tiers`' arity changes from 2 to 3.** Its docstring claims two tiers, `apply()`
-  splats it, and `TestTierStack` unpacks it — all three are named in Task 3. The alternative
-  (filtering the population instead of bucketing it) would move the page's "30 tools"
-  sentence through `reconcile-counts.py` and every count derived from it.
+- **`stack_tiers`' arity changes from 2 to 3.** Its docstring claimed two tiers, `apply()`
+  splats it, and **four** call sites unpack it — `TestTierStack`'s split test, the live-tree
+  invariant, `TestStackCount`'s two-consumers test and `TestWorkflowDrift`'s one-definition
+  test. All four are named in Task 3, and the module docstring documents the third group now.
+  The alternative — filtering the population instead of bucketing it — would move the page's
+  "30 tools" sentence through `reconcile-counts.py` and every count derived from it.
 - **AM is report-only and stays that way until it is quiet**, following the `--overlaps`
   lifecycle: report first, gate once the findings are dispositioned. Do not add it to
   `DEFAULT_GATES` in this plan, and do not wire it into CI here.
