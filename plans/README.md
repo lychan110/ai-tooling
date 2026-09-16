@@ -42,7 +42,7 @@ Execute in the order below unless dependencies say otherwise. Each executor: rea
 | [016](016-decouple-from-claude-code.md) | Decouple from Claude Code — harness-agnostic instructions, skills, hooks | P1 | L | — | TODO |
 | [017](../docs/plans/017-hermes-harness-support.md) | Support Hermes Agent alongside opencode | P1 | M | — | IN PROGRESS 2026-09-15 |
 | [018](../docs/plans/018-opencode-hermes-distribution.md) | Install on opencode and Hermes; delete the Claude Code marketplace | P1 | M | 016 | IN PROGRESS 2026-09-15 |
-| [019](../docs/plans/019-harness-parity-gaps.md) | Check the install verbs and the dropped picks the harness column introduced | P1 | M | 11 | IN PROGRESS 2026-09-16 |
+| [019](../docs/plans/019-harness-parity-gaps.md) | Check the install verbs and the dropped picks the harness column introduced | P1 | M | 11 | DONE 2026-09-16 ([#12](https://github.com/lychan110/ai-tooling/pull/12), [#14](https://github.com/lychan110/ai-tooling/pull/14), [#15](https://github.com/lychan110/ai-tooling/pull/15); issue [#16](https://github.com/lychan110/ai-tooling/issues/16) filed) |
 
 Status values: TODO | IN PROGRESS | DONE | BLOCKED (with one-line reason) | REJECTED (with one-line rationale)
 
