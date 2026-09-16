@@ -1,4 +1,12 @@
 {
+  "00200200/repro-lens": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T22:48:06Z",
+    "resolved_name": "00200200/repro-lens",
+    "stars": 9
+  },
   "0x0funky/agent-sprite-forge": {
     "archived": false,
     "discontinued": null,
@@ -28,6 +36,22 @@
     "pushed_at": "2026-08-03T08:43:03Z",
     "resolved_name": "0xNyk/council-of-high-intelligence",
     "stars": 3819
+  },
+  "0xnyn/airship": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T02:09:45Z",
+    "resolved_name": "0xnyn/airship",
+    "stars": 687
+  },
+  "0xsline/awesome-deepseek-harness": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "CC0-1.0",
+    "pushed_at": "2026-09-08T06:53:48Z",
+    "resolved_name": "0xsline/awesome-deepseek-harness",
+    "stars": 1068
   },
   "0xsteph/pentest-ai": {
     "archived": false,
@@ -107,6 +131,14 @@
     "resolved_name": "1weiho/open-slide",
     "stars": 6097
   },
+  "2akouwu/reverify": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-07T10:12:07Z",
+    "resolved_name": "2akouwu/reverify",
+    "stars": 1210
+  },
   "8090-inc/software-factory-harness": {
     "archived": false,
     "discontinued": null,
@@ -177,6 +209,14 @@
     "resolved_name": "abluva/mcp-remote",
     "stars": 15
   },
+  "acryldev/acryl": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T03:44:33Z",
+    "resolved_name": "acryldev/acryl",
+    "stars": 240
+  },
   "activeloopai/hivemind": {
     "archived": false,
     "discontinued": null,
@@ -197,6 +237,14 @@
     "resolved_name": "activepieces/activepieces",
     "stars": 23581
   },
+  "adand-91/requirement-ledger": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T01:52:19Z",
+    "resolved_name": "adand-91/gpt-6-astra-skill",
+    "stars": 120
+  },
   "addyosmani/agent-skills": {
     "archived": false,
     "discontinued": null,
@@ -209,6 +257,14 @@
     "pushed_at": "2026-08-04T04:08:25Z",
     "resolved_name": "addyosmani/agent-skills",
     "stars": 81681
+  },
+  "addyosmani/factory": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-21T18:28:27Z",
+    "resolved_name": "addyosmani/factory",
+    "stars": 188
   },
   "addyosmani/web-quality-skills": {
     "archived": false,
@@ -238,6 +294,30 @@
     "resolved_name": "adrida/hud-mode",
     "stars": 26
   },
+  "adscanpro/claude-ad": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-24T18:14:38Z",
+    "resolved_name": "ADScanPro/Claude-AD",
+    "stars": 200
+  },
+  "aethrox/doctrine": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-11T09:08:30Z",
+    "resolved_name": "aethrox/doctrine",
+    "stars": 18
+  },
+  "affaan-m/agentshield": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-10T12:51:47Z",
+    "resolved_name": "affaan-m/agentshield",
+    "stars": 1189
+  },
   "affaan-m/ecc": {
     "archived": false,
     "discontinued": null,
@@ -257,6 +337,22 @@
     "pushed_at": "2026-08-05T01:09:17Z",
     "resolved_name": "ag-ui-protocol/ag-ui",
     "stars": 15133
+  },
+  "agent-clinic/claude-md-doctor": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-30T23:36:44Z",
+    "resolved_name": "agent-clinic/claude-md-doctor",
+    "stars": 38
+  },
+  "agent-launch/agent-launcher": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-10T22:21:23Z",
+    "resolved_name": "agent-launch/agent-launcher",
+    "stars": 184
   },
   "agent-of-empires/agent-of-empires": {
     "archived": false,
@@ -297,6 +393,14 @@
     "pushed_at": "2026-08-04T21:27:24Z",
     "resolved_name": "Agenta-AI/agenta",
     "stars": 4431
+  },
+  "agenta-ai/awesome-ai-agent-platforms": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "CC0-1.0",
+    "pushed_at": "2026-09-03T16:17:23Z",
+    "resolved_name": "Agenta-AI/awesome-ai-agent-platforms",
+    "stars": 198
   },
   "agentforce314/clawcodex": {
     "archived": false,
@@ -466,6 +570,14 @@
     "resolved_name": "AixleHQ/flow",
     "stars": 4
   },
+  "akimiya-z/codex-guard": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-03T20:24:41Z",
+    "resolved_name": "Akimiya-z/codex-guard",
+    "stars": 140
+  },
   "alan-thegentleman/gentleman-book-mcp": {
     "archived": false,
     "discontinued": null,
@@ -476,6 +588,14 @@
     "resolved_name": "Alan-TheGentleman/gentleman-book-mcp",
     "stars": 135
   },
+  "albertchamberlain/awesome-okf": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T02:03:40Z",
+    "resolved_name": "Albertchamberlain/Awesome-OKF",
+    "stars": 100
+  },
   "alchaincyf/huashu-design": {
     "archived": false,
     "discontinued": null,
@@ -485,6 +605,14 @@
     "pushed_at": "2026-07-27T02:53:02Z",
     "resolved_name": "alchaincyf/huashu-design",
     "stars": 22471
+  },
+  "alexanderradahl/mac-developer-bridge": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-03T03:38:36Z",
+    "resolved_name": "alexanderradahl/mac-developer-bridge",
+    "stars": 39
   },
   "alibaba/open-code-review": {
     "archived": false,
@@ -556,6 +684,22 @@
     "resolved_name": "amElnagdy/guard-skills",
     "stars": 1140
   },
+  "amelnagdy/review-skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-26T08:37:47Z",
+    "resolved_name": "amElnagdy/review-skills",
+    "stars": 116
+  },
+  "anasse-hassala/memorymint": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-08T06:52:24Z",
+    "resolved_name": "anasse-hassala/MemoryMint",
+    "stars": 41
+  },
   "andrewyng/aisuite": {
     "archived": false,
     "discontinued": null,
@@ -581,6 +725,14 @@
     "pushed_at": "2026-08-07T06:11:30Z",
     "resolved_name": "Anionex/agent-vision-toolkit",
     "stars": 346
+  },
+  "anionex/dsh-vision-toolkit": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T07:07:43Z",
+    "resolved_name": "Anionex/dsh-vision-toolkit",
+    "stars": 881
   },
   "anivar/decern": {
     "archived": false,
@@ -710,6 +862,14 @@
     "resolved_name": "apache/devlake",
     "stars": 3094
   },
+  "apodexai/frontieragent": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-16T00:17:25Z",
+    "resolved_name": "ApodexAI/FrontierAgent",
+    "stars": 3292
+  },
   "app-brew/claude-nanny": {
     "archived": false,
     "fetched_at": "2026-08-07",
@@ -727,6 +887,14 @@
     "pushed_at": "2026-07-09T18:49:14Z",
     "resolved_name": "Ar9av/PaperOrchestra",
     "stars": 628
+  },
+  "arihantdeva/heimdall": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-11T15:29:11Z",
+    "resolved_name": "ArihantDeva/heimdall",
+    "stars": 100
   },
   "arize-ai/openinference": {
     "archived": false,
@@ -748,6 +916,14 @@
     "resolved_name": "Arize-ai/phoenix",
     "stars": 10902
   },
+  "artemnovichkov/xcode-skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NONE",
+    "pushed_at": "2026-09-09T20:22:28Z",
+    "resolved_name": "artemnovichkov/xcode-skills",
+    "stars": 24
+  },
   "asgeirtj/system_prompts_leaks": {
     "archived": false,
     "discontinued": null,
@@ -767,6 +943,14 @@
     "pushed_at": "2026-07-27T05:40:40Z",
     "resolved_name": "ashishpatel26/500-AI-Agents-Projects",
     "stars": 35737
+  },
+  "ashutoshsinghpr7/wikiskill": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T21:06:29Z",
+    "resolved_name": "ashutoshsinghpr7/wikiskill",
+    "stars": 210
   },
   "assistant-ui/assistant-ui": {
     "archived": false,
@@ -818,6 +1002,14 @@
     "resolved_name": "athola/claude-night-market",
     "stars": 325
   },
+  "atomburstofficial/geiger": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-12T10:55:34Z",
+    "resolved_name": "Atomburstofficial/geiger",
+    "stars": 135
+  },
   "automazeio/ccpm": {
     "archived": false,
     "discontinued": null,
@@ -827,6 +1019,14 @@
     "pushed_at": "2026-03-18T12:15:24Z",
     "resolved_name": "automazeio/ccpm",
     "stars": 8311
+  },
+  "avijit07x/claude-db": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-30T12:39:39Z",
+    "resolved_name": "Avijit07x/claude-db",
+    "stars": 225
   },
   "aws/agent-toolkit-for-aws": {
     "archived": false,
@@ -858,6 +1058,14 @@
     "resolved_name": "awslabs/mcp",
     "stars": 9551
   },
+  "azrtydxb/procoder": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-14T11:03:45Z",
+    "resolved_name": "azrtydxb/procoder",
+    "stars": 207
+  },
   "backendarchitect/gospect-mcp": {
     "archived": false,
     "fetched_at": "2026-08-07",
@@ -875,6 +1083,14 @@
     "pushed_at": "2026-08-05T04:41:15Z",
     "resolved_name": "backnotprop/plannotator",
     "stars": 7525
+  },
+  "bar181/bar-observatory": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-27T21:34:04Z",
+    "resolved_name": "bar181/bar-observatory",
+    "stars": 22
   },
   "bayramannakov/claude-reflect": {
     "archived": false,
@@ -986,6 +1202,14 @@
     "resolved_name": "browser-use/browser-use",
     "stars": 107900
   },
+  "bsab/italia-mcp-servers": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-11T08:34:05Z",
+    "resolved_name": "bsab/italia-mcp-servers",
+    "stars": 101
+  },
   "bug0inc/passmark": {
     "archived": false,
     "discontinued": null,
@@ -995,6 +1219,14 @@
     "pushed_at": "2026-07-30T08:11:01Z",
     "resolved_name": "bug0inc/passmark",
     "stars": 1240
+  },
+  "buildd-ai/buildd": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-15T18:02:12Z",
+    "resolved_name": "buildd-ai/buildd",
+    "stars": 1
   },
   "builderio/agent-native": {
     "archived": false,
@@ -1011,6 +1243,14 @@
     "pushed_at": "2026-08-05T18:55:22Z",
     "resolved_name": "BuilderIO/agent-native",
     "stars": 4411
+  },
+  "bukacdan/mergeproof": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-02T09:19:04Z",
+    "resolved_name": "bukacdan/MergeProof",
+    "stars": 3
   },
   "bybit-exchange/kaas": {
     "archived": false,
@@ -1062,6 +1302,30 @@
     "resolved_name": "can1357/oh-my-pi",
     "stars": 21936
   },
+  "carrick-tools/carrick": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-09-16T00:07:19Z",
+    "resolved_name": "carrick-tools/carrick",
+    "stars": 3
+  },
+  "cbrock84/headcount": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T03:01:35Z",
+    "resolved_name": "cbrock84/headcount",
+    "stars": 1524
+  },
+  "ccch1mneyyy/dsh-tui": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T03:15:33Z",
+    "resolved_name": "ccch1mneyyy/dsh-TUI",
+    "stars": 3053
+  },
   "ccusage/ccusage": {
     "archived": false,
     "discontinued": null,
@@ -1071,6 +1335,22 @@
     "pushed_at": "2026-08-05T00:51:34Z",
     "resolved_name": "ccusage/ccusage",
     "stars": 17727
+  },
+  "cdmx-in/security-review": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-07T19:12:14Z",
+    "resolved_name": "cdmx-in/security-review",
+    "stars": 4
+  },
+  "centsandcode/rubber-duck": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-04T08:33:16Z",
+    "resolved_name": "centsandcode/rubber-duck",
+    "stars": 15
   },
   "chachamaru127/claude-code-harness": {
     "archived": false,
@@ -1082,6 +1362,14 @@
     "resolved_name": "Chachamaru127/claude-code-harness",
     "stars": 3044
   },
+  "charlie947/show-me": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-15T15:31:52Z",
+    "resolved_name": "charlie947/show-me",
+    "stars": 67
+  },
   "cherryhq/cherry-studio": {
     "archived": false,
     "discontinued": null,
@@ -1092,6 +1380,22 @@
     "resolved_name": "CherryHQ/cherry-studio",
     "stars": 49421
   },
+  "chigwell/penelopa.ai": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "AGPL-3.0",
+    "pushed_at": "2026-09-14T08:32:38Z",
+    "resolved_name": "chigwell/Penelopa.ai",
+    "stars": 140
+  },
+  "chl03ks/shut-up-and-code": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-14T17:09:15Z",
+    "resolved_name": "chl03ks/shut-up-and-code",
+    "stars": 12
+  },
   "chris-asmussen/warden": {
     "archived": false,
     "discontinued": null,
@@ -1101,6 +1405,14 @@
     "pushed_at": "2026-07-31T22:08:20Z",
     "resolved_name": "chris-asmussen/warden",
     "stars": 10
+  },
+  "christiangrey922/multi-agent-workflow-lab": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-14T03:42:48Z",
+    "resolved_name": "christiangrey922/multi-agent-workflow-lab",
+    "stars": 86
   },
   "chromedevtools/chrome-devtools-mcp": {
     "archived": false,
@@ -1242,6 +1554,14 @@
     "resolved_name": "codejunkie99/agentic-stack",
     "stars": 2216
   },
+  "codejunkie99/agentic-stack-desktop": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-10T07:19:05Z",
+    "resolved_name": "codejunkie99/agentic-stack-desktop",
+    "stars": 60
+  },
   "coderamp-labs/gitingest": {
     "archived": false,
     "discontinued": null,
@@ -1282,6 +1602,14 @@
     "resolved_name": "colbymchenry/codegraph",
     "stars": 64594
   },
+  "coldteadotai/pr-lens": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T14:45:00Z",
+    "resolved_name": "coldteadotai/pr-lens",
+    "stars": 1176
+  },
   "coleam00/archon": {
     "archived": false,
     "discontinued": null,
@@ -1301,6 +1629,14 @@
     "pushed_at": "2026-03-01T13:36:16Z",
     "resolved_name": "coleam00/excalidraw-diagram-skill",
     "stars": 4316
+  },
+  "coleam00/skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T01:12:10Z",
+    "resolved_name": "coleam00/skills",
+    "stars": 547
   },
   "comet-ml/opik": {
     "archived": false,
@@ -1397,6 +1733,14 @@
     "resolved_name": "continuedev/continue",
     "stars": 35324
   },
+  "continuum-ai-corp/orcareplay": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-16T03:54:01Z",
+    "resolved_name": "Continuum-AI-Corp/OrcaReplay",
+    "stars": 248
+  },
   "coordclaw/coordclaw": {
     "archived": false,
     "discontinued": null,
@@ -1467,6 +1811,14 @@
     "resolved_name": "crewAIInc/crewAI",
     "stars": 56634
   },
+  "crichars/embedded-project-governance": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-03T03:41:38Z",
+    "resolved_name": "crichars/embedded-project-governance",
+    "stars": 104
+  },
   "cristicretu/diri": {
     "archived": false,
     "fetched_at": "2026-08-07",
@@ -1474,6 +1826,22 @@
     "pushed_at": "2026-08-07T11:15:43Z",
     "resolved_name": "cristicretu/diri",
     "stars": 218
+  },
+  "ctrlrun/ctrlrun": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-16T00:40:09Z",
+    "resolved_name": "CTRLRun/ctrlrun",
+    "stars": 22
+  },
+  "da7-tech/sureforge": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-09T13:34:54Z",
+    "resolved_name": "Da7-Tech/SureForge",
+    "stars": 105
   },
   "dair-ai/prompt-engineering-guide": {
     "archived": false,
@@ -1505,6 +1873,14 @@
     "resolved_name": "DanMcInerney/architect-loop",
     "stars": 620
   },
+  "danyuchn/iso-24495-skill": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-13T15:30:33Z",
+    "resolved_name": "danyuchn/iso-24495-skill",
+    "stars": 140
+  },
   "data-privacy-stack/presidio": {
     "archived": false,
     "discontinued": null,
@@ -1535,6 +1911,14 @@
     "resolved_name": "davepoon/buildwithclaude",
     "stars": 3252
   },
+  "davidmosiah/delx-memory": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-07T12:17:07Z",
+    "resolved_name": "davidmosiah/delx-memory",
+    "stars": 1
+  },
   "davila7/claude-code-templates": {
     "archived": false,
     "discontinued": null,
@@ -1555,6 +1939,14 @@
     "resolved_name": "daytonaio/daytona",
     "stars": 72054
   },
+  "decionis/agent-safe-pipeline": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-16T03:13:27Z",
+    "resolved_name": "decionis/agent-safe-pipeline",
+    "stars": 533
+  },
   "deepaksinghcs14/deadeye-cc": {
     "archived": false,
     "fetched_at": "2026-08-07",
@@ -1572,6 +1964,14 @@
     "pushed_at": "2026-08-02T12:32:39Z",
     "resolved_name": "deeplethe/forkd",
     "stars": 2739
+  },
+  "deepseek-ai/deepseek-harness": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T04:51:11Z",
+    "resolved_name": "deepseek-ai/deepseek-harness",
+    "stars": 225593
   },
   "deepset-ai/haystack": {
     "archived": false,
@@ -1663,6 +2063,30 @@
     "resolved_name": "disler/claude-code-hooks-multi-agent-observability",
     "stars": 1508
   },
+  "dixie-sketch/clawdeck": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-04T15:23:18Z",
+    "resolved_name": "Dixie-sketch/Clawdeck",
+    "stars": 34
+  },
+  "dmmulroy/anti-slop": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-10T13:53:24Z",
+    "resolved_name": "dmmulroy/anti-slop",
+    "stars": 4533
+  },
+  "dmytrome/groundhog": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T19:01:14Z",
+    "resolved_name": "dmytrome/groundhog",
+    "stars": 0
+  },
   "docmd-io/docmd": {
     "archived": false,
     "discontinued": null,
@@ -1672,6 +2096,14 @@
     "pushed_at": "2026-08-04T00:46:15Z",
     "resolved_name": "docmd-io/docmd",
     "stars": 2220
+  },
+  "dogo/stargate": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-13T12:18:29Z",
+    "resolved_name": "dogo/stargate",
+    "stars": 0
   },
   "donchitos/claude-code-game-studios": {
     "archived": false,
@@ -1693,6 +2125,22 @@
     "resolved_name": "Doorman11991/smallcode",
     "stars": 1998
   },
+  "doxaras/claude-rotate": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-08T12:06:58Z",
+    "resolved_name": "doxaras/claude-rotate",
+    "stars": 30
+  },
+  "drdroidlab/open-index": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-12T07:33:27Z",
+    "resolved_name": "DrDroidLab/open-index",
+    "stars": 109
+  },
   "dsherret/ts-morph": {
     "archived": false,
     "discontinued": null,
@@ -1712,6 +2160,22 @@
     "pushed_at": "2026-08-05T04:23:56Z",
     "resolved_name": "duriantaco/skylos",
     "stars": 482
+  },
+  "duty1g/x64dbg-mcp-server": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-10T17:54:29Z",
+    "resolved_name": "duty1g/x64dbg-mcp-server",
+    "stars": 1970
+  },
+  "dziksu/structsmith": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-11T19:21:49Z",
+    "resolved_name": "dziksu/StructSmith",
+    "stars": 15
   },
   "e2b-dev/awesome-ai-agents": {
     "archived": false,
@@ -1803,6 +2267,30 @@
     "resolved_name": "elementalsouls/Claude-BugHunter",
     "stars": 3296
   },
+  "emanuelel/dont-reinvent": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-28T10:45:14Z",
+    "resolved_name": "Emanuelel/dont-reinvent",
+    "stars": 36
+  },
+  "emiquelito/agent-delivery-gates": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-10T22:19:32Z",
+    "resolved_name": "emiquelito/agent-delivery-gates",
+    "stars": 0
+  },
+  "endokelp/only-skill-you-need": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-27T22:48:43Z",
+    "resolved_name": "Endokelp/Only-Skill-You-Need",
+    "stars": 36
+  },
   "enowdev/succubus": {
     "archived": false,
     "discontinued": null,
@@ -1863,6 +2351,14 @@
     "resolved_name": "evalstate/fast-agent",
     "stars": 3880
   },
+  "evermind-ai/skillcorpus": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-11T02:25:58Z",
+    "resolved_name": "EverMind-AI/SkillCorpus",
+    "stars": 647
+  },
   "everyinc/compound-engineering-plugin": {
     "archived": false,
     "discontinued": null,
@@ -1903,6 +2399,14 @@
     "resolved_name": "exa-labs/exa-mcp-server",
     "stars": 4816
   },
+  "extracurricular-ai/filesnap": {
+    "archived": null,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "404",
+    "pushed_at": null,
+    "resolved_name": null,
+    "stars": null
+  },
   "eyaltoledano/claude-task-master": {
     "archived": false,
     "discontinued": null,
@@ -1928,6 +2432,30 @@
     "resolved_name": "eze-is/web-access",
     "stars": 8551
   },
+  "ezra144israel/governed-agent-skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T01:31:06Z",
+    "resolved_name": "Ezra144israel/governed-agent-skills",
+    "stars": 22
+  },
+  "fabricioctelles/jump-skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T11:14:34Z",
+    "resolved_name": "fabricioctelles/jump-skills",
+    "stars": 29
+  },
+  "fankchen/tracecrate": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-13T13:44:14Z",
+    "resolved_name": "FankChen/tracecrate",
+    "stars": 130
+  },
   "fareedkhan-dev/claude-code-staff-engineer": {
     "archived": false,
     "discontinued": null,
@@ -1947,6 +2475,14 @@
     "pushed_at": "2026-08-05T01:04:15Z",
     "resolved_name": "farion1231/cc-switch",
     "stars": 124470
+  },
+  "fdiblen/rseng-agent-skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-07T08:50:48Z",
+    "resolved_name": "fdiblen/rseng-agent-skills",
+    "stars": 16
   },
   "finna/finn-loop": {
     "archived": false,
@@ -1998,6 +2534,14 @@
     "resolved_name": "Fission-AI/OpenSpec",
     "stars": 63815
   },
+  "fitchmultz/pi-posthorse": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T15:36:40Z",
+    "resolved_name": "fitchmultz/pi-posthorse",
+    "stars": 244
+  },
   "florianbruniaux/claude-code-ultimate-guide": {
     "archived": false,
     "discontinued": null,
@@ -2017,6 +2561,14 @@
     "pushed_at": "2026-08-13T12:38:19Z",
     "resolved_name": "FlowiseAI/Flowise",
     "stars": 55386
+  },
+  "forcewake/hermes-conductor": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-25T15:08:02Z",
+    "resolved_name": "forcewake/hermes-conductor",
+    "stars": 75
   },
   "formkit/formkit": {
     "archived": false,
@@ -2048,6 +2600,14 @@
     "resolved_name": "FoundationAgents/MetaGPT",
     "stars": 69666
   },
+  "framy2/ctxwise": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-13T04:33:19Z",
+    "resolved_name": "FramY2/ctxwise",
+    "stars": 6
+  },
   "francyjglisboa/agent-skill-creator": {
     "archived": false,
     "discontinued": null,
@@ -2068,6 +2628,14 @@
     "resolved_name": "frankbria/ralph-claude-code",
     "stars": 9584
   },
+  "frdyx/maddu": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-13T23:14:33Z",
+    "resolved_name": "frdyx/maddu",
+    "stars": 5
+  },
   "freestyle-voice/freestyle": {
     "archived": false,
     "discontinued": null,
@@ -2087,6 +2655,22 @@
     "pushed_at": "2026-08-05T04:23:02Z",
     "resolved_name": "fujibee/agmsg",
     "stars": 1401
+  },
+  "fuqiuluo/ida-headless-mcp": {
+    "archived": null,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "404",
+    "pushed_at": null,
+    "resolved_name": null,
+    "stars": null
+  },
+  "furkankly/zoetrope": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T15:24:38Z",
+    "resolved_name": "furkankly/zoetrope",
+    "stars": 876
   },
   "ganyuanran/aegis": {
     "archived": false,
@@ -2137,6 +2721,14 @@
     "pushed_at": "2026-08-05T03:36:13Z",
     "resolved_name": "gastownhall/gastown",
     "stars": 17448
+  },
+  "gen-verse/recuris": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-30T11:55:00Z",
+    "resolved_name": "Gen-Verse/Recuris",
+    "stars": 201
   },
   "gentleman-programming/engram": {
     "archived": false,
@@ -2280,6 +2872,14 @@
     "resolved_name": "github/spec-kit",
     "stars": 130961
   },
+  "gkihlstadius/behalf-chrome-agent": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-09T13:19:19Z",
+    "resolved_name": "GKihlstadius/behalf-chrome-agent",
+    "stars": 0
+  },
   "glips/figma-context-mcp": {
     "archived": false,
     "discontinued": null,
@@ -2289,6 +2889,14 @@
     "pushed_at": "2026-07-03T14:24:36Z",
     "resolved_name": "GLips/Figma-Context-MCP",
     "stars": 15584
+  },
+  "glukicov/slideops": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-03T15:05:45Z",
+    "resolved_name": "glukicov/slideops",
+    "stars": 53
   },
   "gmickel/flow-next": {
     "archived": false,
@@ -2443,6 +3051,30 @@
     "resolved_name": "graykode/abtop",
     "stars": 3420
   },
+  "gregorbiswanger/featherspec": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-30T01:13:48Z",
+    "resolved_name": "GregorBiswanger/featherspec",
+    "stars": 48
+  },
+  "grishkovei/proof-of-done-loop": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-10T19:31:33Z",
+    "resolved_name": "grishkovei/proof-of-done-loop",
+    "stars": 0
+  },
+  "grpcer/ownmem": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-09T13:21:50Z",
+    "resolved_name": "grpcer/ownmem",
+    "stars": 381
+  },
   "gui-gou/claude-statusline-burnrate": {
     "archived": false,
     "fetched_at": "2026-08-07",
@@ -2481,6 +3113,14 @@
     "resolved_name": "h5i-dev/h5i",
     "stars": 502
   },
+  "halofyai/halofy": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "AGPL-3.0",
+    "pushed_at": "2026-09-15T06:08:09Z",
+    "resolved_name": "halofyai/halofy",
+    "stars": 425
+  },
   "hamzarehmandeveloper/claude-account": {
     "archived": false,
     "discontinued": null,
@@ -2490,6 +3130,14 @@
     "pushed_at": "2026-08-04T09:03:42Z",
     "resolved_name": "hamzarehmandeveloper/claude-account",
     "stars": 68
+  },
+  "hannes-west81/biks-claude-loader-update": {
+    "archived": null,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "404",
+    "pushed_at": null,
+    "resolved_name": null,
+    "stars": null
   },
   "harbor-framework/harbor": {
     "archived": false,
@@ -2681,6 +3329,30 @@
     "resolved_name": "hoangsonww/Claude-Code-Agent-Monitor",
     "stars": 870
   },
+  "howznguyen/pi-delegate-mcp": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-25T19:30:24Z",
+    "resolved_name": "howznguyen/pi-delegate-mcp",
+    "stars": 15
+  },
+  "hsandhu/mobilecode": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T18:59:50Z",
+    "resolved_name": "hsandhu/mobilecode",
+    "stars": 234
+  },
+  "huanglvjing/spotpatch": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-09T17:04:39Z",
+    "resolved_name": "huanglvjing/spotpatch",
+    "stars": 132
+  },
   "huggingface/smolagents": {
     "archived": false,
     "discontinued": null,
@@ -2711,6 +3383,14 @@
     "resolved_name": "humanlayer/humanlayer",
     "stars": 11196
   },
+  "hutsuliakdmytro/d-code": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-10T18:34:30Z",
+    "resolved_name": "HutsuliakDmytro/d-code",
+    "stars": 7
+  },
   "hyhmrright/brooks-lint": {
     "archived": false,
     "discontinued": null,
@@ -2720,6 +3400,22 @@
     "pushed_at": "2026-08-04T11:48:45Z",
     "resolved_name": "hyhmrright/brooks-lint",
     "stars": 1284
+  },
+  "hyuga611/llm-safe-sql": {
+    "archived": true,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-02T04:35:52Z",
+    "resolved_name": "hyuga611/llm-safe-sql",
+    "stars": 0
+  },
+  "i3t4an/kadath": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-09T21:01:28Z",
+    "resolved_name": "i3T4AN/KADATH",
+    "stars": 271
   },
   "iamzhihuix/skills-manage": {
     "archived": false,
@@ -2740,6 +3436,14 @@
     "pushed_at": "2026-08-05T04:47:30Z",
     "resolved_name": "IBM/mcp-context-forge",
     "stars": 4243
+  },
+  "idavidov13/agentic-playwright": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-10T10:15:13Z",
+    "resolved_name": "idavidov13/agentic-playwright",
+    "stars": 173
   },
   "idosal/git-mcp": {
     "archived": false,
@@ -2861,6 +3565,22 @@
     "resolved_name": "inngest/inngest",
     "stars": 5687
   },
+  "itshen/source-reading-methodology": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-24T15:03:45Z",
+    "resolved_name": "itshen/source-reading-methodology",
+    "stars": 136
+  },
+  "ivyfan-toowell/ivyclaw": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NONE",
+    "pushed_at": "2026-09-13T04:33:41Z",
+    "resolved_name": "ivyfan-toowell/IvyClaw",
+    "stars": 59
+  },
   "jackwener/opencli": {
     "archived": false,
     "discontinued": null,
@@ -2870,6 +3590,38 @@
     "pushed_at": "2026-07-30T12:36:27Z",
     "resolved_name": "jackwener/OpenCLI",
     "stars": 27723
+  },
+  "jacobhayes/briefing": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T09:04:03Z",
+    "resolved_name": "JacobHayes/briefing",
+    "stars": 0
+  },
+  "jamalkamaladdin/pixelpact": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-12T08:43:20Z",
+    "resolved_name": "jamalkamaladdin/pixelpact",
+    "stars": 20
+  },
+  "jamescazzetta/moire": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-25T21:33:23Z",
+    "resolved_name": "jamescazzetta/moire",
+    "stars": 18
+  },
+  "janyork/llm-wiki-cli": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-13T04:04:33Z",
+    "resolved_name": "JanYork/llm-wiki-cli",
+    "stars": 54
   },
   "jarrodwatts/claude-hud": {
     "archived": false,
@@ -2901,6 +3653,22 @@
     "resolved_name": "jeremylongshore/claude-code-plugins-plus-skills",
     "stars": 2596
   },
+  "jhochenbaum/herdr-hunk-diff": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-09T12:26:25Z",
+    "resolved_name": "jhochenbaum/herdr-hunk-diff",
+    "stars": 126
+  },
+  "jiabaobei/skills-constitution": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T07:38:22Z",
+    "resolved_name": "jiabaobei/skills-constitution",
+    "stars": 225
+  },
   "jimliu/baoyu-design": {
     "archived": false,
     "discontinued": null,
@@ -2921,6 +3689,54 @@
     "resolved_name": "JimLiu/baoyu-skills",
     "stars": 24581
   },
+  "jinhanbuilds/hoist-the-elephant": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-24T05:00:32Z",
+    "resolved_name": "jinhanbuilds/hoist-the-elephant",
+    "stars": 101
+  },
+  "jinzijian/evotrace": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-21T06:17:01Z",
+    "resolved_name": "jinzijian/EvoTrace",
+    "stars": 293
+  },
+  "joe960913/jixu": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-28T10:45:13Z",
+    "resolved_name": "joe960913/Jixu",
+    "stars": 101
+  },
+  "johnwangwyx/stele": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-02T21:30:13Z",
+    "resolved_name": "johnwangwyx/stele",
+    "stars": 4
+  },
+  "jolo-build/jolo": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T04:43:30Z",
+    "resolved_name": "jolo-build/jolo",
+    "stars": 30
+  },
+  "jordanwei1/jiaojie-skill": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-20T13:47:18Z",
+    "resolved_name": "Jordanwei1/jiaojie-skill",
+    "stars": 88
+  },
   "juliusbrussee/caveman": {
     "archived": false,
     "discontinued": null,
@@ -2930,6 +3746,30 @@
     "pushed_at": "2026-08-04T13:44:52Z",
     "resolved_name": "JuliusBrussee/caveman",
     "stars": 95849
+  },
+  "junhan2/oh-my-fable": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-07T01:39:28Z",
+    "resolved_name": "Junhan2/oh-my-fable",
+    "stars": 52
+  },
+  "juror-ai/juror": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T09:14:31Z",
+    "resolved_name": "Juror-AI/juror",
+    "stars": 125
+  },
+  "justadityaraj/shim-mcp": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "GPL-2.0",
+    "pushed_at": "2026-09-05T17:02:37Z",
+    "resolved_name": "justadityaraj/shim-mcp",
+    "stars": 47
   },
   "k-dense-ai/scientific-agent-skills": {
     "archived": false,
@@ -3006,6 +3846,14 @@
     "resolved_name": "kayba-ai/agentic-context-engine",
     "stars": 2547
   },
+  "keli-wen/agy-staff": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T05:44:52Z",
+    "resolved_name": "keli-wen/agy-staff",
+    "stars": 140
+  },
   "kenn-io/agentsview": {
     "archived": false,
     "discontinued": null,
@@ -3046,6 +3894,22 @@
     "resolved_name": "keploy/keploy",
     "stars": 18368
   },
+  "kerneta/daidocs": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-15T16:22:57Z",
+    "resolved_name": "Kerneta/daidocs",
+    "stars": 22
+  },
+  "kharmanskyi/open-steps": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T16:02:26Z",
+    "resolved_name": "kharmanskyi/open-steps",
+    "stars": 422
+  },
   "khazp/vibe-coding-prompt-template": {
     "archived": false,
     "discontinued": null,
@@ -3084,6 +3948,30 @@
     "resolved_name": "Kilo-Org/kilocode",
     "stars": 26713
   },
+  "kitorz/token-step-tracker": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-20T10:30:15Z",
+    "resolved_name": "kitorz/token-step-tracker",
+    "stars": 1
+  },
+  "klarluft/gitwarren-app": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "GPL-3.0",
+    "pushed_at": "2026-09-15T22:30:42Z",
+    "resolved_name": "klarluft/gitwarren-app",
+    "stars": 15
+  },
+  "kmgcc/ios-trace": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-08T07:08:34Z",
+    "resolved_name": "kmgcc/iOS-Trace",
+    "stars": 6
+  },
   "knowsuchagency/mcp2cli": {
     "archived": false,
     "discontinued": null,
@@ -3104,6 +3992,22 @@
     "resolved_name": "kodustech/kodus-ai",
     "stars": 1289
   },
+  "koragraph/koragraphmcp": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-09-14T12:25:00Z",
+    "resolved_name": "Koragraph/KoragraphMCP",
+    "stars": 14
+  },
+  "kostakurta8/roundtable": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-04T10:52:44Z",
+    "resolved_name": "Kostakurta8/roundtable",
+    "stars": 19
+  },
   "krishagarwal314/codejury": {
     "archived": false,
     "discontinued": null,
@@ -3113,6 +4017,14 @@
     "pushed_at": "2026-08-03T17:26:26Z",
     "resolved_name": "krishagarwal314/CodeJury",
     "stars": 136
+  },
+  "kruzovic7/ai-data-extractor": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-11T18:20:56Z",
+    "resolved_name": "kruzovic7/ai-data-extractor",
+    "stars": 823
   },
   "kuaamu/mcp-vision-bridge": {
     "archived": false,
@@ -3182,6 +4094,14 @@
     "resolved_name": "langchain-ai/langgraphjs",
     "stars": 3175
   },
+  "langchain-ai/openwiki": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T19:22:14Z",
+    "resolved_name": "langchain-ai/openwiki",
+    "stars": 16543
+  },
   "langflow-ai/langflow": {
     "archived": false,
     "discontinued": null,
@@ -3242,6 +4162,22 @@
     "resolved_name": "larksuite/cli",
     "stars": 16147
   },
+  "lb623/no-negative-echo": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-31T02:20:48Z",
+    "resolved_name": "LB623/no-negative-echo",
+    "stars": 849
+  },
+  "lbb00/ai-rules-sync": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Unlicense",
+    "pushed_at": "2026-08-20T07:09:00Z",
+    "resolved_name": "lbb00/ai-rules-sync",
+    "stars": 37
+  },
   "lec-ai/claude-devfleet": {
     "archived": false,
     "discontinued": null,
@@ -3251,6 +4187,30 @@
     "pushed_at": "2026-05-28T15:51:29Z",
     "resolved_name": "LEC-AI/claude-devfleet",
     "stars": 17
+  },
+  "legoambarish/portable-handoff": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-08T01:25:41Z",
+    "resolved_name": "legoambarish/portable-handoff",
+    "stars": 21
+  },
+  "lennney/stop-that-shit": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T15:41:04Z",
+    "resolved_name": "lennney/stop-that-shit",
+    "stars": 2024
+  },
+  "leog/ai-pulse": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-26T00:40:02Z",
+    "resolved_name": "leog/ai-pulse",
+    "stars": 31
   },
   "leonxlnx/taste-skill": {
     "archived": false,
@@ -3302,6 +4262,22 @@
     "resolved_name": "letta-ai/letta-code",
     "stars": 2954
   },
+  "lexmount/moli": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-16T03:58:24Z",
+    "resolved_name": "lexmount/moli",
+    "stars": 2004
+  },
+  "leynier/exeora": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "AGPL-3.0",
+    "pushed_at": "2026-09-04T02:53:33Z",
+    "resolved_name": "leynier/exeora",
+    "stars": 6
+  },
   "libukai/awesome-agent-skills": {
     "archived": false,
     "discontinued": null,
@@ -3312,6 +4288,14 @@
     "resolved_name": "libukai/awesome-agent-skills",
     "stars": 4924
   },
+  "linklyai/best-skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-09-15T06:35:18Z",
+    "resolved_name": "LinklyAI/best-skills",
+    "stars": 529
+  },
   "liveloveapp/hashbrown": {
     "archived": false,
     "discontinued": null,
@@ -3321,6 +4305,14 @@
     "pushed_at": "2026-07-21T22:19:16Z",
     "resolved_name": "liveloveapp/hashbrown",
     "stars": 716
+  },
+  "liyuqin606-del/packrehearsal": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-11T02:46:48Z",
+    "resolved_name": "liyuqin606-del/packrehearsal",
+    "stars": 108
   },
   "ljagiello/ctf-skills": {
     "archived": false,
@@ -3382,6 +4374,14 @@
     "resolved_name": "luminarylane/fal-mcp-server",
     "stars": 52
   },
+  "lunkibr/ship-it": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-09T17:32:21Z",
+    "resolved_name": "LunkiBR/ship-it",
+    "stars": 18
+  },
   "luongnv89/claude-howto": {
     "archived": false,
     "discontinued": null,
@@ -3391,6 +4391,14 @@
     "pushed_at": "2026-08-04T08:41:12Z",
     "resolved_name": "luongnv89/claude-howto",
     "stars": 40842
+  },
+  "lyfuci/ai-terminal-manager": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T06:56:44Z",
+    "resolved_name": "lyfuci/ai-terminal-manager",
+    "stars": 21
   },
   "ma-nucho-pro/wife": {
     "archived": false,
@@ -3410,6 +4418,14 @@
     "resolved_name": "Maciek-roboblog/Claude-Code-Usage-Monitor",
     "stars": 8589
   },
+  "maludb-ed/skill-safety-checker": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NONE",
+    "pushed_at": "2026-08-14T15:43:24Z",
+    "resolved_name": "maludb-ed/skill-safety-checker",
+    "stars": 13
+  },
   "manavarya09/design-extract": {
     "archived": false,
     "fetched_at": "2026-08-23",
@@ -3417,6 +4433,14 @@
     "pushed_at": "2026-08-22T03:39:36Z",
     "resolved_name": "Manavarya09/design-extract",
     "stars": 3361
+  },
+  "mancerayder42/jarvis-os": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-05T15:46:15Z",
+    "resolved_name": "ManceRayder42/jarvis-os",
+    "stars": 5
   },
   "mastra-ai/mastra": {
     "archived": false,
@@ -3447,6 +4471,14 @@
     "pushed_at": "2026-05-13T21:40:54Z",
     "resolved_name": "matt1398/claude-devtools",
     "stars": 3794
+  },
+  "matthew0822/toolreplay": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T12:09:08Z",
+    "resolved_name": "Matthew0822/ToolReplay",
+    "stars": 170
   },
   "mattpocock/dictionary-of-ai-coding": {
     "archived": false,
@@ -3515,6 +4547,14 @@
     "resolved_name": "maxbogo/awesome-ai-tools-for-ui",
     "stars": 803
   },
+  "maxhu-xuan/task-state-guard": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-25T11:22:16Z",
+    "resolved_name": "MaxHu-xuan/task-state-guard",
+    "stars": 389
+  },
   "maximhq/bifrost": {
     "archived": false,
     "discontinued": null,
@@ -3524,6 +4564,14 @@
     "pushed_at": "2026-08-05T04:44:51Z",
     "resolved_name": "maximhq/bifrost",
     "stars": 7053
+  },
+  "maxritter/open-claude-design": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-09-14T02:16:02Z",
+    "resolved_name": "maxritter/open-claude-design",
+    "stars": 26
   },
   "mcp-ui-org/mcp-ui": {
     "archived": false,
@@ -3545,6 +4593,14 @@
     "resolved_name": "mcp-use/mcp-use",
     "stars": 10449
   },
+  "mcpware/cross-code-organizer": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-13T04:30:01Z",
+    "resolved_name": "mcpware/cross-code-organizer",
+    "stars": 379
+  },
   "mdn/mcp": {
     "archived": false,
     "discontinued": null,
@@ -3554,6 +4610,14 @@
     "pushed_at": "2026-08-04T21:51:10Z",
     "resolved_name": "mdn/mcp",
     "stars": 178
+  },
+  "meiotcom/codingplanquota": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-09-14T09:25:06Z",
+    "resolved_name": "MeIotCOM/CodingPlanQuota",
+    "stars": 73
   },
   "melvynx/portly": {
     "archived": false,
@@ -3582,6 +4646,14 @@
     "pushed_at": "2026-07-14T18:35:09Z",
     "resolved_name": "memodb-io/Acontext",
     "stars": 3656
+  },
+  "memoket/memoket-kite": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-12T13:49:31Z",
+    "resolved_name": "memoket/memoket-kite",
+    "stars": 140
   },
   "memorax-ai/memorax-code": {
     "archived": false,
@@ -3668,6 +4740,14 @@
     "pushed_at": "2026-08-05T04:01:16Z",
     "resolved_name": "metalbear-co/mirrord",
     "stars": 5246
+  },
+  "metedata/remarc": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-09T22:31:16Z",
+    "resolved_name": "metedata/Remarc",
+    "stars": 66
   },
   "mex-memory/mex": {
     "archived": false,
@@ -3859,6 +4939,14 @@
     "resolved_name": "mindsdb/mindshub",
     "stars": 39517
   },
+  "mini-harness/mini-harness": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NONE",
+    "pushed_at": "2026-09-11T16:24:05Z",
+    "resolved_name": "mini-harness/mini-harness",
+    "stars": 100
+  },
   "minishlab/semble": {
     "archived": false,
     "discontinued": null,
@@ -3869,6 +4957,14 @@
     "resolved_name": "MinishLab/semble",
     "stars": 5823
   },
+  "mintlify/index": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-06T22:39:09Z",
+    "resolved_name": "mintlify/index",
+    "stars": 49
+  },
   "mito-ds/mito": {
     "archived": false,
     "discontinued": null,
@@ -3878,6 +4974,14 @@
     "pushed_at": "2026-07-21T19:36:01Z",
     "resolved_name": "mito-ds/mito",
     "stars": 2646
+  },
+  "mkanat/skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "CC0-1.0",
+    "pushed_at": "2026-08-24T10:13:46Z",
+    "resolved_name": "mkanat/skills",
+    "stars": 69
   },
   "mksglu/context-mode": {
     "archived": false,
@@ -3944,6 +5048,22 @@
     "resolved_name": "MoonshotAI/kimi-code",
     "stars": 6040
   },
+  "morningstar202604/agentseed": {
+    "archived": null,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "404",
+    "pushed_at": null,
+    "resolved_name": null,
+    "stars": null
+  },
+  "motleywildside/explain-for-dumb": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-01T21:55:05Z",
+    "resolved_name": "MotleyWildside/explain-for-dumb",
+    "stars": 11
+  },
   "mrexodia/ida-pro-mcp": {
     "archived": false,
     "discontinued": null,
@@ -3964,6 +5084,14 @@
     "resolved_name": "mrpulor-gh/nuphus-mcp",
     "stars": 105
   },
+  "mrzoyo/deslop-gpt": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-04T17:05:51Z",
+    "resolved_name": "MrZoyo/deslop-GPT",
+    "stars": 131
+  },
   "msitarzewski/agency-agents": {
     "archived": false,
     "discontinued": null,
@@ -3974,13 +5102,21 @@
     "resolved_name": "msitarzewski/agency-agents",
     "stars": 138611
   },
-  "msshives-gif/subagent-context": {
+  "msshives-gif/claude-plugins": {
     "archived": false,
-    "fetched_at": "2026-08-07",
+    "fetched_at": "2026-09-16",
     "license_spdx": "MIT",
-    "pushed_at": "2026-08-03T02:55:39Z",
-    "resolved_name": "msshives-gif/subagent-context",
+    "pushed_at": "2026-08-28T03:17:22Z",
+    "resolved_name": "msshives-gif/claude-plugins",
     "stars": 2
+  },
+  "mstuart/peek": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-10T11:23:23Z",
+    "resolved_name": "mstuart/peek",
+    "stars": 1
   },
   "mudler/localai": {
     "archived": false,
@@ -4047,6 +5183,22 @@
     "resolved_name": "mvanhorn/last30days-skill",
     "stars": 57276
   },
+  "nagi-ovo/dsh-find-plugins": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "BSD-3-Clause",
+    "pushed_at": "2026-08-15T15:58:22Z",
+    "resolved_name": "Nagi-ovo/dsh-find-plugins",
+    "stars": 174
+  },
+  "nanako0129/sepia": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T18:08:58Z",
+    "resolved_name": "Nanako0129/sepia",
+    "stars": 2631
+  },
   "nanobrowser/nanobrowser": {
     "archived": false,
     "discontinued": null,
@@ -4066,6 +5218,22 @@
     "pushed_at": "2026-08-04T13:56:07Z",
     "resolved_name": "nanocoai/nanoclaw",
     "stars": 30433
+  },
+  "narekgevorgyan/agent-track": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-07T07:45:29Z",
+    "resolved_name": "narekgevorgyan/agent-track",
+    "stars": 1
+  },
+  "nateherkai/scroll-craft": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-04T23:33:30Z",
+    "resolved_name": "nateherkai/scroll-craft",
+    "stars": 2479
   },
   "neolabhq/context-engineering-kit": {
     "archived": false,
@@ -4096,6 +5264,14 @@
     "pushed_at": "2026-08-04T16:30:55Z",
     "resolved_name": "neuml/txtai",
     "stars": 12795
+  },
+  "neuronto/agentic-resource-discovery": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-15T12:57:16Z",
+    "resolved_name": "neuronto/agentic-resource-discovery",
+    "stars": 52
   },
   "nevamind-ai/memu": {
     "archived": false,
@@ -4147,6 +5323,14 @@
     "resolved_name": "nexu-io/open-design",
     "stars": 83729
   },
+  "nickelsec/bough": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T20:09:58Z",
+    "resolved_name": "nickelsec/bough",
+    "stars": 57
+  },
   "nicobailon/pi-subagents": {
     "archived": false,
     "discontinued": null,
@@ -4197,6 +5381,22 @@
     "resolved_name": "NirDiamant/GenAI_Agents",
     "stars": 23630
   },
+  "nishantmodak/ltrace": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-10T18:19:56Z",
+    "resolved_name": "nishantmodak/ltrace",
+    "stars": 1
+  },
+  "nishikantaray/attic": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-12T16:04:04Z",
+    "resolved_name": "NishikantaRay/Attic",
+    "stars": 4
+  },
   "nizos/tdd-guard": {
     "archived": false,
     "discontinued": null,
@@ -4206,6 +5406,22 @@
     "pushed_at": "2026-08-16T11:57:48Z",
     "resolved_name": "nizos/tdd-guard",
     "stars": 2311
+  },
+  "nmdra/opencode-cache-stats": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-18T08:08:11Z",
+    "resolved_name": "nmdra/opencode-cache-stats",
+    "stars": 24
+  },
+  "no-human-ai/no_human": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T04:00:01Z",
+    "resolved_name": "no-human-ai/no_human",
+    "stars": 314
   },
   "nousresearch/hermes-agent": {
     "archived": false,
@@ -4287,6 +5503,22 @@
     "resolved_name": "obra/superpowers",
     "stars": 266647
   },
+  "oil-oil/oil-skill-creator": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-10T12:46:21Z",
+    "resolved_name": "oil-oil/oil-skill-creator",
+    "stars": 60
+  },
+  "okf-memory/okf-agent-memory": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T13:31:21Z",
+    "resolved_name": "okf-memory/okf-agent-memory",
+    "stars": 670
+  },
   "oliverb-io1902e8/agent-skills-collection": {
     "archived": null,
     "discontinued": null,
@@ -4296,6 +5528,14 @@
     "pushed_at": null,
     "resolved_name": null,
     "stars": null
+  },
+  "omaekumiko2-create/kru": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-30T14:07:47Z",
+    "resolved_name": "omaekumiko2-create/kru",
+    "stars": 125
   },
   "omnigent-ai/omnigent": {
     "archived": false,
@@ -4307,6 +5547,14 @@
     "resolved_name": "omnigent-ai/omnigent",
     "stars": 8128
   },
+  "only-cli/oc": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T03:18:21Z",
+    "resolved_name": "only-cli/oc",
+    "stars": 489
+  },
   "onyx-dot-app/onyx": {
     "archived": false,
     "discontinued": null,
@@ -4316,6 +5564,14 @@
     "pushed_at": "2026-08-05T04:37:51Z",
     "resolved_name": "onyx-dot-app/onyx",
     "stars": 31427
+  },
+  "ooocooc/open-skill-sunset": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-01T11:12:29Z",
+    "resolved_name": "ooocooc/open-skill-sunset",
+    "stars": 87
   },
   "ooples/token-optimizer-mcp": {
     "archived": false,
@@ -4416,6 +5672,14 @@
     "pushed_at": "2026-08-01T23:18:17Z",
     "resolved_name": "openinterpreter/openinterpreter",
     "stars": 67581
+  },
+  "openlabs-so/oa-design": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-20T19:25:29Z",
+    "resolved_name": "OpenLabs-so/oa-design",
+    "stars": 130
   },
   "openmemind/memind": {
     "archived": false,
@@ -4547,6 +5811,14 @@
     "resolved_name": "p0nymc1/cee",
     "stars": 81
   },
+  "pablo-aps/prove-it": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-18T10:29:14Z",
+    "resolved_name": "Pablo-aps/prove-it",
+    "stars": 9
+  },
   "panniantong/agent-reach": {
     "archived": false,
     "discontinued": null,
@@ -4556,6 +5828,14 @@
     "pushed_at": "2026-08-05T03:50:38Z",
     "resolved_name": "Panniantong/Agent-Reach",
     "stars": 66578
+  },
+  "parallel-web/search-mcp": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-08T22:15:58Z",
+    "resolved_name": "parallel-web/search-mcp",
+    "stars": 17
   },
   "parcadei/continuous-claude-v3": {
     "archived": false,
@@ -4655,6 +5935,14 @@
     "resolved_name": "Piebald-AI/claude-code-system-prompts",
     "stars": 12190
   },
+  "pillcrew/deedchain": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-04T22:46:54Z",
+    "resolved_name": "PillCrew/deedchain",
+    "stars": 47
+  },
   "pimzino/claude-code-spec-workflow": {
     "archived": false,
     "discontinued": null,
@@ -4664,6 +5952,14 @@
     "pushed_at": "2025-09-07T14:14:52Z",
     "resolved_name": "Pimzino/claude-code-spec-workflow",
     "stars": 3807
+  },
+  "pinoox/neuromesh": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T23:47:59Z",
+    "resolved_name": "pinoox/neuromesh",
+    "stars": 90
   },
   "pioner92/symbolpeek-mcp": {
     "archived": false,
@@ -4694,6 +5990,14 @@
     "pushed_at": "2026-08-04T21:03:10Z",
     "resolved_name": "plastic-labs/honcho",
     "stars": 6430
+  },
+  "pliablepixels/gap-trap": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T11:01:30Z",
+    "resolved_name": "pliablepixels/gap-trap",
+    "stars": 149
   },
   "portkey-ai/gateway": {
     "archived": false,
@@ -4735,6 +6039,14 @@
     "resolved_name": "prisma/prisma",
     "stars": 47529
   },
+  "prismorsec/patchbot": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-25T14:38:30Z",
+    "resolved_name": "PrismorSec/patchbot",
+    "stars": 21
+  },
   "promptfoo/promptfoo": {
     "archived": false,
     "discontinued": null,
@@ -4744,6 +6056,22 @@
     "pushed_at": "2026-08-24T03:18:12Z",
     "resolved_name": "promptfoo/promptfoo",
     "stars": 24503
+  },
+  "pullfrog/pullfrog": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T02:33:43Z",
+    "resolved_name": "pullfrog/pullfrog",
+    "stars": 1193
+  },
+  "pulseaiclub/phi": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T03:46:51Z",
+    "resolved_name": "pulseaiclub/phi",
+    "stars": 399
   },
   "punkpeye/awesome-mcp-servers": {
     "archived": false,
@@ -4785,15 +6113,13 @@
     "resolved_name": "qodo-ai/qodo-cover",
     "stars": 5575
   },
-  "qualifire-dev/rogue": {
+  "quant-off/skills": {
     "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-08-04",
-    "license_lost": false,
-    "license_spdx": "NOASSERTION",
-    "pushed_at": "2026-08-04T07:52:34Z",
-    "resolved_name": "qualifire-dev/rogue",
-    "stars": 1052
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-10T12:58:13Z",
+    "resolved_name": "Quant-Off/skills",
+    "stars": 1
   },
   "qufei1993/skills-hub": {
     "archived": false,
@@ -4815,6 +6141,14 @@
     "resolved_name": "QwenLM/qwen-code",
     "stars": 26707
   },
+  "raffaelespezia/staffetta": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-14T21:03:20Z",
+    "resolved_name": "RaffaeleSpezia/staffetta",
+    "stars": 3
+  },
   "raylinkh/envlatch": {
     "archived": false,
     "discontinued": null,
@@ -4824,6 +6158,22 @@
     "pushed_at": "2026-07-30T05:48:03Z",
     "resolved_name": "Raylinkh/envlatch",
     "stars": 70
+  },
+  "razshy/wiggle": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-09-05T06:16:22Z",
+    "resolved_name": "Razshy/Wiggle",
+    "stars": 90
+  },
+  "rdilruba/codebase-map": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-11T21:23:03Z",
+    "resolved_name": "rdilruba/codebase-map",
+    "stars": 6
   },
   "ref-tools/ref-tools-mcp": {
     "archived": false,
@@ -4865,6 +6215,14 @@
     "resolved_name": "RefoundAI/lenny-skills",
     "stars": 1215
   },
+  "regenrek/codex-proofloop": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-11T18:01:42Z",
+    "resolved_name": "regenrek/codex-proofloop",
+    "stars": 38
+  },
   "regent-vcs/re_gent": {
     "archived": false,
     "discontinued": null,
@@ -4905,6 +6263,14 @@
     "resolved_name": "repowise-dev/repowise",
     "stars": 4663
   },
+  "resciencelab/super-prototyping": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-15T19:35:53Z",
+    "resolved_name": "ReScienceLab/super-prototyping",
+    "stars": 71
+  },
   "revfactory/harness": {
     "archived": false,
     "discontinued": null,
@@ -4934,6 +6300,14 @@
     "pushed_at": "2026-08-04T10:22:47Z",
     "resolved_name": "ReyJ94/SceneProof",
     "stars": 39
+  },
+  "riccardo8888/agent-link": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-21T16:42:31Z",
+    "resolved_name": "Riccardo8888/agent-link",
+    "stars": 56
   },
   "richards199999/thinking-claude": {
     "archived": false,
@@ -4975,6 +6349,14 @@
     "resolved_name": "RKiding/Awesome-finance-skills",
     "stars": 2751
   },
+  "rogue-security/rogue": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-08-04T07:52:34Z",
+    "resolved_name": "rogue-security/rogue",
+    "stars": 1060
+  },
   "rohitg00/agentmemory": {
     "archived": false,
     "discontinued": null,
@@ -5010,6 +6392,14 @@
     "resolved_name": "rohitg00/pro-workflow",
     "stars": 2761
   },
+  "romandredan/1c-quality-gate": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-09-15T17:04:12Z",
+    "resolved_name": "Romandredan/1c-quality-gate",
+    "stars": 25
+  },
   "roocodeinc/roo-code": {
     "archived": true,
     "discontinued": null,
@@ -5040,6 +6430,14 @@
     "resolved_name": "rtk-ai/rtk",
     "stars": 74761
   },
+  "ruc-datalab/skilladam": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-09-14T10:20:28Z",
+    "resolved_name": "ruc-datalab/SkillAdam",
+    "stars": 63
+  },
   "run-llama/llama_index": {
     "archived": false,
     "discontinued": null,
@@ -5059,6 +6457,22 @@
     "pushed_at": "2026-08-04T06:15:30Z",
     "resolved_name": "ruvnet/ruflo",
     "stars": 67055
+  },
+  "sabbour/agentweaver": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T02:19:43Z",
+    "resolved_name": "sabbour/agentweaver",
+    "stars": 6
+  },
+  "saladday/pi-from-scratch": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-18T08:09:35Z",
+    "resolved_name": "SaladDay/pi-from-scratch",
+    "stars": 1212
   },
   "samber/cc-skills-golang": {
     "archived": false,
@@ -5100,6 +6514,54 @@
     "resolved_name": "sandeco/reversa",
     "stars": 1446
   },
+  "sateezg/codex-bridge": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-10T07:56:13Z",
+    "resolved_name": "Sateezg/codex-bridge",
+    "stars": 250
+  },
+  "satwiksps/testseal": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-14T04:47:47Z",
+    "resolved_name": "satwiksps/testseal",
+    "stars": 8
+  },
+  "saurabhkumar8112/cyclomatic-complexity-skill": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-26T18:17:41Z",
+    "resolved_name": "saurabhkumar8112/cyclomatic-complexity-skill",
+    "stars": 390
+  },
+  "scarletkc/perenna": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-09T03:51:15Z",
+    "resolved_name": "scarletkc/Perenna",
+    "stars": 40
+  },
+  "seed-forge/harness-ai-kit": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-31T17:26:16Z",
+    "resolved_name": "seed-forge/harness-ai-kit",
+    "stars": 22
+  },
+  "semihtalii/brink": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-31T14:35:40Z",
+    "resolved_name": "semihtalii/brink",
+    "stars": 53
+  },
   "sentrux/sentrux": {
     "archived": false,
     "discontinued": null,
@@ -5109,6 +6571,14 @@
     "pushed_at": "2026-03-19T02:23:12Z",
     "resolved_name": "sentrux/sentrux",
     "stars": 2632
+  },
+  "seyedehsanhadi/sloptrim": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-05T09:09:50Z",
+    "resolved_name": "seyedehsanhadi/sloptrim",
+    "stars": 210
   },
   "shadcn/improve": {
     "archived": false,
@@ -5140,6 +6610,22 @@
     "resolved_name": "shareAI-lab/learn-claude-code",
     "stars": 73246
   },
+  "shasyasan/claude-rein": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-06T19:31:44Z",
+    "resolved_name": "shasyasan/claude-rein",
+    "stars": 2
+  },
+  "shinegang/baron": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-11T04:11:19Z",
+    "resolved_name": "shinegang/baron",
+    "stars": 13
+  },
   "shubhamsaboo/awesome-llm-apps": {
     "archived": false,
     "discontinued": null,
@@ -5150,15 +6636,13 @@
     "resolved_name": "Shubhamsaboo/awesome-llm-apps",
     "stars": 130585
   },
-  "sickn33/antigravity-awesome-skills": {
+  "sickn33/agentic-awesome-skills": {
     "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-08-04",
-    "license_lost": false,
+    "fetched_at": "2026-09-16",
     "license_spdx": "MIT",
-    "pushed_at": "2026-08-04T18:49:43Z",
+    "pushed_at": "2026-09-15T08:34:56Z",
     "resolved_name": "sickn33/agentic-awesome-skills",
-    "stars": 44454
+    "stars": 46472
   },
   "sigoden/aichat": {
     "archived": false,
@@ -5169,6 +6653,14 @@
     "pushed_at": "2026-02-23T11:16:42Z",
     "resolved_name": "sigoden/aichat",
     "stars": 10326
+  },
+  "simonlin1212/factreach": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-04T08:32:31Z",
+    "resolved_name": "simonlin1212/FactReach",
+    "stars": 32
   },
   "simstudioai/sim": {
     "archived": false,
@@ -5240,6 +6732,14 @@
     "resolved_name": "slopus/happy",
     "stars": 23127
   },
+  "slxca/opencontext": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-03T19:49:19Z",
+    "resolved_name": "slxca/opencontext",
+    "stars": 11
+  },
   "smitner-studio/facet": {
     "archived": false,
     "fetched_at": "2026-08-07",
@@ -5247,6 +6747,14 @@
     "pushed_at": "2026-08-03T17:36:35Z",
     "resolved_name": "Smitner-Studio/facet",
     "stars": 4
+  },
+  "smshahbaj/crucible": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-24T19:18:17Z",
+    "resolved_name": "smshahbaj/crucible",
+    "stars": 9
   },
   "smtg-ai/claude-squad": {
     "archived": false,
@@ -5267,6 +6775,30 @@
     "pushed_at": "2026-02-02T01:46:21Z",
     "resolved_name": "snarktank/ralph",
     "stars": 21385
+  },
+  "snyk/agent-scan": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-15T12:28:44Z",
+    "resolved_name": "snyk/agent-scan",
+    "stars": 3052
+  },
+  "socialpranker/zodchiy": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-01T16:19:00Z",
+    "resolved_name": "Socialpranker/zodchiy",
+    "stars": 22
+  },
+  "sodiumsun/agenttrail": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-09T04:08:08Z",
+    "resolved_name": "sodiumsun/agenttrail",
+    "stars": 665
   },
   "softaworks/agent-toolkit": {
     "archived": false,
@@ -5318,6 +6850,22 @@
     "resolved_name": "specstoryai/getspecstory",
     "stars": 1295
   },
+  "spielewoy/autoprompt-skill": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T21:52:37Z",
+    "resolved_name": "Spielewoy/autoprompt-skill",
+    "stars": 1153
+  },
+  "ssssssanjiu/skill_manager": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-09T07:52:52Z",
+    "resolved_name": "ssssssanjiu/skill_manager",
+    "stars": 16
+  },
   "stablyai/orca": {
     "archived": false,
     "discontinued": null,
@@ -5367,6 +6915,14 @@
     "pushed_at": "2026-08-04T18:17:16Z",
     "resolved_name": "stanfordnlp/dspy",
     "stars": 36628
+  },
+  "stanimirtenev/fleetpost": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-11T14:59:05Z",
+    "resolved_name": "StanimirTenev/fleetpost",
+    "stars": 1
   },
   "stevesolun/ctx": {
     "archived": false,
@@ -5418,6 +6974,14 @@
     "resolved_name": "stryker-mutator/stryker-js",
     "stars": 2986
   },
+  "sunhao123456sun-svg/toolpermit": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-10T01:55:48Z",
+    "resolved_name": "sunhao123456sun-svg/toolpermit",
+    "stars": 4
+  },
   "supabase/mcp": {
     "archived": false,
     "discontinued": null,
@@ -5468,6 +7032,22 @@
     "resolved_name": "superset-sh/superset",
     "stars": 12776
   },
+  "surefirestudios/tldr": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T16:55:28Z",
+    "resolved_name": "SurefireStudios/tldr",
+    "stars": 7
+  },
+  "surendranb/writing-skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-02T07:17:43Z",
+    "resolved_name": "surendranb/writing-skills",
+    "stars": 34
+  },
   "surya-koritala/sigbound": {
     "archived": false,
     "discontinued": null,
@@ -5478,6 +7058,14 @@
     "resolved_name": "surya-koritala/sigbound",
     "stars": 94
   },
+  "svy04/ballast": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-25T08:05:39Z",
+    "resolved_name": "svy04/ballast",
+    "stars": 74
+  },
   "swe-agent/swe-agent": {
     "archived": false,
     "discontinued": null,
@@ -5487,6 +7075,14 @@
     "pushed_at": "2026-08-03T22:06:16Z",
     "resolved_name": "SWE-agent/SWE-agent",
     "stars": 19995
+  },
+  "sysprog21/frama-c-mcp": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-13T18:00:29Z",
+    "resolved_name": "sysprog21/frama-c-mcp",
+    "stars": 28
   },
   "tabbyml/tabby": {
     "archived": false,
@@ -5517,6 +7113,14 @@
     "pushed_at": "2026-08-05T01:12:29Z",
     "resolved_name": "tailcallhq/forgecode",
     "stars": 7478
+  },
+  "taimoorkhan1122/prod-readiness": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NONE",
+    "pushed_at": "2026-09-11T08:07:02Z",
+    "resolved_name": "Taimoorkhan1122/prod-readiness",
+    "stars": 28
   },
   "tambo-ai/tambo": {
     "archived": false,
@@ -5577,6 +7181,14 @@
     "pushed_at": "2026-08-02T20:44:09Z",
     "resolved_name": "taylorwilsdon/google_workspace_mcp",
     "stars": 2966
+  },
+  "tcmug/_gogol": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-09T06:07:23Z",
+    "resolved_name": "tcmug/_gogol",
+    "stars": 0
   },
   "tech-leads-club/agent-skills": {
     "archived": false,
@@ -5648,6 +7260,14 @@
     "resolved_name": "The-PR-Agent/pr-agent",
     "stars": 12365
   },
+  "the-sentience-company/easel": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-15T18:50:36Z",
+    "resolved_name": "The-Sentience-Company/easel",
+    "stars": 57
+  },
   "thedotmack/claude-mem": {
     "archived": false,
     "discontinued": null,
@@ -5657,6 +7277,14 @@
     "pushed_at": "2026-08-04T18:32:00Z",
     "resolved_name": "thedotmack/claude-mem",
     "stars": 89595
+  },
+  "thegoodengineers/agit": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-14T07:10:13Z",
+    "resolved_name": "agitHQ/agit",
+    "stars": 5
   },
   "thesysdev/openui": {
     "archived": false,
@@ -5786,6 +7414,22 @@
     "resolved_name": "trycua/cua",
     "stars": 20930
   },
+  "tt-a1i/simplify-codebase": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-04T07:13:36Z",
+    "resolved_name": "tt-a1i/simplify-codebase",
+    "stars": 481
+  },
+  "turki-sh/foreman": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-25T13:50:00Z",
+    "resolved_name": "Turki-Sh/Foreman",
+    "stars": 27
+  },
   "tw93/kaku": {
     "archived": false,
     "discontinued": null,
@@ -5854,6 +7498,22 @@
     "resolved_name": "UditAkhourii/adhd",
     "stars": 3239
   },
+  "unknown-333/awesome-data-engineering-skills": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-08-30T12:49:52Z",
+    "resolved_name": "Unknown-333/awesome-data-engineering-skills",
+    "stars": 18
+  },
+  "unstablebuild/rune": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "GPL-3.0",
+    "pushed_at": "2026-09-15T23:58:06Z",
+    "resolved_name": "unstablebuild/rune",
+    "stars": 644
+  },
   "untrivial-ai/agent-orchestrator": {
     "archived": false,
     "discontinued": null,
@@ -5874,6 +7534,22 @@
     "resolved_name": "upstash/context7",
     "stars": 60270
   },
+  "useagenthq/useagent": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "AGPL-3.0",
+    "pushed_at": "2026-09-15T12:11:26Z",
+    "resolved_name": "useagenthq/useagent",
+    "stars": 307
+  },
+  "usedotai/dot-reflex": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-28T14:00:48Z",
+    "resolved_name": "usedotai/dot-reflex",
+    "stars": 80
+  },
   "usestrix/strix": {
     "archived": false,
     "discontinued": null,
@@ -5883,6 +7559,22 @@
     "pushed_at": "2026-08-04T19:34:53Z",
     "resolved_name": "usestrix/strix",
     "stars": 48457
+  },
+  "v-yun/vuln-report-skill": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-21T01:24:05Z",
+    "resolved_name": "v-yun/vuln-report-skill",
+    "stars": 75
+  },
+  "v0idw4lker/trustmcp": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-29T15:22:04Z",
+    "resolved_name": "v0idw4lker/trustmcp",
+    "stars": 2
   },
   "vectifyai/pageindex": {
     "archived": false,
@@ -6044,6 +7736,14 @@
     "resolved_name": "vibrantlabsai/ragas",
     "stars": 15133
   },
+  "vicoa-ai/vicoa": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "AGPL-3.0",
+    "pushed_at": "2026-09-16T03:58:11Z",
+    "resolved_name": "vicoa-ai/vicoa",
+    "stars": 256
+  },
   "virgiliojr94/book-to-skill": {
     "archived": false,
     "discontinued": null,
@@ -6054,6 +7754,14 @@
     "resolved_name": "virgiliojr94/book-to-skill",
     "stars": 16523
   },
+  "vistyy/nopus": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-19T16:26:34Z",
+    "resolved_name": "Vistyy/nopus",
+    "stars": 287
+  },
   "vkhanhqui/figma-mcp-go": {
     "archived": null,
     "fetched_at": "2026-08-04",
@@ -6061,6 +7769,22 @@
     "pushed_at": null,
     "resolved_name": null,
     "stars": null
+  },
+  "vladimirbakalov/secretguard-mcp": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-13T17:51:53Z",
+    "resolved_name": "vladimirbakalov/secretguard-mcp",
+    "stars": 0
+  },
+  "vlinx-io/velaterm": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-15T12:32:53Z",
+    "resolved_name": "vlinx-io/VelaTerm",
+    "stars": 124
   },
   "voideditor/void": {
     "archived": true,
@@ -6142,6 +7866,38 @@
     "resolved_name": "vstorm-co/pydantic-deepagents",
     "stars": 1013
   },
+  "vuk97/codex-remote-pro": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-31T18:33:38Z",
+    "resolved_name": "Vuk97/codex-remote-pro",
+    "stars": 12
+  },
+  "vuk97/forward-implementation-first": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-31T13:46:22Z",
+    "resolved_name": "Vuk97/forward-implementation-first",
+    "stars": 169
+  },
+  "vuphongle/oss-pr-reviewer": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-29T19:49:49Z",
+    "resolved_name": "vuphongle/oss-pr-reviewer",
+    "stars": 113
+  },
+  "waldekmastykarz/skillfid": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-07T11:41:09Z",
+    "resolved_name": "waldekmastykarz/skillfid",
+    "stars": 1
+  },
   "walkinglabs/awesome-harness-engineering": {
     "archived": false,
     "discontinued": null,
@@ -6162,6 +7918,14 @@
     "resolved_name": "walkinglabs/learn-harness-engineering",
     "stars": 11005
   },
+  "wannabeyourfriend/awesome-harness-evolution": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "CC0-1.0",
+    "pushed_at": "2026-09-12T17:41:31Z",
+    "resolved_name": "wannabeyourfriend/awesome-harness-evolution",
+    "stars": 23
+  },
   "wanshuiyin/auto-claude-code-research-in-sleep": {
     "archived": false,
     "discontinued": null,
@@ -6171,6 +7935,22 @@
     "pushed_at": "2026-08-04T07:15:46Z",
     "resolved_name": "wanshuiyin/Auto-claude-code-research-in-sleep",
     "stars": 14249
+  },
+  "wanshuiyin/hero-anti-overdefense": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-09T05:41:02Z",
+    "resolved_name": "wanshuiyin/HERO-Anti-OverDefense",
+    "stars": 454
+  },
+  "wdhwg001/csift": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-12T17:46:00Z",
+    "resolved_name": "wdhwg001/csift",
+    "stars": 31
   },
   "web-infra-dev/midscene": {
     "archived": false,
@@ -6202,6 +7982,22 @@
     "resolved_name": "Weizhena/Deep-Research-skills",
     "stars": 1864
   },
+  "wenjimods/timeboxed-execution": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-27T02:46:41Z",
+    "resolved_name": "wenjimods/timeboxed-execution",
+    "stars": 95
+  },
+  "willqxcwest2114/conflux-agent-workflow-2026": {
+    "archived": null,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "404",
+    "pushed_at": null,
+    "resolved_name": null,
+    "stars": null
+  },
   "windy3f3f3f3f/how-claude-code-works": {
     "archived": false,
     "discontinued": null,
@@ -6231,6 +8027,14 @@
     "pushed_at": "2026-06-21T08:31:44Z",
     "resolved_name": "withkynam/vibecode-pro-max-kit",
     "stars": 1062
+  },
+  "wolfiesch/omp-best-of": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-02T07:32:44Z",
+    "resolved_name": "wolfiesch/omp-best-of",
+    "stars": 67
   },
   "wondelai/skills": {
     "archived": false,
@@ -6302,6 +8106,14 @@
     "resolved_name": "x1xhlol/system-prompts-and-models-of-ai-tools",
     "stars": 142568
   },
+  "xai-org/grok-build": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-09-15T13:17:47Z",
+    "resolved_name": "xai-org/grok-build",
+    "stars": 26774
+  },
   "xberg-io/xberg": {
     "archived": false,
     "discontinued": null,
@@ -6311,6 +8123,14 @@
     "pushed_at": "2026-08-04T20:28:32Z",
     "resolved_name": "xberg-io/xberg",
     "stars": 8897
+  },
+  "xiaoduoya/codex-with-chatgpt": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-13T03:22:46Z",
+    "resolved_name": "XiaoDuoYa/codex-with-chatgpt",
+    "stars": 4517
   },
   "xiaomimimo/mimo-code": {
     "archived": false,
@@ -6322,6 +8142,14 @@
     "resolved_name": "XiaomiMiMo/MiMo-Code",
     "stars": 12646
   },
+  "xiayutian11/maskit": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "AGPL-3.0",
+    "pushed_at": "2026-09-15T07:58:11Z",
+    "resolved_name": "xiaYuTian11/maskit",
+    "stars": 222
+  },
   "xknight254-hub/align-dev": {
     "archived": false,
     "discontinued": null,
@@ -6331,6 +8159,22 @@
     "pushed_at": "2026-06-05T08:10:33Z",
     "resolved_name": "xknight254-hub/align-dev",
     "stars": 0
+  },
+  "xu123-bob/baize": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-16T03:13:20Z",
+    "resolved_name": "Xu123-Bob/Baize",
+    "stars": 70
+  },
+  "xyiqq/skilldoctor": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-08-16T08:03:50Z",
+    "resolved_name": "xyiqq/skilldoctor",
+    "stars": 11
   },
   "yamadashy/repomix": {
     "archived": false,
@@ -6372,6 +8216,14 @@
     "resolved_name": "YishenTu/claudian",
     "stars": 14545
   },
+  "yizhiyanhua-ai/fireworks-open-eli5": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-08-24T13:11:07Z",
+    "resolved_name": "yizhiyanhua-ai/fireworks-open-eli5",
+    "stars": 190
+  },
   "yj972/know-before-act": {
     "archived": false,
     "discontinued": null,
@@ -6401,6 +8253,14 @@
     "pushed_at": "2026-08-04T17:50:21Z",
     "resolved_name": "yonatangross/orchestkit",
     "stars": 213
+  },
+  "yudis-bit/why-ui": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-06T11:17:33Z",
+    "resolved_name": "Yudis-bit/why-ui",
+    "stars": 1
   },
   "yussufs/export-md": {
     "archived": false,
@@ -6531,6 +8391,14 @@
     "pushed_at": "2025-07-25T14:30:39Z",
     "resolved_name": "zou-group/textgrad",
     "stars": 3686
+  },
+  "zseven-w/dsh-ios": {
+    "archived": false,
+    "fetched_at": "2026-09-16",
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T03:01:38Z",
+    "resolved_name": "ZSeven-W/dsh-ios",
+    "stars": 292
   },
   "zzet/gortex": {
     "archived": false,

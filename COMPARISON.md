@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 913 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 914 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -337,6 +337,7 @@ All 913 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | resolving-merge-conflicts | skill | | ✓ | ADOPT | MEASURED |
 | codex-plugin-cc | plugin | | ✓ | discovery-log | REVIEW |
 | agy-staff | plugin | | ✓ | discovery-log | SOURCE-ONLY |
+| dsh-crew | plugin | | ✓ | discovery-log | SOURCE-ONLY |
 | agents-council | plugin | | ✓ | SKIP | SOURCE-ONLY |
 | vibecode-pro-max-kit | harness | | ✓ | SKIP | REVIEW |
 | re_gent | tool | | ✓ | discovery-log | REVIEW |
@@ -544,7 +545,7 @@ All 913 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | debroid | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | roundtable | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | zoetrope | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
-| OrcaReplay | tool | ✓ | ✓ | SKIP | SOURCE-ONLY |
+| OrcaReplay | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | agenttrail | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | csift | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | Apache DevLake | platform | ✓ | ✓ | DEFER | REVIEW |
@@ -998,15 +999,15 @@ All 913 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 80 | 35 | 6 | 44% |
-| Implement | 268 | 119 | 4 | 44% |
+| Implement | 269 | 119 | 4 | 44% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 97 | 30 | 3 | 31% |
 | Ship | 4 | 1 | 1 | 25% |
 | Reflect | 10 | 5 | 3 | 50% |
-| Outer Loop | 76 | 21 | 2 | 28% |
+| Outer Loop | 76 | 20 | 2 | 26% |
 | Skills & Plugins | 122 | 43 | 4 | 35% |
 | Memory & Context | 81 | 26 | 2 | 32% |
 | MCP Servers | 57 | 18 | 2 | 32% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 60 | 18 | 4 | 30% |
-| **Total** | **913** | **338** | **34** | **37%** |
+| **Total** | **914** | **337** | **34** | **37%** |
