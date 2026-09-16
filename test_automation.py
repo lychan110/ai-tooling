@@ -4165,9 +4165,10 @@ class TestTierStack(unittest.TestCase):
         # amap is injected through stack_tiers' interface (#199) — no patching
         # another module's private function.
         amap = {"foo": "MEASURED", "bar": "REVIEW"}  # baz has no eval -> SOURCE-ONLY
-        t1, t2 = tier.stack_tiers(self.STACK, amap)
+        t1, t2, dropped = tier.stack_tiers(self.STACK, amap)
         self.assertEqual(t1, [("foo", "MEASURED")])           # MEASURED/RUN -> Tier 1
         self.assertEqual(t2, [("bar", "REVIEW"), ("baz", "SOURCE-ONLY")])  # rest -> Tier 2
+        self.assertEqual(dropped, [])   # no Harness cell -> installable, never guessed
 
     def test_apply_replaces_between_markers_and_is_idempotent(self):
         amap = {"foo": "RUN", "bar": "REVIEW"}
@@ -4238,8 +4239,9 @@ class TestStackCount(unittest.TestCase):
         population. Both call `distinct_stack_picks`, so they cannot drift."""
         text = Path(ROOT, "STACK.md").read_text(encoding="utf-8")
         n = reconcile.stack_count(ROOT)
-        tiers = [int(x) for x in re.findall(r"\*\*Tier \d — [a-z-]+ \((\d+)\)", text)]
-        self.assertEqual(len(tiers), 2, "STACK.md should render exactly two tiers")
+        tiers = [int(x) for x in re.findall(
+            r"\*\*(?:Tier \d+ — [a-z-]+|Dropped — [^*]+?) \((\d+)\)", text)]
+        self.assertEqual(len(tiers), 3, "STACK.md should render two tiers plus the dropped group")
         self.assertEqual(sum(tiers), n)
         self.assertIn(f"The {n} tools worth installing", text)
 
@@ -4251,8 +4253,8 @@ class TestStackCount(unittest.TestCase):
         `amap={}` sends every pick to Tier 2 (no eval -> SOURCE-ONLY); the tier *split* is
         not the subject here, the population is, and it skips building a DetectorContext."""
         text = Path(ROOT, "STACK.md").read_text(encoding="utf-8")
-        t1, t2 = tier.stack_tiers(text, {})
-        self.assertEqual(len(t1) + len(t2), reconcile.stack_count(ROOT))
+        t1, t2, dropped = tier.stack_tiers(text, {})
+        self.assertEqual(len(t1) + len(t2) + len(dropped), reconcile.stack_count(ROOT))
 
     def test_live_tree_no_two_tools_share_a_display_name(self):
         """The one thing to watch about a text key: two distinct tools sharing a display
@@ -5157,8 +5159,8 @@ class TestWorkflowDrift(unittest.TestCase):
         self.assertEqual([p.slug for p in picks], ["own/a", "own/b"])
         # detector J's helper and tier-stack's renderer are the same list
         self.assertEqual(audit._stack_picks_by_slug(stack), picks)
-        t1, t2 = tier.stack_tiers(stack, {})
-        self.assertEqual([t for t, _e in [*t1, *t2]], ["a", "b"])
+        t1, t2, dropped = tier.stack_tiers(stack, {})
+        self.assertEqual([t for t, _e in [*t1, *t2, *dropped]], ["a", "b"])
         with tempfile.TemporaryDirectory() as d:
             self.assertEqual(
                 audit.audit_workflow_drift(self._ctx(d, stack, ""))[1], len(picks))
