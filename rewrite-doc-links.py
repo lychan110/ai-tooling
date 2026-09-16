@@ -10,7 +10,7 @@ them on `plugin/docs/PLAYBOOK.md` — the front door of the bundle a user actual
 installs — including `[CLAUDE.md](CLAUDE.md)` under a heading promising that CI
 enforces all of it. None is fixable at the source: the root link is correct *at root*.
 It is the copy that is wrong, which makes this the sync's job, and the skills half of
-the same script already does the analogous transform (it strips `${CLAUDE_PLUGIN_ROOT}/docs/`
+the same script already does the analogous transform (it strips `${AI_TOOLING_DOCS}/`
 out of every SKILL.md on the way through).
 
 One rule carries the whole design: **the sync fixes depth, not rot.**

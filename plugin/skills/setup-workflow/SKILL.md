@@ -44,7 +44,7 @@ hermes mcp list 2>/dev/null
 ls .agents/skills/ 2>/dev/null
 ```
 
-Map against the recommended stack from `${CLAUDE_PLUGIN_ROOT}/docs/STACK.md` — check each dev loop stage (Plan, Implement, Verify, Review, Ship, Reflect, Outer Loop).
+Map against the recommended stack from `${AI_TOOLING_DOCS}/STACK.md` — check each dev loop stage (Plan, Implement, Verify, Review, Ship, Reflect, Outer Loop).
 
 ### 2b. Offer to install missing tools
 

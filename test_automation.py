@@ -2553,7 +2553,7 @@ def _sync_fixture_tree(d):
     _write(d, "discovery/bar.md", "# discovery bar\n")
     _write(d, "methodologies/baz.md", "# methodology baz\n")
     _write(d, "plugin/skills/myskill/SKILL.md",
-           "See ${CLAUDE_PLUGIN_ROOT}/docs/CATALOG.md for the catalog.\n")
+           "See ${AI_TOOLING_DOCS}/CATALOG.md for the catalog.\n")
 
 
 class TestSyncPluginDocs(unittest.TestCase):
@@ -2575,14 +2575,14 @@ class TestSyncPluginDocs(unittest.TestCase):
             self.assertTrue(os.path.exists(os.path.join(d, "plugin/docs/methodologies/baz.md")))
 
     def test_strips_plugin_root_prefix_in_root_skills(self):
-        # The sed strips the whole "${CLAUDE_PLUGIN_ROOT}/docs/" prefix, so a
-        # "${CLAUDE_PLUGIN_ROOT}/docs/CATALOG.md" reference becomes "CATALOG.md".
+        # The sed strips the whole "${AI_TOOLING_DOCS}/" prefix, so a
+        # "${AI_TOOLING_DOCS}/CATALOG.md" reference becomes "CATALOG.md".
         with tempfile.TemporaryDirectory() as d:
             self._fixture_tree(d)
             self._run(d)
             with open(os.path.join(d, "skills/myskill/SKILL.md"), encoding="utf-8") as f:
                 out = f.read()
-            self.assertNotIn("${CLAUDE_PLUGIN_ROOT}", out)
+            self.assertNotIn("${AI_TOOLING_DOCS}", out)
             self.assertIn("See CATALOG.md for the catalog.", out)
 
     def test_stale_plugin_docs_reconciled_by_delete(self):
