@@ -595,6 +595,7 @@ Usage:
   uv run audit-evals.py --skills     # skill-evidence backlog report (offline)
   uv run audit-evals.py --overlaps   # dangling overlap-reference report (offline)
   uv run audit-evals.py --clusters   # overlap clusters still awaiting a pick (offline)
+  uv run audit-evals.py --hermes-verbs  # hermes-verb report (offline, report-only)
   uv run audit-evals.py --savings-claims  # unverified token-savings headlines (offline)
   uv run audit-evals.py --evidence   # declared Evidence-field distribution (offline)
   uv run audit-evals.py --staleness  # flag evals past their last-verified threshold (offline)
@@ -4570,6 +4571,91 @@ def audit_claude_verbs(ctx):
     return findings, walked
 
 
+# ---------------------------------------------------------------- AM. hermes verb (report-only)
+# `hermes mcp install <name>` and `hermes plugins install <owner>/<repo>` are the install
+# forms STACK.md teaches since PR #11, and detector A checks an install's ARGUMENT and never
+# its VERB — the defect AL documents for `claude` (#487). A *catalog name* has no offline
+# authority at all (the Hermes catalog belongs to the CLI, and CI has no hermes binary:
+# detector R's rule), so this detector checks the verb and leaves the name to the reader.
+#
+# Snapshot of `hermes --help`'s "Command to run" column plus `hermes mcp --help` and
+# `hermes plugins --help`, taken 2026-09-16 on v0.21.3 (2026.9.14) — the version PR #11
+# verified its commands against. Re-derive it by running those three commands and reading
+# the left column.
+HERMES_VERBS = frozenset({
+    "acp", "approvals", "auth", "backup", "browser", "bundles", "chat", "checkpoints",
+    "claw", "completion", "computer-use", "config", "console", "cron", "curator",
+    "dashboard", "debug", "desktop", "doctor", "dump", "egress", "fallback", "gateway",
+    "gui", "hooks", "import", "import-agent", "insights", "journey", "kanban", "learning",
+    "logs", "login", "logout", "lsp", "mcp", "memory", "memory-graph", "migrate", "moa",
+    "model", "monitoring", "pairing", "pause", "peer", "pets", "plugins", "portal",
+    "profile", "project", "prompt-size", "proxy", "resume", "secrets", "security", "send",
+    "serve", "sessions", "setup", "skin", "skills", "slack", "status", "sync", "tools",
+    "uninstall", "update", "vault", "verify", "webhook", "whatsapp", "whatsapp-cloud",
+    "worktree",
+})
+
+# Same page list as AL: the pages a reader or an agent EXECUTES. AGENTS.md, audit-evals.py
+# and test_automation.py all name fabricated verbs ON PURPOSE — documenting a defect is not
+# committing it — and plugin/docs/ is a synced MIRROR of these same root files (#437's
+# split), so walking it would double every finding.
+HERMES_VERB_PAGES = ("STACK.md", "WORKFLOW.md", "CATALOG.md", "README.md", "PLAYBOOK.md")
+
+# Anchored at the START of the backticked span, then `hermes` + whitespace. The span anchor
+# is what keeps a tool NAMED hermes in argument position out: STACK.md's `ccusage hermes
+# daily` is a per-harness view of ccusage and would otherwise donate the verb `daily`, while
+# `caveman hermes` donates nothing only because no argument follows it. The `\s+` requirement
+# plus the anchor also rule out `hermes-agent` (a hyphen, not whitespace) and `.hermes` (the
+# config directory).
+_HERMES_CMD = re.compile(r"^\s*hermes\s+(\S+)")
+
+HermesVerbFinding = collections.namedtuple("HermesVerbFinding", "rel line verb command")
+
+
+def audit_hermes_verbs(ctx):
+    """(findings, walked) — every backticked `hermes <word>` command whose word resolves to
+    neither a declared subcommand nor a flag.
+
+    Same three exclusions and the same NEGATION window as AL, for the same reason: a command
+    framed as the WRONG one in surrounding prose is a correction note, not a claim to check.
+    Extraction runs on `` `...` `` spans that START with `hermes` — prose describing the CLI
+    ("the Hermes CLI") carries no verb, and a tool *named* hermes in argument position
+    (`ccusage hermes daily`, a per-harness view of ccusage) is not a hermes subcommand.
+
+    Nested forms are read at the TOP level (`hermes mcp install …` is the verb `mcp`,
+    `hermes plugins install …` is `plugins`), which is what the one-word match gives: a
+    sub-verb is never checked on its own, exactly as `claude auth login` never flags `login`.
+
+    Report-only, AL's own call: the pages are mid-migration between harnesses, and the
+    remedy for a live finding is a human's — guessing at a replacement is how a fix launders
+    a wrong command into a plausible-looking one.
+    """
+    files = [*HERMES_VERB_PAGES,
+             *sorted(glob.glob("evaluations/*.md", root_dir=ctx.root)),
+             *sorted(glob.glob("discovery/*.md", root_dir=ctx.root))]
+    findings, walked = [], 0
+    for rel in files:
+        if not os.path.exists(ctx.path(rel)):
+            continue
+        for i, line in enumerate(ctx.read(rel).splitlines(), 1):
+            for m in re.finditer(r"`([^`]*)`", line):
+                cmd = m.group(1)
+                cm = _HERMES_CMD.search(cmd)
+                if not cm:
+                    continue
+                word = cm.group(1)
+                if word.startswith(("-", '"', "'")):
+                    continue
+                walked += 1
+                if word.lower() in HERMES_VERBS:
+                    continue
+                window = line[max(0, m.start() - 70):m.end() + 60]
+                if NEGATION.search(window):
+                    continue
+                findings.append(HermesVerbFinding(rel, i, word, cmd.strip()))
+    return findings, walked
+
+
 OFFLINE_GATES = ("--fabrication", "--verdicts", "--comparison", "--drift",
                  "--verdict-evidence", "--rows", "--bulk-triage")
 # With no flags at all: the offline gates plus the network install resolver.
@@ -4582,7 +4668,8 @@ REPORT_FLAGS = ("--links", "--archived", "--skills", "--skill-design", "--overla
                 "--license-declared", "--containment", "--conditional-gate",
                 "--license-header", "--duplicate-evals", "--workflow-skips",
                 "--containment-evidence", "--stage-drift", "--repo-installs",
-                "--layer-drift", "--link-identity", "--claim-drift", "--claude-verbs")
+                "--layer-drift", "--link-identity", "--claim-drift", "--claude-verbs",
+                "--hermes-verbs")
 DETECTOR_FLAGS = DEFAULT_GATES + REPORT_FLAGS
 # Every argument main() accepts. Anything else is a typo, and a typo used to be silently
 # dropped from `sel` — which made the argument list read as empty and turned `--ofline`
@@ -4655,6 +4742,7 @@ def main():
     do_linkid = "--link-identity" in want  # opt-in report (does not affect exit code)
     do_claim = "--claim-drift" in want  # opt-in report (does not affect exit code)
     do_claudeverb = "--claude-verbs" in want  # opt-in report (does not affect exit code)
+    do_hermesverb = "--hermes-verbs" in want  # opt-in report (does not affect exit code)
 
     ctx = DetectorContext(ROOT)  # the one place the module global feeds the detectors (#199)
     rc = 0
@@ -5335,6 +5423,17 @@ def main():
         for f in cv[0]:
             print(f"  UNRECOGNIZED  {f.rel}:{f.line} — `{f.command}`: "
                   f"\"{f.verb}\" is not a `claude` subcommand")
+    if do_hermesverb:
+        hv = audit_hermes_verbs(ctx)
+        print(f"== AM. hermes verb (report-only) — {len(hv[0])} of {hv[1]} "
+              f"`hermes <word>` command(s) name an unrecognized subcommand ==")
+        if not hv[1]:
+            print("  no `hermes <word>` commands found — nothing to check")
+        elif not hv[0]:
+            print("  OK — every `hermes <word>` command names a declared subcommand or a flag")
+        for f in hv[0]:
+            print(f"  UNRECOGNIZED  {f.rel}:{f.line} — `{f.command}`: "
+                  f"\"{f.verb}\" is not a `hermes` subcommand")
     sys.exit(rc)
 
 if __name__ == "__main__":

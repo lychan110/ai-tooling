@@ -1295,7 +1295,7 @@ class TestDetectorPopulations(unittest.TestCase):
         "--license-declared", "--containment", "--conditional-gate", "--license-header",
         "--duplicate-evals", "--workflow-skips", "--containment-evidence", "--stage-drift",
         "--repo-installs", "--layer-drift", "--link-identity", "--claim-drift",
-        "--claude-verbs")
+        "--claude-verbs", "--hermes-verbs")
 
     # A denominator in any of the shapes the corpus uses: `6/8`, `0 of 693`, `across 619
     # record(s)`, `in 318 of 583`, `644 record(s)`.
@@ -9075,3 +9075,20 @@ class TestHarnessGapDetectors(unittest.TestCase):
             self.assertIn("BROKEN [gh] owner/aitooling-nope-skills", r.stdout)
             self.assertIn("BROKEN [gh] owner/aitooling-nope-uv", r.stdout)
             self.assertEqual(r.returncode, 1, msg=r.stdout)
+
+    def test_a_fabricated_hermes_verb_is_named_without_gating(self):
+        """The user-visible contract of `--hermes-verbs`: the bad command is printed, the good
+        one is not, and the flag never changes the exit code (report-only, exactly like AL)."""
+        with tempfile.TemporaryDirectory() as d:
+            # Guard the target before running anything (real-subprocess-e2e-testing).
+            self.assertTrue(os.path.realpath(d).startswith(os.path.realpath(tempfile.gettempdir())))
+            r = self._run(d, ["audit-evals.py", "--hermes-verbs"],
+                          "# Stack\n\n"
+                          "Run `hermes plugins install obra/superpowers` in your project.\n\n"
+                          "Then `hermes plugin install obra/superpowers` does the same thing.\n\n"
+                          "Per-harness views: `ccusage opencode daily`, `ccusage hermes daily`.\n")
+            self.assertEqual(r.returncode, 0, msg=r.stdout + r.stderr)
+            self.assertIn("— 1 of 2", r.stdout, msg=r.stdout)
+            self.assertIn('"plugin" is not a `hermes` subcommand', r.stdout)
+            self.assertNotIn('"plugins" is not a `hermes` subcommand', r.stdout)
+            self.assertNotIn('"daily" is not a `hermes` subcommand', r.stdout)
