@@ -86,7 +86,6 @@ _Listing 12 of 377 — rerun `uv run triage.py` and read the source for the tail
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| dsh-crew | Implement | 7.6 | pressure 1, gap 5.6 | `/triage-lead dsh-crew` |
 | gptme | Implement | 25.6 | pressure 9, gap 5.6 | `/triage-lead gptme` |
 | qwen-code | Implement | 25.6 | pressure 9, gap 5.6 | `/triage-lead qwen-code` |
 | buildwithclaude | Reference | 25.0 | pressure 8, gap 7.0 | `/triage-lead buildwithclaude` |
@@ -98,6 +97,7 @@ _Listing 12 of 377 — rerun `uv run triage.py` and read the source for the tail
 | awesome-claude-skills (Composio) | Reference | 23.0 | pressure 7, gap 7.0 | `/triage-lead awesome-claude-skills (Composio)` |
 | slidev | Skills & Plugins | 22.5 | pressure 7, gap 6.5 | `/triage-lead slidev` |
 | ccpm | Plan | 21.6 | pressure 7, gap 5.6 | `/triage-lead ccpm` |
+| codex-plugin-cc | Implement | 21.6 | pressure 7, gap 5.6 | `/triage-lead codex-plugin-cc` |
 
 ## P4 mechanical-skip — 0 leads
 

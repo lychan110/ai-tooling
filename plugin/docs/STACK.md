@@ -1,6 +1,6 @@
 # Recommended Stack
 
-The 30 tools worth installing on every project, distilled from 914 catalog entries and 941 evaluations. Each tool earned its slot by moving a quality signal — see the Evidence tiers below for how far each one was actually validated. Install instructions are written for **opencode** and **Hermes Agent**; a pick that exists only as a Claude Code plugin is marked **dropped** rather than given a command that cannot run.
+The 30 tools worth installing on every project, distilled from 914 catalog entries and 942 evaluations. Each tool earned its slot by moving a quality signal — see the Evidence tiers below for how far each one was actually validated. Install instructions are written for **opencode** and **Hermes Agent**; a pick that exists only as a Claude Code plugin is marked **dropped** rather than given a command that cannot run.
 
 > **Harness key.** `both` — the Install cell runs as written on opencode and Hermes. `opencode` / `Hermes` — that harness only. `dropped` — Claude Code only, with the reason in the cell. The Evidence tiers below answer *how well validated* a pick is, not *what runs on your harness* — the Harness column answers that. Picks marked `dropped` are grouped separately at the end of that block. MCP servers: opencode takes a block in `opencode.json`'s `mcp` object; Hermes takes `hermes mcp …` on the command line.
 >
