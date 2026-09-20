@@ -1,7 +1,7 @@
 # Evaluation: awesome-llm-agents
 
 **Repo:** [kaushikb11/awesome-llm-agents](https://github.com/kaushikb11/awesome-llm-agents)
-**Stars:** 1,514 | **Last commit:** 2026-06-14 | **License:** none
+**Stars:** 1,514 | **Last commit:** 2026-06-14 | **License:** CC0-1.0  <!-- header froze at the pre-refresh "none" reading; the refreshed record shows CC0-1.0 -->
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
 **Last triaged:** 2026-08-04  <!-- triaged: bulk -->
 **Dev loop stage:** Discover (outer loop)
@@ -61,9 +61,10 @@ behind three catalogued directories that cover the same ground more thoroughly:
 (the row it names in its own "Overlaps with"), and `awesome-generative-ai-guide` (★28K).
 
 A reference row earns its keep by being the place you look. When three larger, fresher lists index
-the same ecosystem, the smallest one is not a fourth answer — it is a fourth thing to check. It also
-declares no licence, which for a list of links matters less than it would for code, but it is one
-more reason it is not the copy to reach for.
+the same ecosystem, the smallest one is not a fourth answer — it is a fourth thing to check.
+**~~It also declares no licence, which for a list of links matters less than it would for code, but
+it is one more reason it is not the copy to reach for.~~** Withdrawn 2026-09-20 — the refreshed
+record shows the repo now declares CC0-1.0; the SKIP stands on catalog supersession above.
 
 Re-open if it develops a filter the larger lists lack — curation by quality rather than breadth is
 the thing none of them do.
