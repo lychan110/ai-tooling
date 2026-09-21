@@ -44,7 +44,7 @@ grep -niE "reporails|openskills|skills-manage|agentic-stack|capa" CATALOG.md
 
 ## What didn't work or surprised us
 
-- **No license field via the API despite an MIT badge/`LICENSE` file** — minor metadata quirk (the repo does carry MIT), but worth noting.
+- ~~**No license field via the API despite an MIT badge/`LICENSE` file** — minor metadata quirk (the repo does carry MIT), but worth noting.~~ **Corrected 2026-09-21** — the API now reports MIT and `/repos/infragate/capa/license` returns the file, so the quirk this bullet recorded is gone; see the withdrawal in the triage note.
 - **284 stars and 4 contributors.** Real maturity risk for an infrastructure tool you'd standardize a team's whole agent config on. It introduces a yaml format, a local server/DB, and a cache as new dependencies in your repo — meaningful lock-in for an early-stage project.
 - **The value proposition is multi-editor.** For a developer working primarily in Claude Code, the core pain capa solves (keeping `.cursor/rules/`, `CLAUDE.md`, and `AGENTS.md` in sync) largely doesn't exist — Claude Code already reads `.claude/` and `CLAUDE.md` natively. You'd be adding a build step and a config indirection layer to manage files the agent already consumes directly.
 - **Cost-savings claim is vendor-reported.** "19–40% cheaper, 150 trials on claude-opus-4-8" is plausible given the lazy-load design but is not independently reproduced here; treat as a hypothesis, not a result.
@@ -72,15 +72,19 @@ Versus neighbors: **reporails/cli** is diagnostics (validate existing instructio
 
 Left at `discovery-log`. ★680, pushed today.
 
-**License finding, disclosed rather than acted on.** GitHub reports no license for this repository, and
+~~**License finding, disclosed rather than acted on.** GitHub reports no license for this repository, and
 a direct check confirms it: `GET /repos/infragate/capa/license` returns 404 and there is no `LICENSE`
 file anywhere in the HEAD tree. But the README carries an **MIT badge** whose link points at that
-missing file. So the intent is declared and the grant is not shipped.
+missing file. So the intent is declared and the grant is not shipped.~~ **Withdrawn 2026-09-21** — the
+refreshed record contradicts the finding: `repo-metadata.json` now reads `license_spdx: "MIT"`, and a
+direct re-check of `/repos/infragate/capa/license` returns the file (MIT License, © 2026 Infragate).
+The clerical omission recorded here was fixed upstream, so the row is an ordinary MIT-licensed tool
+again. Nothing is re-disposed on this account: the finding was disclosed rather than acted on, and the
+disposition below never rested on it — the license is not why this lead sits at `discovery-log`.
 
-That is deliberately not treated the same as `command-code` or `agent-native`, both SKIPped in this
-lane for having no license: those declare nothing anywhere. Here the author states MIT and has
-evidently forgotten the file — a fixable omission, and disposing a row for a missing file when the
-intent is published in the README would be punishing a clerical error. It is worth an upstream issue.
+The paragraph that followed declined the `command-code`/`agent-native` treatment *because* the intent
+was published while the grant was not. That comparison is now moot rather than wrong, and is dropped
+rather than left standing as a licence caveat this row no longer has.
 
 On the merits the eval's own reservation stands and is the reason this is not a promotion either: its
 core pain — keeping `.cursor/rules/`, `CLAUDE.md` and `AGENTS.md` in sync — "barely exists for someone
