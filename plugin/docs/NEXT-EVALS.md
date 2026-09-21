@@ -1,15 +1,15 @@
 # Next evals — a banded promotion queue
 
-The 577 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
+The 576 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
 
-Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 107 distinct values across these 577 leads (246 have zero overlap pressure; largest tie: 42) — enough to pick a head, not to rank a tail. Leads already stamped `**Last triaged:**` sink within their band so each pass surfaces un-examined ones.
+Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 102 distinct values across these 576 leads (245 have zero overlap pressure; largest tie: 42) — enough to pick a head, not to rank a tail. Leads already stamped `**Last triaged:**` sink within their band so each pass surfaces un-examined ones.
 
 **Eliminate-only.** Outside `P0 measure`, an unattended agent may SKIP a lead or leave it at `discovery-log`; it may never write ADOPT/KEEP/CONDITIONAL. A false SKIP is cheap and reversible; a false ADOPT poisons STACK. Detector Q gates this.
 
 | Band | Definition | Leads | An agent may conclude |
 |------|------------|-------|-----------------------|
 | **P0 measure** | score-ranked head | 25 | human or `eval-runner` only — the one band that may reach ADOPT |
-| **P1 successor-check** | `archived == true` | 1 | repoint the link to a successor, or SKIP "archived, no successor" |
+| **P1 successor-check** | `archived == true` | 0 | repoint the link to a successor, or SKIP "archived, no successor" |
 | **P2 challenger** | overlaps a tool already in STACK | 169 | SKIP "redundant with `<incumbent>`", or leave at discovery-log |
 | **P3 backlog** | everything else | 377 | leave; stamp `**Last triaged:**` only |
 | **P4 mechanical-skip** | vendored Type under a disqualifying license | 0 | SKIP — zero judgement |
@@ -49,13 +49,11 @@ _human or `eval-runner` only — the one band that may reach ADOPT._
 | claude-octopus | Review | 28.9 | pressure 10, gap 6.9 | `/evaluate-tool claude-octopus` |
 | ACE (agentic-context-engine) | Memory & Context | 28.8 | pressure 10, gap 6.8 | `/evaluate-tool ACE (agentic-context-engine)` |
 
-## P1 successor-check — 1 leads
+## P1 successor-check — 0 leads
 
 _repoint the link to a successor, or SKIP "archived, no successor"._
 
-| Tool | Stage | Score | Why | Command |
-|------|-------|-------|-----|---------|
-| llm-safe-sql | MCP Servers | 6.8 | pressure 0, gap 6.8 | `/triage-lead llm-safe-sql` |
+_(none)_
 
 ## P2 challenger — 169 leads
 
@@ -111,9 +109,9 @@ _settle the container, or SKIP "ships inside `<container>`" — never an indepen
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| prisma | MCP Servers | 14.8 | ships inside `prisma/prisma` · pressure 3, gap 6.8 | `/triage-lead prisma` |
-| confluence | MCP Servers | 8.8 | ships inside `sooperset/mcp-atlassian` · pressure 0, gap 6.8 | `/triage-lead confluence` |
-| jira | MCP Servers | 8.8 | ships inside `sooperset/mcp-atlassian` · pressure 0, gap 6.8 | `/triage-lead jira` |
+| prisma | MCP Servers | 14.7 | ships inside `prisma/prisma` · pressure 3, gap 6.7 | `/triage-lead prisma` |
+| confluence | MCP Servers | 8.7 | ships inside `sooperset/mcp-atlassian` · pressure 0, gap 6.7 | `/triage-lead confluence` |
+| jira | MCP Servers | 8.7 | ships inside `sooperset/mcp-atlassian` · pressure 0, gap 6.7 | `/triage-lead jira` |
 | typescript-mcp-server-generator | Skills & Plugins | 8.5 | ships inside `github/awesome-copilot` · pressure 0, gap 6.5 | `/triage-lead typescript-mcp-server-generator` |
 | presentation-creator | Skills & Plugins | 6.5 | ships inside `getsentry/skills` · pressure 0, gap 6.5 | `/triage-lead presentation-creator` |
 

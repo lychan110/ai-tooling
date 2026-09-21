@@ -858,7 +858,7 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | jira | MCP server | ✓ | ✓ | discovery-log | REVIEW |
 | mcp-toolbox | MCP server | ✓ | ✓ | discovery-log | REVIEW |
 | prisma | MCP server | ✓ | ✓ | discovery-log | REVIEW |
-| llm-safe-sql | MCP server | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| llm-safe-sql | MCP server | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | modelcontextprotocol/servers | MCP server | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | sequential-thinking | MCP server | ✓ | ✓ | SKIP | REVIEW |
 | sentry | MCP server | ✓ | ✓ | discovery-log | REVIEW |
@@ -1007,7 +1007,7 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Outer Loop | 76 | 20 | 2 | 26% |
 | Skills & Plugins | 122 | 43 | 4 | 35% |
 | Memory & Context | 81 | 26 | 2 | 32% |
-| MCP Servers | 57 | 18 | 2 | 32% |
+| MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 60 | 18 | 4 | 30% |
-| **Total** | **914** | **337** | **34** | **37%** |
+| **Total** | **914** | **338** | **34** | **37%** |
