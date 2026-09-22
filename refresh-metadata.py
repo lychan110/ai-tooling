@@ -83,7 +83,18 @@ DISCONTINUED = re.compile(
     # read-only") — both live tools describing a COMMAND. A detector that flags a
     # healthy tool is worse than one that misses a dead one, because the miss costs
     # a stale row and the false positive costs trust in every other finding.
-    r"|(?:repo|repository|project) is (?:now )?read-only"
+    #
+    # Two further guards, same trade, added after i3t4an/KADATH arrived as a P5-style
+    # false positive (2026-09-22): its README says "their repository is read-only while
+    # an epoch is running", describing KADATH's own per-epoch isolation of the agent
+    # under evolution. The previous pattern matched it and detector V reported a live
+    # repo as discontinued. A POSSESSIVE subject ("their/its/each") and a TEMPORAL
+    # qualifier ("while/during/until") both mean the sentence is about a state something
+    # is put INTO, not about the repo being closed — a permanent banner names the
+    # repository itself ("This repository is read-only for all users").
+    r"|(?<!their )(?<!its )(?<!each )(?:this |the |our )?(?:repo|repository|project) "
+    r"is (?:now )?read-only"
+    r"(?!\s+(?:while|during|until|unless|when)\b)"
     r"|will receive no further updates)", re.IGNORECASE)
 README_HEAD = 3000  # the banner is at the top or it is not a banner
 

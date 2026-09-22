@@ -8208,12 +8208,20 @@ class TestDiscontinuationRegex(unittest.TestCase):
             # other finding; a miss costs one stale row.
             "This command is read-only and will not perform any changes.",
             "The closing `final-review` is read-only. It returns `REVIEW: GREEN`.",
+            # i3t4an/KADATH, reported by detector V on 2026-09-22: the sentence
+            # describes the repo KADATH PUTS AN ORGANISM INTO for an epoch, not a
+            # closed repository. Possessive subject + temporal qualifier.
+            "Their complete framework is evolvable, but their repository is read-only "
+            "while an epoch is running.",
+            "Each repository is read-only during grading.",
         ):
             self.assertIsNone(rx.search(text), text)
 
     def test_matches_a_repo_that_really_is_read_only(self):
         rx = self._rx()
         self.assertIsNotNone(rx.search("This repository is read-only for all users."))
+        self.assertIsNotNone(rx.search("The repository is now read-only."))
+        self.assertIsNotNone(rx.search("Repository is read-only."))
 
 
 # ----------------------------------------------------- Z. unread license declaration (#372)
