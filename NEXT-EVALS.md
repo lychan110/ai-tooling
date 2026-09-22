@@ -2,7 +2,7 @@
 
 The 576 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
 
-Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 102 distinct values across these 576 leads (245 have zero overlap pressure; largest tie: 42) — enough to pick a head, not to rank a tail. Leads already stamped `**Last triaged:**` sink within their band so each pass surfaces un-examined ones.
+Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 102 distinct values across these 576 leads (245 have zero overlap pressure; largest tie: 42) — enough to pick a head, not to rank a tail. In the score-based bands (`P2`/`P3`) a lead stamped `**Last triaged:**` sinks within its band so each pass surfaces un-examined ones. **The structural bands do not work that way**: `P1`/`P4`/`P5` hold a row because of a metadata fact (`archived`, a disqualifying license, `Ships inside`), so a stamp neither clears nor reorders them — a one-row structural band means the fact is still true, not that the queue is exhausted.
 
 **Eliminate-only.** Outside `P0 measure`, an unattended agent may SKIP a lead or leave it at `discovery-log`; it may never write ADOPT/KEEP/CONDITIONAL. A false SKIP is cheap and reversible; a false ADOPT poisons STACK. Detector Q gates this.
 
@@ -53,6 +53,8 @@ _human or `eval-runner` only — the one band that may reach ADOPT._
 
 _repoint the link to a successor, or SKIP "archived, no successor"._
 
+_Fact-driven: a row leaves when `archived` clears or its successor is linked. A `**Last triaged:**` stamp changes nothing here._
+
 _(none)_
 
 ## P2 challenger — 169 leads
@@ -101,11 +103,15 @@ _Listing 12 of 377 — rerun `uv run triage.py` and read the source for the tail
 
 _SKIP — zero judgement._
 
+_Fact-driven: a row leaves when the license changes. A `**Last triaged:**` stamp changes nothing here._
+
 _(none)_
 
 ## P5 ships-inside — 5 leads
 
 _settle the container, or SKIP "ships inside `<container>`" — never an independent lead._
+
+_Fact-driven: a row leaves when its container is settled. A container that is itself an open lead keeps this band's size until that row is answered — a one-row band is an unsettled container, not an exhausted queue._
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
