@@ -109,6 +109,24 @@ BANDS = (
      "settle the container, or SKIP \"ships inside `<container>`\" — never an independent lead"),
 )
 
+# Bands whose membership is a metadata FACT rather than a score. A `**Last triaged:**`
+# stamp cannot clear them, and the sentence above ("stamped leads sink within their band")
+# read as "this band is done": three passes inferred a converged queue from a one-row P5
+# band whose container was still an open lead. Each note states what the band's size
+# actually means, and is printed under the band's disposition next to it.
+STRUCTURAL_BAND_NOTES = {
+    "P1 successor-check":
+        "Fact-driven: a row leaves when `archived` clears or its successor is linked. A "
+        "`**Last triaged:**` stamp changes nothing here.",
+    "P4 mechanical-skip":
+        "Fact-driven: a row leaves when the license changes. A `**Last triaged:**` stamp "
+        "changes nothing here.",
+    "P5 ships-inside":
+        "Fact-driven: a row leaves when its container is settled. A container that is "
+        "itself an open lead keeps this band's size until that row is answered — a one-row "
+        "band is an unsettled container, not an exhausted queue.",
+}
+
 
 def load_metadata():
     """slug -> repo facts. Absent cache is not fatal: the metadata-derived bands
@@ -339,8 +357,12 @@ def render(ordered, ranked, incumbents, containers=None):
         "is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), "
         f"but that score has only {distinct} distinct values across these {total} leads "
         f"({zero_pressure} have zero overlap pressure; largest tie: {largest_tie}) — enough "
-        "to pick a head, not to rank a tail. Leads already stamped `**Last triaged:**` sink "
-        "within their band so each pass surfaces un-examined ones.",
+        "to pick a head, not to rank a tail. In the score-based bands (`P2`/`P3`) a lead "
+        "stamped `**Last triaged:**` sinks within its band so each pass surfaces "
+        "un-examined ones. **The structural bands do not work that way**: `P1`/`P4`/`P5` hold "
+        "a row because of a metadata fact (`archived`, a disqualifying license, `Ships "
+        "inside`), so a stamp neither clears nor reorders them — a one-row structural band "
+        "means the fact is still true, not that the queue is exhausted.",
         "",
         "**Eliminate-only.** Outside `P0 measure`, an unattended agent may SKIP a lead or "
         "leave it at `discovery-log`; it may never write ADOPT/KEEP/CONDITIONAL. A false SKIP "
@@ -358,6 +380,10 @@ def render(ordered, ranked, incumbents, containers=None):
         lines.append(f"## {name} — {len(rows)} leads")
         lines.append("")
         lines.append(f"_{disposition}._")
+        note = STRUCTURAL_BAND_NOTES.get(name)
+        if note:
+            lines.append("")
+            lines.append(f"_{note}_")
         lines.append("")
         if not rows:
             lines += ["_(none)_", ""]
