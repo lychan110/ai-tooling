@@ -65,7 +65,7 @@ main() {
       install_docs
       printf 'installed %s: %s + %s\n' "$1" "$(skills_dest_for "$1")" "$DOCS_DEST"
       if [ "$1" = hermes ]; then
-        printf 'next: copy .hermes/plugins/ai-tooling-harness into ~/.hermes/plugins/ , then: hermes plugins enable ai-tooling-harness\n'
+        printf 'next: enable the repo-local plugin for this checkout — HERMES_ENABLE_PROJECT_PLUGINS=true plus an `ai-tooling-harness` entry in plugins.enabled (see docs/agents/hermes-harness.md). Do NOT copy it to ~/.hermes/plugins/: REPO = parents[3] would then resolve to your HOME and the gate fails open, silently.\n'
       fi
       ;;
     *) printf 'usage: bash install-harness.sh opencode|hermes|--check\n' >&2 ; exit 2 ;;
