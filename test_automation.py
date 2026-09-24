@@ -3085,6 +3085,23 @@ class TestInstallHarness(unittest.TestCase):
                 self.assertTrue(os.path.realpath(pointer.group(0)).startswith(os.path.realpath(home)),
                                 msg="install escaped the temp HOME: " + pointer.group(0))
 
+    def test_the_hermes_install_pointer_names_the_repo_local_plugin(self):
+        """The pointer must not send a reader to the user-plugins copy: that copy is inert.
+
+        `REPO = parents[3]` resolves to <repo> only for
+        `<repo>/.hermes/plugins/<name>/__init__.py`; copied to the user plugins dir it resolves
+        to HOME, the `make check-data` probe fails, and the fail-open adapter goes silently
+        inert. Measured 2026-09-24 (repo-local probe exit 0, user-copy exit 2).
+        """
+        with tempfile.TemporaryDirectory() as home:
+            r = self._run("hermes", home=home)
+            self.assertEqual(r.returncode, 0, msg=r.stderr)
+            # The regression is the imperative: "copy .hermes/plugins/… into <user plugins>".
+            self.assertNotIn("copy .hermes/plugins/", r.stdout,
+                             msg="the pointer must not teach the inert user-plugins copy")
+            self.assertIn("HERMES_ENABLE_PROJECT_PLUGINS", r.stdout,
+                          msg="the pointer must name the repo-local enable path instead")
+
     # The other cases a unit-minded author would write — a bad argument exiting non-zero,
     # --check on an empty HOME, per-harness destination paths — are self-evident from the
     # script and are deliberately not tested.
