@@ -222,7 +222,7 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | lobehub | platform | | ✓ | SKIP | REVIEW |
 | nanoclaw | platform | | ✓ | SKIP | REVIEW |
 | nanobot | harness | ✓ | ✓ | SKIP | REVIEW |
-| Hermes Agent | harness | ✓ | ✓ | discovery-log | REVIEW |
+| Hermes Agent | harness | ✓ | ✓ | CONDITIONAL | MEASURED |
 | flue | framework | | ✓ | discovery-log | SOURCE-ONLY |
 | moltworker | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | hermes-webui | platform | | ✓ | discovery-log | SOURCE-ONLY |
@@ -999,7 +999,7 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 80 | 35 | 6 | 44% |
-| Implement | 269 | 119 | 4 | 44% |
+| Implement | 269 | 120 | 4 | 45% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 97 | 30 | 3 | 31% |
 | Ship | 4 | 1 | 1 | 25% |
@@ -1010,4 +1010,4 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 60 | 18 | 4 | 30% |
-| **Total** | **914** | **338** | **34** | **37%** |
+| **Total** | **914** | **339** | **34** | **37%** |

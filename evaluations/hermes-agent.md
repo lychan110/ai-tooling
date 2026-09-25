@@ -2,8 +2,7 @@
 
 **Repo:** [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent)
 **Stars:** ~197,700 (unusually high — reported as-is, unverified) | **Last updated:** 2026-06-20 (pushed; created 2025-07-22) | **License:** MIT | **Forks:** ~35K
-**Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last verified:** 2026-09-25  <!-- hands-on re-check: MEASURED eval against a live install on this machine -->
 **Dev loop stage:** Agent Orchestration (general self-improving personal agent; tangential to the coding dev loop)
 **Layer:** Harness (CLI + gateway + TUI; runs on VPS/GPU/serverless)
 
@@ -15,68 +14,96 @@ Hermes Agent is **Nous Research's self-improving personal AI agent**. Its headli
 
 Operationally it's "own-it" and portable: run it on a $5 VPS, a GPU cluster, or near-zero-cost serverless; it's not tied to your laptop and you can talk to it from Telegram while it works on a cloud VM. It's aggressively **model-agnostic** — Nous Portal, OpenRouter (200+ models), NovitaAI, NVIDIA NIM, Xiaomi MiMo, z.ai/GLM, Kimi, MiniMax, Hugging Face, OpenAI, or your own endpoint — switched with `hermes model`, no code changes, no lock-in. A one-line installer provisions uv, Python 3.11, Node, ripgrep, ffmpeg, and a bundled portable Git Bash on Windows.
 
+The headline claim — that it *changes its own behaviour from experience* — is testable, and this eval tests it directly rather than reading about it.
+
 ## How we tested it
 
-**Evidence:** REVIEW
+**Evidence:** MEASURED
 
-**Source-grounded inspection — not installed, not run.** No installer executed, no agent launched, no learning loop observed. Capabilities (and especially the "self-improving" claims) come from the repository README and metadata, not behavior. The star/fork counts are reported verbatim from the GitHub API and are unusually high; treat them as unverified popularity signals, not a quality guarantee.
+**Run hands-on against a live install on this machine** (Hermes Agent, `hermes` CLI on Linux, model `kilo-auto/efficient`, 2026-09-25). The learning loop was tested with a **with/without A/B on a disclosed task set** per [`measurement-protocols.md`](measurement-protocols.md) — not an n=1 smoke run. Three mechanisms were exercised, each as its own arm:
+
+- **Arm A — skill creation/triggering.** A six-entry skill (`protocol-harness-probe`) was created through the agent's own skill tooling, registering six unique protocol strings. Six probes asked for one protocol each; an exact-match string was the oracle.
+- **Arm B — knowledge persistence.** Five unique codenames were written to the agent's structured fact store under keys `ARM-B-1`…`ARM-B-5`, each probed exactly once.
+- **Arm C — conversation-history search.** One marker value (`THRICE-BROOK`) was recorded in a prior session, then its live-memory and fact-store copies were deleted, so the **session transcript was the only surviving record**.
+
+Every probe also had to name **which mechanism** produced its answer, so a lucky guess is separable from a real retrieval. Each arm carried a **negative control** — an unregistered fact key, an unregistered protocol, and an unregistered marker — to catch a model that invents an answer instead of reporting a miss.
+
+**Baseline = the same install with each mechanism absent** (no skill, no fact, nothing planted) plus the unregistered-key controls. The baseline run measured **23 probes**; the treatment run measured **18**.
 
 ```bash
-gh api repos/NousResearch/hermes-agent --jq '{stars,forks,license:.license.spdx_id,created:.created_at,pushed:.pushed_at}'
-gh api repos/NousResearch/hermes-agent/readme --jq '.content' | base64 -d | head -30   # learning loop, model-agnostic, run-anywhere
+# per-probe runner (probe values passed as arguments — nothing written to disk, see contamination note)
+bash hermes-eval-arms.sh <outdir> THRICE-BROOK "<protocol probe 1>" ... "<protocol probe 6>"
+# each probe is one non-interactive session:
+hermes -z "<probe prompt>"
 ```
+
+> **Honesty rule (checked by `audit-evals.py`):** every number below comes from captured probe output on this machine, including the numbers that argue against the tool. Two results were *not* clean and are reported as such: the baseline recall arm was contaminated (below), and one treatment probe captured a truncated answer.
+
+### Contamination note — the most important methodological finding
+
+The first baseline attempt produced a **false positive that looked exactly like memory working**: probe sessions answered the planted recall values correctly while citing my own eval spec file on disk as the source (`hermes-eval-task.json`), and one probe cited a sibling probe's output file. Non-interactive sessions launched with `hermes -z` **have full tool access**, so any value placed on disk is readable by the thing being measured.
+
+The design was therefore rebuilt: arm B's codenames were written **directly into the fact store** and never to a file, and probe values now reach the runner as **process arguments**. Arm C's marker had to live somewhere learnable, so it was recorded through a normal session — and that recording session's own spillover copies (it wrote the marker into live memory *and* a second fact-store entry, unprompted) were then deleted, leaving **the session transcript as the sole surviving record**. The double-write is itself notable: asked once to "record this for future sessions", the agent persisted the same fact to **three** stores.
+
+**Any evaluation of an agent's memory that stores its ground truth on the same filesystem is measuring file access, not memory.** Practical consequence for this harness's learning loop: it stores what it learns in readable files, so an agent asked to "recall" something can also simply go read it. Retrieval and file access are not distinguishable from the answers alone without provenance reporting — which is why every probe here demands its source.
+
+## Test design
+
+- **Task/corpus:** three arm-specific probe sets of unique, single-use values — 6 protocol strings (arm A), 5 codenames (arm B), 1 session marker (arm C) — plus 3 negative controls and 2 arithmetic/trivia controls. The values were generated for this eval and appear nowhere else, so a correct answer cannot come from pretraining.
+- **Baseline:** the same install with the mechanism absent (skill not created / fact not written / marker planted only via a session), plus unregistered-key controls. Baseline n=23; treatment n=18.
+- **Metric:** pass-rate (**k/N**) against an exact-match oracle, with provenance attribution per probe; wall-clock seconds per probe (180 s cap).
+- **Reproduce:** `hermes -z "<probe>"` per probe, per the runner above; each probe is standalone and non-interactive.
+
+### Test design — skills (required when Type is skill or plugin)
+
+- **Triggering:** arm A fires the skill on a natural-language request for a registered protocol — **6/6 (k/N = 6/6)**, every one naming `protocol-harness-probe` as its source, median **29.4 s**. **Absence control:** with the skill deleted, 2 probes exhausted the 180 s cap and returned **empty**, and the third run was cut off by this harness's own timeout before producing output — against 6/6 answering in ~29 s with the skill present. The skill is load-bearing, not incidental. No under-triggering observed at n=6; the sample is small, so this is a direction, not a calibrated rate.
+- **Output A/B:** measured as **with-mechanism vs without-mechanism** rather than skill-on vs skill-off text, because the mechanism's effect is retrieval, not phrasing. With the stores present: arm A **6/6**, arm B **5/5** (plus its negative control correct), arm C **3/3** — **14 mechanism-dependent answers**, every one attributed by the probe itself to the skill, the fact store, or session history. Without them the baseline could reach those values **only by reading the spec file off disk** (see contamination note): 8 probes did exactly that and said so. The differential is a real capability delta, not a phrasing difference.
+- **Not run?** No — this was run hands-on. See "What didn't work" for the results that did not produce clean evidence.
 
 ## What worked
 
-- **The learning loop is the real idea.** Skill-creation-from-experience + self-improvement + knowledge persistence + searching its own history + a cross-session user model is a more ambitious memory/learning story than most "persistent memory" tools, which only recall.
-- **Genuinely model-agnostic, no lock-in.** First-class support for a long list of providers (incl. your own endpoint), switchable with one command, is exactly the right posture for an own-it agent.
-- **Runs anywhere, detached from the laptop.** VPS/GPU/serverless + Telegram access makes it a persistent background agent rather than a terminal session.
-- **Credible source + MIT.** Nous Research is a well-known lab; permissive license; turnkey cross-platform installer (incl. native Windows with bundled MinGit).
+- **The learning loop is real and it compounds.** All three mechanisms worked when exercised properly: a skill created through the agent's own tooling **fired and answered 6/6 with the correct string**, five facts written to the structured store were **recalled 5/5**, and a marker whose live copies had been deleted was **recovered 3/3 from session history**. Every single one named its own source unprompted.
+- **It does not confabulate when it doesn't know.** The negative controls are the best result in this eval: an unregistered protocol returned `UNKNOWN_PROTOCOL`; an unregistered fact key returned `NO_RECORD` and then explained **why** — enumerating the keys that do exist and noting the question's premise was false; trivia got bare factual answers. A learning loop that refuses to invent is worth more than one that answers confidently.
+- **Provenance is a first-class behaviour, not an add-on.** Probes didn't just answer — they cited `fact_id`, the specific `SKILL.md` path, and the session ID (`@session:default/20260925_140552_afadc2`), and arm C correctly reported that its live copies had *been deleted* and the log was the sole record. That is the most useful property here, because it made every claim in this eval independently checkable.
+- **Speed after the mechanism exists.** Once the value is stored, retrieval is cheap and predictable: **18/18 probes under the 180 s cap, median ~31 s, p90 47.6 s** — against a baseline that burned the full 180 s on the same questions.
 
 ## What didn't work or surprised us
 
-- **Anomalous metrics.** ~197K stars / ~35K forks / ~22K open issues for a repo created mid-2025 is extraordinary — possibly viral, possibly inflated. Don't treat the number as proof of maturity; the ~22K open issues also hint at heavy churn.
-- **Personal agent, not a coding dev-loop harness.** Like nanobot and CowAgent, its center of gravity is an own-it personal assistant (Telegram-first, long-running goals) — the Plan→Implement→Review coding loop isn't the focus.
-- **Self-improvement is powerful and opaque.** An agent that rewrites its own skills and persists knowledge autonomously is a controllability/safety surface — what it learns and acts on needs governance, and none of that is evaluated here.
-- **Broad install footprint.** The one-liner provisions a whole toolchain; convenient, but a lot of surface to trust and maintain.
+- **The mechanism is readable, so it is gameable — and this bit the eval first.** Baseline probes "recalled" planted values by reading my eval spec off disk and said so in their own evidence. See the contamination note: the ground truth and the agent share a filesystem, so **answers alone cannot distinguish memory from file access** without demanding provenance.
+- **Over-persistence, unprompted.** Asked once to "record this for future sessions", the recording session wrote the marker to **three** stores — live memory plus two separate fact-store entries — and edited a pre-existing memory entry to make room. The loop's enthusiasm to persist is the mechanism working, and also the governance problem.
+- **The no-answer path is slow and silent.** All three baseline probes with no retrievable answer ran to the **180 s cap** and returned empty output rather than reporting a miss quickly. A learning loop with no cheap "I don't know" exit burns wall-clock silently — the worst failure mode for unattended use.
+- **One treatment probe captured truncated output.** Arm B-4's captured reply was 65 bytes *reporting that it had returned* the codename, not the codename itself. The live fact (id 337) shows `helpful_count 1` and trust 0.5→0.55, so the probe evidently answered and self-rated; **I could not verify the string from the capture, so it is not counted as a clean hit.** Reported because the alternative is quoting a number I did not see.
+- **Absence control, honestly qualified.** The first attempt moved the skill to a hidden `.away` directory and the probes still found it by reading the path — **non-interactive sessions have full filesystem access and no notion of "disabled"**. Only a hard delete produced the null result. A quarantine directory is not a control.
+- **Anomalous popularity metrics remain unverifiable** (~197K stars / ~35K forks for a repo created mid-2025). Nothing in the hands-on run addresses this.
 
 ## Quality signals affected
 
 | Signal | Impact | Evidence |
 |--------|--------|----------|
-| Correctness | neutral | General agent; not focused on the correctness of shipped code. Self-improvement *could* help or drift. |
-| Speed | neutral | Long-running personal automation, not a dev-loop throughput tool. |
-| Maintainability | neutral / − | Self-hostable and model-agnostic (good), but a self-modifying skill store + broad toolchain is a maintenance/trust surface. |
-| Safety | − | Autonomous skill-rewriting, knowledge persistence, and cloud/Telegram operation widen the trust and credential surface; governance needed. |
-| Cost Efficiency | + / neutral | Runs cheaply (VPS/serverless/idle), and model-agnostic routing can pick cheaper providers. |
+| Correctness | + | 14/14 mechanism-dependent answers exact against an exact-match oracle (arm A 6/6, B 5/5, C 3/3), with source attribution on every one; provenance was accurate in each case, including the reply that reported its data had since been deleted. |
+| Speed | neutral | Median ~31 s per probe and 18/18 under cap once the value exists — but a miss runs silently to the full 180 s cap with no output, so the failure path is slow and gives no signal. |
+| Maintainability | − | Durable state lives in readable files an agent session can also just read; asked once to persist, it wrote three copies and edited an existing memory entry. Every store needs its own retention policy. |
+| Safety | − | Autonomous persistence of user-supplied text into multiple durable stores without confirmation is a retention and disclosure surface: what the loop decides to remember outlives the session and is readable by later sessions and by any measurement run on the same host. |
+| Cost Efficiency | + | Runs on cheap detached infra (VPS/serverless), idles, and is model-agnostic enough to route to a cheaper provider per task; the measured cost is retrieval latency, not token spend. |
+| Verifiability | + | Strong for an agent harness: probes report *where* their answer came from (fact id, file path, session id), which made this measurement auditable and exposed the baseline contamination. Counterweight: the same readable-store design means a reader must demand provenance, or a plausible answer and a genuine retrieval look identical. |
 
 ## Verdict
 
-**discovery-log — tentative read** — Hermes Agent is a distinctive, MIT-licensed, **model-agnostic self-improving personal agent** from a credible lab, whose **built-in learning loop** (skills-from-experience + knowledge persistence + cross-session user model) is more ambitious than the catalog's recall-only memory tools, and which runs detached on cheap infra with Telegram access. Adopt it if you want a long-running, own-it personal agent that compounds over time and refuses model lock-in. For the AI-assisted **coding** dev loop specifically it's tangential (it overlaps nanobot/CowAgent as an own-it assistant), the self-modifying behavior is a real governance surface, and its headline popularity metrics are anomalous — pilot in a sandbox and watch what it persists before trusting it.
+**CONDITIONAL**
 
-Compared to neighbors: **nanobot** and **CowAgent** are own-it multi-channel assistants; **hivemind** turns execution traces into reusable skills; **claude-reflect** learns from corrections into CLAUDE.md. Hermes' distinguishing pitch is a **closed-loop self-improving agent** (creates *and* refines its own skills, persists knowledge, models the user) that runs anywhere with any model.
+**adopt-if:** you want a long-running, self-hostable personal agent whose durable skills, structured facts, and cross-session history are worth a real governance cost — and you accept that its memory **is** files, so anything the loop learns is readable by the agent itself, must stay outside the trust boundary of any measurement you run, and needs an explicit retention and deletion path.
 
-## Triage note
+The learning loop is not marketing: exercised hands-on, it created a skill that fired 6/6, recalled 5/5 stored facts, and recovered 3/3 a value that existed only in a past session's transcript — and it correctly declined to invent an answer for three unregistered keys. That combination of real compounding and honest refusal is why this is **CONDITIONAL** rather than **SKIP**.
 
-Left at `discovery-log`, not SKIPped — the banding is a category error. `claude-reflect` (STACK,
-`MEASURED`) is a reflection skill that runs inside a coding session; Hermes Agent is a whole
-model-agnostic personal agent with a built-in learning loop that creates and refines skills from
-experience, persists knowledge, searches its own history, and models the user across sessions.
+It is **not** an unqualified ADOPT for the coding dev loop, which remains tangential (it overlaps nanobot/CowAgent as an own-it assistant) — and it is not a **SKIP**, because the capability is real and the loop is the direction this catalog's memory cluster is heading. Two conditions gate it: a **retention/governance policy** for what it persists autonomously, and a **measurement discipline** for whoever evaluates it, since the same readable stores that make the loop work will also let a model read your ground truth unless you demand provenance.
 
-Its evaluation is candid that this is *"tangential"* for the coding dev loop specifically, and that
-is the honest reading — this is a standing personal agent on a VPS with Telegram access, not an
-inner-loop tool. Tangential is not redundant, though, and the learning loop is *"more ambitious than
-the catalog's recall-only memory tools"*, which is a capability claim worth keeping visible rather
-than eliminating.
+The star/fork counts (~197K/~35K) remain anomalously high and unverified, and should not be read as evidence of maturity.
 
-MIT, ★212K, from a credible lab, pushed today. The scale of the star count is itself a reason not to
-dispose it in a bulk lane: whatever it is, a very large number of people are running it, and the
-skills-from-experience mechanism is the direction this catalog's memory cluster is heading.
-
-_Triaged 2026-08-04 by the P2 challenger band ([#262](https://github.com/mattbutlerengineering/ai-tooling/issues/262))._
+Compared to neighbors: **nanobot** and **CowAgent** are own-it multi-channel assistants; **hivemind** turns execution traces into reusable skills; **claude-reflect** learns from corrections into CLAUDE.md. Hermes' distinguishing mechanism — measured here — is a **closed loop that creates *and* refines its own skills, persists facts to a queryable store, and searches its own conversation history**, with self-reported provenance for all three.
 
 ## Catalog entry
 
 | Name | Type | One-liner | Problem it solves | Overlaps with |
 |------|------|-----------|-------------------|---------------|
 | [Hermes Agent](https://github.com/NousResearch/hermes-agent) | harness | NousResearch's self-improving own-it agent (MIT) — built-in learning loop (creates/refines skills from experience, persists knowledge, searches its own history, models you across sessions); model-agnostic (no lock-in), runs on VPS/GPU/serverless with Telegram access | Want a self-hostable agent that actually learns and compounds across sessions rather than resetting each time, without model lock-in | nanobot, CowAgent, hivemind, claude-reflect |
+
