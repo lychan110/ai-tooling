@@ -81,7 +81,7 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | domain-modeling | skill | | ✓ | SKIP | REVIEW |
 | plannotator | tool | | ✓ | discovery-log | REVIEW |
 | facet | MCP server | ✓ | ✓ | SKIP | SOURCE-ONLY |
-| easel | tool | | ✓ | SKIP | SOURCE-ONLY |
+| easel | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | Remarc | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | code-context-engine | MCP server | ✓ | ✓ | CONDITIONAL | REVIEW |
 | trace-mcp | MCP server | ✓ | ✓ | discovery-log | REVIEW |
@@ -998,7 +998,7 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
-| Plan | 80 | 35 | 6 | 44% |
+| Plan | 80 | 34 | 6 | 42% |
 | Implement | 269 | 120 | 4 | 45% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 97 | 30 | 3 | 31% |
@@ -1010,4 +1010,4 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 60 | 18 | 4 | 30% |
-| **Total** | **914** | **339** | **34** | **37%** |
+| **Total** | **914** | **338** | **34** | **37%** |
