@@ -27,6 +27,54 @@ keeps that from recurring.
 Review still happens; it happens *after* the merge, on a small dated commit that is
 trivial to revert, instead of *before* it, on a branch that rots while it waits.
 
+## The three lanes
+
+The daily pass is split across three scheduled jobs, because no single agent run has the
+budget for all of it. Each lane owns one half and refuses the other's work on purpose; a
+lane that starts doing another lane's job is how the queue goes quiet.
+
+| Lane | Cadence | Owns | May conclude |
+|------|---------|------|--------------|
+| Discovery | Mon, Thu | Intake (new candidates), catalog entries, the drift issue, the **full** `--maintenance` refresh | eliminate-only |
+| Triage | Tue, Wed, Fri, Sat | The `NEXT-EVALS.md` queue, one day's worth, cheap `--stale` refresh | eliminate-only |
+| P0 eval | Weekly | One **measured** evaluation of the `P0 measure` head | anything, including ADOPT/KEEP |
+
+**Intake is a search of the ecosystem, not a read of this repo.** `find-gaps.py` (detector F
+plus a hardcoded checklist) and `triage.py` (which re-bands leads already in
+`COMPARISON.md`) can only see tools this repo already knows about — run alone they return
+`0 candidates` by construction, and a report built on them alone measures the intake, not
+the ecosystem. The discovery lane's real source is a GitHub search over the topics the
+catalog covers (`claude-code`, `claude-skills`, `agent-skills`, `mcp-server`, `ai-agents`),
+sorted by stars and restricted to a recent creation window, with `/sync-stars`'s
+starred-but-uncatalogued comparison as a best-effort complement. Issue #608 (2026-09-14) is
+the last run that used it, and the 10-add batch it produced is what the catalog has been
+living on since.
+
+**The drift issue is the discovery lane's.** The scheduled `link-archive-sweep` workflow
+files it (Mondays, `.github/workflows/link-archive-sweep.yml`) and then stops — it reports,
+it does not repair. The discovery lane reads it, resolves the MOVED and GONE classes, and
+comments the residue back so the next sweep and the next pass read current state. MOVED is a
+single class decision: repoint every row to its `resolved_name`, or decline every row at
+once. The slug keys `repo-metadata.json`, so a repoint writes the destination as a new key
+and orphans the old one — that cost is why the class moves together or not at all.
+
+**`P0 measure` is nobody else's band, and that is why it needs its own job.** `NEXT-EVALS.md`
+reserves it for "a human or `eval-runner` only — the one band that may reach ADOPT", and both
+other lanes are eliminate-only: they may write `SKIP` or leave a lead at `discovery-log`,
+never a positive verdict. So the band cannot move from either of them, and without a third
+lane it moves only when a human sits down to it. It is drawn from what the structural bands
+did not claim, none of its rows is stamped, so `sort_key` never sinks them and the same 25
+leads hold the same scores pass after pass. A triage pass reporting "structurally settled"
+is reporting the queue's floor accurately and its ceiling not at all.
+
+**One measured eval per P0 run, and the verdict must be propagated.** `eval-runner`'s own
+scope is one eval per run — install, build an objective oracle, plant defects, run the A/B.
+An eval alone changes nothing downstream: the row's `COMPARISON.md` cell must take the
+headline (detector D), an ADOPT/KEEP must be run-backed or disclaimed (detector K) and must
+appear in `STACK.md` or in `STACK-LEDGER.md` with a reason (detector J). Honesty beats
+coverage: when the tool cannot be installed or no oracle exists here, the honest not-run
+review lands with a `discovery-log` headline, and the row stays a lead.
+
 ## Sequence
 
 1. **Start from fresh `main`.** `git fetch origin main && git checkout -b routine/<lane>-<YYYY-MM-DD> origin/main`.
