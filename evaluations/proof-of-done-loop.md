@@ -1,7 +1,7 @@
 # Evaluation: proof-of-done-loop
 
 **Repo:** [grishkovei/proof-of-done-loop](https://github.com/grishkovei/proof-of-done-loop)
-**Stars:** 0 | **Last updated:** 2026-08-09 (pushed) | **License:** Apache-2.0
+**Stars:** 0 | **Last updated:** 2026-08-09 (pushed) | **License:** MIT
 **Last verified:** 2026-08-09
 **Last triaged:** 2026-08-09  <!-- triaged: bulk -->
 **Dev loop stage:** Implement (completion/verification loop)

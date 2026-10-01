@@ -1,7 +1,7 @@
 # Evaluation: oc
 
 **Repo:** [only-cli/oc](https://github.com/only-cli/oc)
-**Stars:** 70 | **Last updated:** 2026-08-20 (pushed) | **License:** ⚠️ no LICENSE file
+**Stars:** 70 | **Last updated:** 2026-08-20 (pushed) | **License:** MIT (LICENSE at HEAD)
 **Last verified:** 2026-08-21
 **Last triaged:** 2026-08-21  <!-- triaged: bulk -->
 **Dev loop stage:** Research & Discovery
@@ -22,9 +22,8 @@ repo metadata plus the CATALOG "Overlaps with" cell.
 
 ## Triage note
 
-No STACK overlap pressure (P3 backlog). No LICENSE file is a real gap that would
-block adoption later, but this Type is `tool` (not vendored skill/plugin text), so
-it does not trigger the P4 mechanical-skip band. Left at discovery-log; stamping
-records that it was examined.
+No STACK overlap pressure (P3 backlog) — left at `discovery-log`. Re-checked 2026-10-01: a `LICENSE`
+file (MIT) is present at HEAD and `repo-metadata.json` records `MIT`, so the missing-licence gap
+this note originally recorded is closed. The row remains a lead on its own merits.
 
 _Triaged 2026-08-21 by the P3 backlog band._

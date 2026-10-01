@@ -43,12 +43,27 @@ lane that starts doing another lane's job is how the queue goes quiet.
 plus a hardcoded checklist) and `triage.py` (which re-bands leads already in
 `COMPARISON.md`) can only see tools this repo already knows about — run alone they return
 `0 candidates` by construction, and a report built on them alone measures the intake, not
-the ecosystem. The discovery lane's real source is a GitHub search over the topics the
-catalog covers (`claude-code`, `claude-skills`, `agent-skills`, `mcp-server`, `ai-agents`),
-sorted by stars and restricted to a recent creation window, with `/sync-stars`'s
-starred-but-uncatalogued comparison as a best-effort complement. Issue #608 (2026-09-14) is
-the last run that used it, and the 10-add batch it produced is what the catalog has been
-living on since.
+the ecosystem. The discovery lane's real source is a GitHub topic search, sorted by stars
+and restricted to a recent creation window, with `/sync-stars`'s starred-but-uncatalogued
+comparison as a best-effort complement. Issue #608 (2026-09-14) is the last run that used
+it, and the 10-add batch it produced is what the catalog has been living on since.
+
+The query set is deliberately **harness-agnostic first**, because a Claude-Code-only intake
+inherits that harness's blind spots — and this repo no longer treats Claude Code as its
+reference harness (plans 016-019). Measured 2026-10-01 (`total_count` per topic):
+
+| Tier | Topics |
+|------|--------|
+| **Agnostic (run first)** | `agent-skills` · `mcp-server` · `ai-agents` · `coding-agent` · `ai-coding-agent` · `agent-harness` |
+| **Harness-named (run second)** | `opencode` · `hermes-agent` |
+| **Benched (run last, heavy dedup)** | `claude-code` · `claude-skills` |
+
+Measured totals — agnostic 27,996 · 31,878 · 103,200 · 6,161 · 951 · 1,364; named 7,989 ·
+3,896; benched 81,252 · 9,646. Tier 1 and Tier 2 are the pass's real intake. Tier 3 is
+retained rather than deleted because it still surfaces artifacts the agnostic topics miss,
+but it is the lowest-yield vector per result — the catalog already carries ~180 Claude-named
+rows, so most Tier-3 hits dedup against `CATALOG.md` and its `Overlaps` cells. Do not let a
+Tier-3 run stand in for Tier 1.
 
 **The drift issue is the discovery lane's.** The scheduled `link-archive-sweep` workflow
 files it (Mondays, `.github/workflows/link-archive-sweep.yml`) and then stops — it reports,

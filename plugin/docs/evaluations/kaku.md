@@ -1,7 +1,7 @@
 # Evaluation: Kaku
 
 **Repo:** [tw93/Kaku](https://github.com/tw93/Kaku)
-**Stars:** 5,423 | **Last updated:** 2026-06-18 (pushed; created 2026-02-07) | **License:** MIT (README/LICENSE.md; GitHub API reports NOASSERTION)
+**Stars:** 5,423 | **Last updated:** 2026-06-18 (pushed; created 2026-02-07) | **License:** MIT (LICENSE.md at HEAD)
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
 **Last triaged:** 2026-08-04  <!-- triaged: bulk -->
 **Dev loop stage:** Cross-cutting environment — the terminal you run coding agents *in*, not a stage participant; light Implement/Verify conveniences via its AI panel
@@ -40,7 +40,7 @@ gh api repos/tw93/Kaku/releases --jq 'length'   # 18
 - **It's a terminal emulator, not a dev-loop tool.** Kaku is the *environment* you run agents in; it doesn't plan, implement, verify, review, or ship — it doesn't move the catalog's quality signals except marginally via prompt-level AI helpers. This is the core scope caveat.
 - **macOS-only.** No Linux/Windows; immediately out of scope for a large share of developers.
 - **Overlaps the whole terminal-emulator field.** WezTerm (its upstream), Ghostty, iTerm2, Warp (which has far deeper AI integration) all compete; Kaku's edge is curated defaults + a light AI panel, not a category-defining capability.
-- **License metadata mismatch.** README/LICENSE.md say MIT but the GitHub API returns NOASSERTION — minor, but worth confirming before redistribution.
+- **Licence metadata, resolved.** `LICENSE.md` at HEAD is plain MIT and `repo-metadata.json` now records `MIT` too; the earlier GitHub-API `NOASSERTION` (an *unparsed*, never an *absent*, licence) is gone.
 - **AI features depend on your own provider keys/models** and are conveniences layered on the terminal, not an agent harness — don't confuse it with opencode/goose/gemini-cli (those *are* the agent; Kaku just hosts them).
 
 ## Quality signals affected
@@ -68,12 +68,11 @@ entry. The row survives, so a reader looking for a WezTerm-compatible macOS term
 agents still finds it; what changes is only that it is not a recommendation. Its sibling **Waza**
 (CONDITIONAL) is the skill suite that *does* intervene in the loop; Kaku is the terminal beneath it.
 
-**License, for the record:** GitHub reports `NOASSERTION`, but `LICENSE.md` read live on 2026-08-04
-is plain **MIT** — the parser is defeated by two copyright lines (Tw93, plus Wez Furlong for the
-original WezTerm code this forks). The header already discloses this, so nothing needed correcting.
-It is noted because the lane is now three-for-three that `NOASSERTION` means *unparsed*, never
-*absent*: it has hidden a permissive Apache-2.0 (`terraform-skill`), a blocking CC BY-NC
-(`academic-research-skills`), and now an MIT-with-upstream-attribution.
+**License, for the record:** `LICENSE.md` at HEAD is plain **MIT** (Tw93, plus Wez Furlong for the
+original WezTerm code this forks), and `repo-metadata.json` now records `MIT` as well — the API's
+`NOASSERTION` was a parser defeated by the two copyright lines, never an absence. Worth keeping as
+a class lesson: `NOASSERTION` has hidden a permissive Apache-2.0 (`terraform-skill`), a blocking
+CC BY-NC (`academic-research-skills`), and an MIT-with-upstream-attribution here.
 
 _Triaged 2026-08-04 by the P3 backlog band ([#268](https://github.com/mattbutlerengineering/ai-tooling/issues/268))._
 
