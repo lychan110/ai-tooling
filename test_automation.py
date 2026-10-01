@@ -4449,12 +4449,12 @@ class TestArchivedProbe(unittest.TestCase):
         os.chmod(p, 0o755)
         return bindir
 
-    def _run(self, gh_body=None):
+    def _run(self, gh_body=None, catalog=None):
         """(stdout) of a real `--archived` run against a 2-row catalog."""
         with tempfile.TemporaryDirectory() as d:
             shutil.copy(os.path.join(ROOT, "audit-evals.py"), os.path.join(d, "audit-evals.py"))
             shutil.copy(os.path.join(ROOT, "catalog_lib.py"), os.path.join(d, "catalog_lib.py"))
-            _write(d, "CATALOG.md", self.CATALOG)
+            _write(d, "CATALOG.md", catalog or self.CATALOG)
             # No `gh` in PATH at all when gh_body is None — the missing-binary case.
             bindir = self._fake_gh(d, gh_body) if gh_body else os.path.join(d, "emptybin")
             os.makedirs(bindir, exist_ok=True)
@@ -4515,6 +4515,40 @@ class TestArchivedProbe(unittest.TestCase):
         headline = next(ln for ln in out.splitlines() if ln.startswith("== H."))
         self.assertRegex(headline, r"\d+/\d+ checked")
 
+    def test_an_already_tombstoned_gone_row_is_not_reported_as_new_drift(self):
+        """#22's loop. The sweep greps for `^  (DEAD|MOVED|GONE) `, so a row a prior pass
+        already annotated re-opened the tracking issue on every Monday run — the line even
+        claimed "the entry still lists it" while the entry recorded the death. The row is
+        still PRINTED (the population is fully reported); only its actionability changes."""
+        catalog = (
+            "## Plan\n"
+            "| Name | Type | One-liner | Problem | Overlaps with |\n"
+            "|------|------|-----------|---------|---------------|\n"
+            "| [a](https://github.com/x/a) | tool | one (⚠️ gone — repo 404 as of 2026-10-01) | two | none |\n"
+            "| [b](https://github.com/x/b) | tool | one | two | none |\n"
+        )
+        out = self._run('echo "gh: Not Found (HTTP 404)" >&2; exit 1', catalog=catalog)
+        self.assertIn("2/2 checked", out)
+        self.assertIn("tombstoned x/a", out)
+        self.assertNotIn("GONE x/a", out)
+        # b carries no tombstone, so a fresh 404 must still read as actionable drift.
+        self.assertIn("GONE x/b", out)
+
+    def test_a_licence_warning_does_not_hide_a_real_404(self):
+        """`⚠️` alone is not a tombstone: `⚠️ no LICENSE file` and `⚠️ GPL-3.0` sit on live
+        rows. Keying the test on the marker rather than the death vocabulary would silently
+        suppress a genuine 404 on any row that carries one."""
+        catalog = (
+            "## Plan\n"
+            "| Name | Type | One-liner | Problem | Overlaps with |\n"
+            "|------|------|-----------|---------|---------------|\n"
+            "| [a](https://github.com/x/a) | tool | one (⚠️ no LICENSE file) | two | none |\n"
+            "| [b](https://github.com/x/b) | tool | one | two | none |\n"
+        )
+        out = self._run('echo "gh: Not Found (HTTP 404)" >&2; exit 1', catalog=catalog)
+        self.assertIn("GONE x/a", out)
+        self.assertNotIn("tombstoned x/a", out)
+
 
 class TestSweepWorkflow(unittest.TestCase):
     """The weekly sweep decides whether to open a tracking issue by grepping the
@@ -4549,6 +4583,16 @@ class TestSweepWorkflow(unittest.TestCase):
             "  INCONCLUSIVE — 2 repo(s) could not be checked (2x gh not installed).",
         ]:
             self.assertTrue(self._matches(line), msg=f"must be actionable: {line!r}")
+
+    def test_a_tombstoned_row_is_not_actionable(self):
+        """The other half of the #22 loop: the workflow must not treat a recorded death as
+        new work. `tombstoned` must stay outside the actionable grep while the fresh `DEAD`
+        and `GONE` forms above remain inside it."""
+        for line in [
+            "  tombstoned 0xwilliamortiz/agents-council — 404 already recorded in the entry",
+            "  tombstoned vkhanhqui/figma-mcp-go — 451 access blocked, already recorded in the entry",
+        ]:
+            self.assertFalse(self._matches(line), msg=f"must not be actionable: {line!r}")
 
     def test_a_clean_run_is_not_actionable(self):
         for line in [

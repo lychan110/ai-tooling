@@ -1159,6 +1159,29 @@ ArchivedProbe = collections.namedtuple("ArchivedProbe", "state pushed reason")
 #   unchecked everything else. Never "not archived": #319's silence-is-not-success.
 _BLOCKED = re.compile(r"\bHTTP 451\b|access blocked", re.IGNORECASE)
 
+# A GONE row whose entry ALREADY records the death is a resolved finding, not drift. H
+# used to re-print it in the actionable form on every sweep, so the workflow's
+# `^  (DEAD|MOVED|GONE) ` grep re-opened tracking issue #22 forever over rows a prior
+# pass had already annotated — the message even claimed "the entry still lists it"
+# while the entry said `⚠️ gone — repo 404 as of <date>`. Matching the *death*
+# vocabulary rather than a bare `⚠️` is deliberate: `⚠️ no LICENSE file` and
+# `⚠️ GPL-3.0` sit on live rows, so keying on the marker alone would hide a real 404.
+# Same near-link window as the archived-disclosure test above, for the same reason
+# (the note sits beside the link).
+# The alternation MUST stay in a non-capturing group: concatenated raw, `slug.{0,400}?gone|404`
+# parses as `(slug.{0,400}?gone)|(404)|…`, so a bare `404` anywhere in the file marked every
+# row as tombstoned. The archived-disclosure test above groups for the same reason.
+_TOMBSTONED = re.compile(r"(?:gone|404|taken down|link dead)", re.IGNORECASE)
+
+def tombstoned(text, slug):
+    """True when the entry already records this repo as dead, near its catalog link.
+
+    Reporting rule, not a gate: it only changes how a finding is *phrased*, so an
+    already-recorded death stops re-reading as new work while a fresh 404 — no
+    tombstone in the entry — still prints in the actionable form."""
+    return bool(re.search(re.escape(slug) + r".{0,400}?" + _TOMBSTONED.pattern,
+                          text, re.DOTALL | re.IGNORECASE))
+
 def check_archived(slug):
     """`ArchivedProbe` — archived / live / gone / unchecked, with a reason."""
     try:
@@ -4886,7 +4909,13 @@ def main():
         if problems:
             rc = 1
             for slug, res in problems:
-                print(f"  {'DEAD' if res=='dead' else 'MOVED'} {slug}" + (f" -> {res[6:]}" if res.startswith('moved:') else ""))
+                # An already-tombstoned death is recorded, not drifting: report it as
+                # such so the sweep's actionable grep does not re-fire on it every week
+                # (#22). It stays printed — the population is still fully reported.
+                if res == "dead" and tombstoned(ctx.catalog, slug):
+                    print(f"  tombstoned {slug} — 404 already recorded in the entry")
+                else:
+                    print(f"  {'DEAD' if res=='dead' else 'MOVED'} {slug}" + (f" -> {res[6:]}" if res.startswith('moved:') else ""))
         if unknowns:
             # Never "OK" on an inconclusive run: this detector once printed a clean
             # sweep of 612 links while GitHub 429'd every single request (#319).
@@ -4910,7 +4939,10 @@ def main():
         for s, reason in gone:
             # Printed, never counted as archived: a gone repo is not an archived one, and
             # detector C reports the 404s as DEAD in the same output.
-            print(f"  GONE {s} — {reason}; not archived, and the entry still lists it")
+            if tombstoned(ctx.catalog, s):
+                print(f"  tombstoned {s} — {reason}, already recorded in the entry")
+            else:
+                print(f"  GONE {s} — {reason}; not archived, and the entry still lists it")
         if unchecked:
             # C's rule, in C's words, because the two print into one report: an
             # inconclusive sweep is not a passing one (#319).
