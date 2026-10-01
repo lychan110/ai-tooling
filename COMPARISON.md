@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 914 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 916 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -76,6 +76,7 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | sem | tool | ✓ | ✓ | discovery-log | REVIEW |
 | carrick | MCP server | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | semble | tool | ✓ | ✓ | CONDITIONAL | REVIEW |
+| jevgrep | tool | ✓ | ✓/$ | discovery-log | SOURCE-ONLY |
 | Understand-Anything | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | codebase-design | skill | | ✓ | SKIP | REVIEW |
 | domain-modeling | skill | | ✓ | SKIP | REVIEW |
@@ -554,6 +555,7 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Infracost | tool | ✓ | ✓/$ | SKIP | SOURCE-ONLY |
 | langfuse | platform | | ✓ | discovery-log | SOURCE-ONLY |
 | ccusage | tool | | ✓ | ADOPT | MEASURED |
+| agent-console | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | token-step-tracker | tool | | ✓ | SKIP | SOURCE-ONLY |
 | tokentab | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | opencode-cache-stats | plugin | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -998,16 +1000,16 @@ All 914 tools from CATALOG.md with dev loop stage, automation capability, pricin
 
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
-| Plan | 80 | 34 | 6 | 42% |
+| Plan | 81 | 34 | 6 | 42% |
 | Implement | 269 | 120 | 4 | 45% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 97 | 30 | 3 | 31% |
 | Ship | 4 | 1 | 1 | 25% |
 | Reflect | 10 | 5 | 3 | 50% |
-| Outer Loop | 76 | 20 | 2 | 26% |
+| Outer Loop | 77 | 20 | 2 | 26% |
 | Skills & Plugins | 122 | 43 | 4 | 35% |
 | Memory & Context | 81 | 26 | 2 | 32% |
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 60 | 18 | 4 | 30% |
-| **Total** | **914** | **338** | **34** | **37%** |
+| **Total** | **916** | **338** | **34** | **37%** |
