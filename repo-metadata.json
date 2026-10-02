@@ -2293,6 +2293,16 @@
     "resolved_name": "duty1g/x64dbg-mcp-server",
     "stars": 2162
   },
+  "dzhng/jevgrep": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-10-02",
+    "license_lost": false,
+    "license_spdx": "MIT",
+    "pushed_at": "2026-10-02T09:02:54Z",
+    "resolved_name": "dzhng/jevgrep",
+    "stars": 2028
+  },
   "dziksu/structsmith": {
     "archived": false,
     "discontinued": null,
@@ -4591,6 +4601,16 @@
     "pushed_at": "2026-10-01T11:05:39Z",
     "resolved_name": "lobehub/lobehub",
     "stars": 82941
+  },
+  "lockedinlabs-ai/agent-console": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-10-02",
+    "license_lost": false,
+    "license_spdx": "MIT",
+    "pushed_at": "2026-10-02T03:32:35Z",
+    "resolved_name": "LockedinLabs-AI/agent-console",
+    "stars": 785
   },
   "lsdefine/genericagent": {
     "archived": false,
