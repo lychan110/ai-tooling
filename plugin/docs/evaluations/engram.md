@@ -3,7 +3,7 @@
 **Repo:** [Gentleman-Programming/engram](https://github.com/Gentleman-Programming/engram)
 **Stars:** 4,493 | **Last updated:** 2026-06-18 | **License:** MIT
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-03  <!-- triaged: bulk -->
 **Dev loop stage:** Reflect
 **Layer:** Infrastructure
 
@@ -70,6 +70,8 @@ when architectural decisions evolve — are things [`claude-mem`](https://github
 which is a fit statement, not a redundancy finding.
 
 _Triaged 2026-08-04 by the P2 challenger band ([#264](https://github.com/mattbutlerengineering/ai-tooling/issues/264))._
+
+**Re-triaged 2026-10-03 by the P2 challenger band:** no change — re-examined the recorded leave-outcome; its cited incumbent `claude-mem` still reads ADOPT/MEASURED on COMPARISON, and this eval's multi-agent differentiators still stand. Re-stamped to keep the fresh-lead sink honest. Left at `discovery-log`.
 
 ## Catalog entry
 

@@ -3,7 +3,7 @@
 **Repo:** [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything)
 **Stars:** 63,945 | **Last updated:** 2026-06-19 | **License:** MIT
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-03  <!-- triaged: bulk -->
 **Dev loop stage:** Plan (codebase understanding / onboarding before and during implementation)
 **Layer:** Tooling
 
@@ -90,6 +90,8 @@ Re-evaluating it toward ADOPT needs the thing this lane cannot do — the eval n
 (a live MCP query interface, or reproducible cost/quality benchmarks). P0 work.
 
 _Triaged 2026-08-04 by the P2 challenger band ([#265](https://github.com/mattbutlerengineering/ai-tooling/issues/265))._
+
+**Re-triaged 2026-10-03 by the P2 challenger band:** no change — re-examined the recorded leave-outcome; cited incumbent `codegraph` still reads ADOPT/MEASURED on COMPARISON, and the "additive, different shape" comparison still stands. Re-stamped to keep the fresh-lead sink honest. Left at `discovery-log`.
 
 ## Catalog entry
 

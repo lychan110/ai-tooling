@@ -3,7 +3,7 @@
 **Repo:** [garrytan/gstack](https://github.com/garrytan/gstack)
 **Stars:** 111,392 | **Last updated:** 2026-06-18 | **License:** MIT
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-03  <!-- triaged: bulk -->
 **Dev loop stage:** Plan + Implement + Verify + Review + Ship + Reflect (a full-sprint workflow)
 **Layer:** Process (with a Tooling browser/eval substrate underneath)
 
@@ -79,6 +79,8 @@ enough — real methodology, mature CI — to be worth a scoped hands-on trial p
 verdict). Left for the P0/eval-runner lane to actually run it.
 
 _Triaged 2026-08-04 by the P2 challenger band (5-oldest-untriaged pass)._
+
+**Re-triaged 2026-10-03 by the P2 challenger band:** no change — re-examined the recorded leave-outcome; the cited incumbent GSD/`obra/superpowers` still anchors STACK as KEEP, and this eval's selective-adoption read still stands. Re-stamped to keep the fresh-lead sink honest. Left at `discovery-log`.
 
 ## Catalog entry
 
