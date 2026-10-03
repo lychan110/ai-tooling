@@ -3,7 +3,7 @@
 **Repo:** [ruvnet/ruflo](https://github.com/ruvnet/ruflo)
 **Stars:** 60,327 | **Last updated:** 2026-06-19 (v3.12.4, released 2026-06-18) | **License:** MIT
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-03  <!-- triaged: bulk -->
 **Dev loop stage:** Plan + Implement + Verify + Review + Reflect (an orchestration + memory + learning layer over Claude Code)
 **Layer:** Infrastructure (MCP server, hooks daemon, WASM kernels, vector DB) + Tooling (45 CLI commands, 35 plugins, 98 agents)
 
@@ -88,6 +88,8 @@ superpowers covers, so "redundant" would understate it — the existing cherry-p
 posture stands. Left for the P0/eval-runner lane.
 
 _Triaged 2026-08-04 by the P2 challenger band (5-oldest-untriaged pass)._
+
+**Re-triaged 2026-10-03 by the P2 challenger band:** no change — re-examined the recorded leave-outcome; the cited incumbent GSD/`obra/superpowers` still anchors STACK as KEEP, and this eval's substance-verified read still stands. Re-stamped to keep the fresh-lead sink honest. Left at `discovery-log`.
 
 ## Catalog entry
 

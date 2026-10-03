@@ -3,7 +3,7 @@
 **Repo:** [numman-ali/openskills](https://github.com/numman-ali/openskills)
 **Stars:** 10,446 | **Last updated:** 2026-01-18 (v1.5.0) | **License:** Apache-2.0
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-03  <!-- triaged: bulk -->
 **Dev loop stage:** Implement (sits beside the inner loop — installs/distributes skills agents load while working; does not change how a skill behaves)
 **Layer:** Infrastructure (skill installation + a load shim around the agent CLI)
 
@@ -118,6 +118,8 @@ Note: `license: NOASSERTION` on the metadata record — GitHub could not parse t
 never disposes a lead on its own. Read the actual file before installing.
 
 _Triaged 2026-08-04 by the P2 challenger band ([#263](https://github.com/mattbutlerengineering/ai-tooling/issues/263))._
+
+**Re-triaged 2026-10-03 by the P2 challenger band:** no change — re-examined the recorded leave-outcome; cited incumbents `skill-creator` (ADOPT/MEASURED) and `capa` (still discovery-log) unchanged, and the multi-editor adopt-when condition still stands. Re-stamped to keep the fresh-lead sink honest. Left at `discovery-log`.
 
 ## Catalog entry
 
