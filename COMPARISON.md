@@ -774,7 +774,7 @@ All 918 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | baron | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | letta | platform | | ✓ | DEFER | REVIEW |
 | claude-subconscious | plugin | ✓ | ✓ | SKIP | REVIEW |
-| cognee | platform | | ✓ | discovery-log | REVIEW |
+| cognee | platform | | ✓ | SKIP | MEASURED |
 | MemOS | platform | | ✓ | discovery-log | REVIEW |
 | memind | platform | ✓ | ✓ | SKIP | REVIEW |
 | ACE (agentic-context-engine) | framework | ✓ | ✓ | discovery-log | REVIEW |
@@ -1010,8 +1010,8 @@ All 918 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 77 | 21 | 2 | 27% |
 | Skills & Plugins | 122 | 43 | 4 | 35% |
-| Memory & Context | 81 | 26 | 2 | 32% |
+| Memory & Context | 81 | 27 | 2 | 33% |
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 60 | 18 | 4 | 30% |
-| **Total** | **918** | **340** | **34** | **37%** |
+| **Total** | **918** | **341** | **34** | **37%** |

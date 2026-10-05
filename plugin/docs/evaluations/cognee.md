@@ -16,19 +16,66 @@ The platform ships as a Python library (`pip install cognee`), CLI (`cognee-cli`
 
 ## How we tested it
 
-**Evidence:** REVIEW
+**Evidence:** MEASURED (keyless posture)
 
-Architecture-level review of the main repo, MCP server, Claude Code plugin, and published benchmarks. Did not install or run locally due to infrastructure requirements.
+Two passes. First pass (2026-06-22): architecture-level REVIEW (see history below). Second pass (2026-10-05, this P0 eval): installed cognee 1.6.2 locally (`python3.14.7`) and ran a measured A/B against a TF-IDF cosine baseline on a 14-doc synthetic clinical-style corpus with a planted **three-hop entity chain** (Patient A1 → drug B1 → enzyme E1 ← inhibits − drug B2) that flat retrieval cannot cross. Cognee ran in its **keyless posture**: GLiNER-local demo extraction (its own shipped keyless route, no LLM key set, dotenv stubbed out, ~40 keys popped from env, telemetry disabled) + fastembed `BAAI/bge-small-en-v1.5` (384-d). This is the exact posture a break-glass user with no OpenAI key lands in by default.
 
 ```bash
-gh api repos/topoteretes/cognee --jq '.description, .stargazers_count, .updated_at'
-gh api repos/topoteretes/cognee/git/trees/main --jq '.tree[].path'
-gh api repos/topoteretes/cognee/contents/cognee-mcp/src/server.py --jq '.content' | base64 -d
-gh api repos/topoteretes/cognee-integrations/git/trees/main?recursive=1 --jq '.tree[].path'
-gh api repos/topoteretes/cognee/contents/evals/README.md --jq '.content' | base64 -d
+# env hygiene (driver pops LLM_/EMBEDDING_/OPENAI_/* and stubs dotenv.load_dotenv)
+python3 .eval-work/ab_driver.py       # A/B: TF-IDF baseline + cognee add/cognify/search
+python3 /home/lychan/tmp/graph-probe.py   # direct Ladybug graph dump of the built graph
 ```
 
-Reviewed: MCP server tool implementations (12 MCP primitives: 3 core tools + 9 UI/management tools), Claude Code plugin hooks architecture (6 lifecycle hooks with session-to-graph sync), evaluation benchmarks (45 cycles on HotPotQA against Mem0, Graphiti, LightRAG), and deployment options (6 platforms: Cloud, Modal, Railway, Fly.io, Render, Daytona).
+### Results (2026-10-05 run, 4 queries each)
+
+| Query | TF-IDF | cognee CHUNKS | cognee GRAPH_COMPLETION |
+|-------|--------|--------------|--------------------------|
+| q1 direct pair (A1 took B1, S1) | ✓ | ✓ | — |
+| q2 confusable (A2 took B2, never S1) | ✗ | **✓** | — |
+| q3 2-hop jump (A1 at-risk via B2) | ✓ | ✓ | — |
+| q4 3-hop jump (A1 harmed by B1+B2 combo) | ✓ | ✓ | — |
+
+- cognee `add` 6.7 s, `cognify` 76.0 s (CPU), then CHUNKS 4/4 vs TF-IDF 3/4
+- `GRAPH_COMPLETION` (its headline graph-aware retrieval): **raises `LLMAPIKeyNotSetError` 422 unconditionally in the keyless posture** — the feature is untestable without a real key, and this eval deliberately did not provide one
+- Built graph: **17 nodes / 22 edges** (1 TextDocument, 1 DocumentChunk, 1 TextSummary, 10 Entity, 4 EntityType)
+- **Direct Ladybug dump of the graph's edges: only `contains` (chunk→entity) and `is_a` (entity→type) exist.** The corpus's stated **relations are absent**: no `took` from A1 to B1, no `metabolized_by` from B1 to E1, no `inhibits` from B2 to E1 — the three-hop chain that the whole eval planted is **structurally impossible to cross** in the keyless build. GLiNER-local extracts entity *types* only, never the relation *between* entities; relation extraction on a real graph is exactly what prevented the q2/q3/q4 jump queries from being answered by traversal.
+
+The graph build itself "succeeded" — it did not error, did not warn about missing relation extraction, and its node/edge count numbers look healthy in isolation. Only reading the actual edges exposed that it's a type-taxonomy graph, not a relation graph; the tool gave no signal a keyless user could act on short of directly dumping its Ladybug store (`MATCH (a)-[r]->(b) RETURN ...` via `ladybug.Connection(db)`).
+
+## What didn't work or surprised us
+
+Everything from the 2026-06-22 REVIEW stands; the measured pass adds:
+
+- **Keyless graph is type-only, relations missing** — this is the summary finding
+- **Keyless CHUNKS retrieval beat TF-IDF 4/4 vs 3/4** — that came from the `bge-small-en` embedding vector path, **not the graph**; it is a win for the embedding model choice, not for graph memory. A plain fastembed + LanceDB setup would score identically without any of cognee's graph build cost.
+- **Trailing first-use cost** — first `cognify` auto-installed CPU-only PyTorch (~196 MB) plus gliner2 and its tokenizer deps (~17 s to fetch, ~800 MB on disk, ~98 s install) before any graph work started; the eval's first run crashed under disk pressure (root was 100%) and had to be deleted+retried on a recovered disk
+- **No keyless on-ramp for graph retrieval**: `LLMAPIKeyNotSetError` surfaces only at query time (not at install or add time), after the ~90 s graph build has already happened
+- **`cognee.search(query_type=SearchType.CODE)`** is not raw Cypher despite the name — it is a code/seed resolver that tries to interpret the string as a seed function name and errors out otherwise (`CodeSearchValidationError`); raw Cypher queries have to go via the graph engine directly through `ladybug.Connection`
+
+## Quality signals affected
+
+| Signal | Impact | Evidence |
+|--------|--------|----------|
+| Correctness | − (keyless) | Built graph carries no relation edges — the differentiating feature is absent from its own keyless demo posture |
+| Speed | neutral | graph build only ~76 s on CPU at this corpus size; not the bottleneck for small corpora |
+| Maintainability | + | graph-backed store; this isn't the concern raised here |
+| Safety | + | dataset isolation, tenant separation, audit traits (unchanged from REVIEW) |
+| Cost Efficiency | − (keyless) | ~800 MB disk and GPU-free torch install for a graph that cannot traverse; the actual value paths require a paid LLM key |
+| Verifiability | − (keyless) | a user cannot tell without dumping the store that edges never extracted — no warning, no surfaced signal |
+
+## Verdict
+
+**SKIP — keyless posture cannot deliver the platform's core value; keyed posture not exercised here.**
+
+Three real findings, all measured, not review-inferred:
+
+1. **Headline feature (graph-aware retrieval) is LLM-key-gated.** In its keyless demo posture, a new user who runs `cognify` on our eval and then queries `GRAPH_COMPLETION` gets `LLMAPIKeyNotSetError` — 422, every time, on every query type that requires an LLM.
+2. **The graph it builds keylessly is a type taxonomy, not a relation graph.** Direct Ladybug dump shows `contains`/`is_a` edges only; the planted relations that should let the graph cross a 3-hop chain were not extracted. That is the specific reason to pick a graph-memory tool, and the keyless build cannot do it.
+3. **The keyless retrieval win (CHUNKS, 4/4) is a vector-model win, not a graph win.** It is available anywhere by just picking a better embedding model — `claude-mem` or a plain vector store can match it without importing cognee.
+
+**Keyed posture — disclosed not-run.** The A/B as designed could not exercise GRAPH_COMPLETION without a real OpenAI key, and this eval deliberately refused to add one (repo policy: no real keys in eval drives, no live secrets in the run file). An `adopt-if: you-have-an-llm-key` CONDITIONAL would be the natural verdict if the keyed route is ever measured — but that is an unexercised condition word on a feature we could not test, and a run where the tool's differentiating capability is the thing that was NOT measured should stay honest about its own boundary. The correct record here is that the keyless posture fails its own unique promise, the keyed posture is untested locally, and `claude-mem` (ADOPT, MEASURED) already holds this cluster pick. cognee as a keyed product remains promising (per its published HotPotQA benchmark) but is not measurable here without a key.
+
+This verdict does not assert a real keyed user cannot extract more from cognee than the keyless demo can. It says we did not measure such a setup, and that is why it stands as SKIP (not ADOPT/CONDITIONAL) despite the tool's genuine quality signals.
 
 ## What worked
 

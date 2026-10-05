@@ -10,3 +10,7 @@ __pycache__/
 
 # Hermes harness scratch - plan-mode output. The tracked .hermes/plugins/ adapter stays.
 .hermes/plans/
+
+# P0 eval scratch: cognee/ruff db and A/B driver output (.cognee_ab_run/ has a
+# full Ladybug + LanceDB store, ~50 MB, regenerable from ab_driver.py).
+.eval-work/
