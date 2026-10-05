@@ -1,6 +1,6 @@
 # Recommended Stack
 
-The 30 tools worth installing on every project, distilled from 918 catalog entries and 944 evaluations. Each tool earned its slot by moving a quality signal — see the Evidence tiers below for how far each one was actually validated. Install instructions are written for **opencode** and **Hermes Agent**; a pick that exists only as a Claude Code plugin is marked **dropped** rather than given a command that cannot run.
+The 30 tools worth installing on every project, distilled from 907 catalog entries and 933 evaluations. Each tool earned its slot by moving a quality signal — see the Evidence tiers below for how far each one was actually validated. Install instructions are written for **opencode** and **Hermes Agent**; a pick that exists only as a Claude Code plugin is marked **dropped** rather than given a command that cannot run.
 
 > **Harness key.** `both` — the Install cell runs as written on opencode and Hermes. `opencode` / `Hermes` — that harness only. `dropped` — Claude Code only, with the reason in the cell. The Evidence tiers below answer *how well validated* a pick is, not *what runs on your harness* — the Harness column answers that. Picks marked `dropped` are grouped separately at the end of that block. MCP servers: opencode takes a block in `opencode.json`'s `mcp` object; Hermes takes `hermes mcp …` on the command line.
 >
@@ -170,7 +170,7 @@ Valuable but situational, so they're not in the every-project default above (#46
 
 ## What's NOT here
 
-- **918 tools** are cataloged in [CATALOG.md](CATALOG.md) — this page is the curated subset
+- **907 tools** are cataloged in [CATALOG.md](CATALOG.md) — this page is the curated subset
 - **CONDITIONAL tools** (context-mode, shadcn/improve, ralph-claude-code, etc.) are documented in [evaluations/](evaluations/) with guidance on when they're worth it
 - **Unevaluated tools** are tracked in [COMPARISON.md](https://github.com/mattbutlerengineering/ai-tooling/blob/main/COMPARISON.md) with evaluation coverage by stage
 - **7 Claude Code-only picks** — feature-dev, code-review, pr-review-toolkit, security-guidance, claude-code-action, claude-reflect and skill-creator — are marked **dropped** in the tables above: they ship only as Claude Code plugins, with no opencode or Hermes install path.
