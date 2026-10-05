@@ -1,8 +1,8 @@
 # Evaluation: buildd
 
 **Repo:** [buildd-ai/buildd](https://github.com/buildd-ai/buildd)
-**Stars:** 1 | **Last updated:** recent (exact push date not captured from the repo page; checked 2026-09-04) | **License:** Apache-2.0
-**Last verified:** 2026-09-04
+**Stars:** 1 | **Last updated:** recent (exact push date not captured from the repo page; checked 2026-09-04) | **License:** FSL-1.1-ALv2 (source-available; converts to Apache-2.0 after 2 years)
+**Last verified:** 2026-10-05
 **Last triaged:** 2026-09-04  <!-- triaged: bulk -->
 **Dev loop stage:** Implement
 **Layer:** Tooling
@@ -29,4 +29,4 @@ _Triaged 2026-09-04 by the P2 challenger band (daily discovery pass)._
 
 | Name | Type | One-liner | Problem it solves | Overlaps with |
 |------|------|-----------|-------------------|---------------|
-| [buildd](https://github.com/buildd-ai/buildd) | tool | Task coordination platform (Apache-2.0) — create/schedule tasks via dashboard, CLI, or API; agents claim them, branch, code, and open PRs, with missions, roles, and shared memory across runs | Coordinating which agent works on what, and tracking a task's lifecycle through to a PR, is ad hoc across tools | gastown, stargate, claude-squad |
+| [buildd](https://github.com/buildd-ai/buildd) | tool | Task coordination platform (⚠️ source-available FSL-1.1-ALv2) — create/schedule tasks via dashboard, CLI, or API; agents claim them, branch, code, and open PRs, with missions, roles, and shared memory across runs | Coordinating which agent works on what, and tracking a task's lifecycle through to a PR, is ad hoc across tools | gastown, stargate, claude-squad |

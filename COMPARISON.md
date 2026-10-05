@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 916 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 918 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -184,6 +184,7 @@ All 916 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Kaku | tool | | ✓ | SKIP | REVIEW |
 | VelaTerm | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | jcode | harness | | ✓ | discovery-log | REVIEW |
+| dscode | harness | | ✓ | discovery-log | SOURCE-ONLY |
 | gstack | harness | | ✓ | discovery-log | REVIEW |
 | gbrain | harness | | ✓ | SKIP | SOURCE-ONLY |
 | happy | platform | | $ | discovery-log | REVIEW |
@@ -493,6 +494,7 @@ All 916 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | OpenOSINT | MCP server | ✓ | ✓ | SKIP | REVIEW |
 | agnix | tool | ✓ | ✓ | discovery-log | REVIEW |
 | trustmcp | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| mcp-audit-tool | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | agent-vault | tool | | ✓ | discovery-log | REVIEW |
 | envlatch | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | kru | MCP server | | ✓ | discovery-log | SOURCE-ONLY |
@@ -1001,9 +1003,9 @@ All 916 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 81 | 35 | 6 | 43% |
-| Implement | 269 | 120 | 4 | 45% |
+| Implement | 270 | 120 | 4 | 44% |
 | Verify | 34 | 14 | 2 | 41% |
-| Review | 97 | 30 | 3 | 31% |
+| Review | 98 | 30 | 3 | 31% |
 | Ship | 4 | 1 | 1 | 25% |
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 77 | 21 | 2 | 27% |
@@ -1012,4 +1014,4 @@ All 916 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 60 | 18 | 4 | 30% |
-| **Total** | **916** | **340** | **34** | **37%** |
+| **Total** | **918** | **340** | **34** | **37%** |

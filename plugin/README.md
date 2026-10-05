@@ -26,7 +26,7 @@ load from `.agents/skills/` (run `hermes skills trust` once, for Hermes).
 ## Reference Documents
 
 The plugin includes reference documents under `docs/`:
-- `CATALOG.md` — flat inventory of 916 tools across 13 categories with overlap markers
+- `CATALOG.md` — flat inventory of 918 tools across 13 categories with overlap markers
 - `WORKFLOW.md` — inner/outer dev loop stages, tools per stage, quality signals, adoption guide
 - `evaluations/` — 944 evaluation and comparison files
 
