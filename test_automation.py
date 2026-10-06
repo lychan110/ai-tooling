@@ -61,6 +61,7 @@ verifyinstalls = _load("verify_installs", "verify-installs.py")
 checklinks = _load("check_links", "check-links.py")
 rewritelinks = _load("rewrite_doc_links", "rewrite-doc-links.py")
 checkplugin = _load("check_plugin", "check-plugin.py")
+catalogdb = _load("catalog_db", "catalog-db.py")
 freshness = _load("freshness", "freshness.py")
 
 
@@ -4812,6 +4813,11 @@ class TestIntegrityMakefile(unittest.TestCase):
     TRAILERS = (
         "audit-evals.py --staleness",
         "audit-evals.py --metadata-staleness",
+        # Laptop-local derived artifact (never committed, .generated/): building it is
+        # a developer step, so a machine without it must not fail the gate — report-only,
+        # exactly like the two staleness sweeps above (ADR-0006's posture for
+        # verify-installs --record).
+        "catalog-db.py --check",
     )
 
     # `check-data` (#459) — the offline data gates alone: GATES minus the two linters
@@ -9163,3 +9169,163 @@ class TestHarnessGapDetectors(unittest.TestCase):
             self.assertIn('"plugin" is not a `hermes` subcommand', r.stdout)
             self.assertNotIn('"plugins" is not a `hermes` subcommand', r.stdout)
             self.assertNotIn('"daily" is not a `hermes` subcommand', r.stdout)
+
+
+class TestCatalogDbEndToEnd(unittest.TestCase):
+    """`catalog-db.py` against a REAL on-disk database — the repo's e2e rule
+    (AGENTS.md): exercise the real artifact against a throwaway target and assert
+    the result a user would see. No unit tests for internal helpers.
+
+    Verdict/Evidence asserted here flow from COMPARISON.md in the fixture — the
+    same honesty source the live DB uses, never the eval's own prose."""
+
+    def _fixture_repo(self, d):
+        shutil.copy(os.path.join(ROOT, "catalog-db.py"), os.path.join(d, "catalog-db.py"))
+        shutil.copy(os.path.join(ROOT, "catalog_lib.py"), os.path.join(d, "catalog_lib.py"))
+
+    def _run(self, d, *args):
+        return subprocess.run([sys.executable, "catalog-db.py", *args],
+                              cwd=d, capture_output=True, text=True, check=False)
+
+    @staticmethod
+    def _catalog(names_types):
+        rows = "\n".join(
+            f"| [{n}](https://github.com/ex/{n.replace(' ', '-')}) | {t} | "
+            f"Does {n} things | someone needs {n.lower()} | tool | |"
+            for n, t in names_types)
+        return ("# Catalog\n\n## Structs\n\n"
+                "| Name | Type | One-liner | Problem it solves | Overlaps with | Ships inside |\n"
+                "|------|------|-----------|-------------------|---------------|--------------|\n"
+                + rows + "\n")
+
+    def _comparison(self, verdicts):
+        rows = "\n".join(f"| {n} | {t} | ✓ | ✓ | {v} | {ev} |"
+                         for (n, t), (v, ev) in verdicts.items())
+        return ("# Tool Comparison\n\n## Structs\n\n"
+                "| Tool | Type | Auto | Free | Evaluated | Evidence |\n"
+                "|------|------|------|------|------|------|\n" + rows + "\n")
+
+    def test_e2e_full_pipeline_builds_changes_and_checks(self):
+        """The full artifact round trip on a throwaway fixture: build two rows, run
+        a question, verify the ADOPT row wins with its Evidence shown, add a row,
+        prove --check catches the drift, rebuild, prove it clears."""
+        with tempfile.TemporaryDirectory() as d:
+            self._fixture_repo(d)
+            _write(d, "CATALOG.md", self._catalog([("Alpha", "tool"), ("Beta", "skill")]))
+            _write(d, "COMPARISON.md", self._comparison({
+                ("Alpha", "tool"): ("ADOPT", "MEASURED"),
+                ("Beta", "skill"): ("discovery-log", "SOURCE-ONLY")}))
+            _write(d, "evaluations/alpha.md",
+                   "# Evaluation: Alpha\n\nAlpha deserves measured claims.\n")
+
+            build = self._run(d)
+            self.assertEqual(build.returncode, 0, msg=build.stderr + build.stdout)
+            self.assertIn("ingested 2 tools", build.stdout, msg=build.stdout)
+            self.assertTrue(os.path.exists(os.path.join(d, ".generated", "catalog.db")),
+                            msg="default db path is .generated/catalog.db under the script")
+
+            ask = self._run(d, "--ask", "which tool for Alpha")
+            self.assertEqual(ask.returncode, 0, msg=ask.stderr + ask.stdout)
+            self.assertIn("Alpha (tool", ask.stdout, msg=ask.stdout)
+            self.assertIn("ADOPT/MEASURED", ask.stdout, msg=ask.stdout)
+            # Alpha is the only term the question carries — Beta must not match at
+            # all (an unrelated row sharing the question's section is not a hit).
+
+            # A new row + verdict lands in CATALOG/COMPARISON but not the DB yet:
+            # --check is the drift alarm, then the rebuild clears it (idempotent).
+            _write(d, "CATALOG.md", self._catalog(
+                [("Alpha", "tool"), ("Beta", "skill"), ("Gamma", "tool")]))
+            _write(d, "COMPARISON.md", self._comparison({
+                ("Alpha", "tool"): ("ADOPT", "MEASURED"),
+                ("Beta", "skill"): ("discovery-log", "SOURCE-ONLY"),
+                ("Gamma", "tool"): ("KEEP", "RUN")}))
+            chk = self._run(d, "--check")
+            self.assertEqual(chk.returncode, 1, msg=chk.stdout + chk.stderr)
+            self.assertIn("STALE", chk.stdout, msg=chk.stdout)
+            rebuild = self._run(d)
+            self.assertEqual(rebuild.returncode, 0, msg=rebuild.stderr + rebuild.stdout)
+            self.assertIn("ingested 3 tools", rebuild.stdout, msg=rebuild.stdout)
+            chk2 = self._run(d, "--check")
+            self.assertEqual(chk2.returncode, 0, msg=chk2.stdout + chk2.stderr)
+            self.assertIn("catalog-db OK", chk2.stdout, msg=chk2.stdout)
+
+    def test_recommended_only_drops_leads_and_keeps_a_wrong_verdict_out(self):
+        """--recommended answers the 'what should I use' question: ADOPT/KEEP/
+        CONDITIONAL only — a discovery-log row sharing all the query's terms must
+        exist in the corpus yet NOT appear in the filtered results; and the
+        Evidence level is displayed alongside every verdict so a recommendation can
+        never lose its SOURCE-ONLY/REVIEW basis."""
+        with tempfile.TemporaryDirectory() as d:
+            self._fixture_repo(d)
+            _write(d, "CATALOG.md", self._catalog([("Alpha", "tool"), ("Beta", "skill")]))
+            _write(d, "COMPARISON.md", self._comparison({
+                ("Alpha", "tool"): ("ADOPT", "MEASURED"),
+                ("Beta", "skill"): ("discovery-log", "SOURCE-ONLY")}))
+            self.assertEqual(self._run(d).returncode, 0)
+            ask = self._run(d, "--ask", "Alpha Beta", "--recommended")
+            self.assertEqual(ask.returncode, 0, msg=ask.stderr + ask.stdout)
+            self.assertIn("Alpha", ask.stdout, msg=ask.stdout)
+            self.assertNotIn("Beta (", ask.stdout, msg=ask.stdout)
+            self.assertIn("ADOPT/MEASURED", ask.stdout, msg=ask.stdout)
+
+    def test_missing_db_is_reported_not_a_traceback(self):
+        """--ask/--card/--check on a machine that never built the artifact must
+        fail with a one-line 'build it first' message and a nonzero exit — the
+        ADR-0006 posture (a missing laptop artifact is a disclosed gap, not an
+        error). This is why the artifact is never in check-data."""
+        with tempfile.TemporaryDirectory() as d:
+            self._fixture_repo(d)
+            for args in (["--ask", "anything"], ["--card", "Alpha"], ["--check"]):
+                r = self._run(d, *args)
+                self.assertEqual(r.returncode, 1, msg=r.stdout + r.stderr)
+                self.assertIn("MISSING", r.stdout, msg=r.stdout)
+                self.assertIn("make index-db", r.stdout, msg=r.stdout)
+
+    def test_row_identity_is_the_row_never_the_repo_slug(self):
+        """#343's identity rule in the DB representation: six rows shipping inside
+        one repo must stay six rows — a slug-keyed build collapses 907 -> 883 and
+        multiplies shared-container hits (observed live in the prototype)."""
+        with tempfile.TemporaryDirectory() as d:
+            self._fixture_repo(d)
+            names = [(f"Pack{i}", "tool") for i in range(6)]
+            _write(d, "CATALOG.md", self._catalog(names))
+            _write(d, "COMPARISON.md", self._comparison({}))
+            build = self._run(d)
+            self.assertEqual(build.returncode, 0, msg=build.stderr + build.stdout)
+            self.assertIn("ingested 6 tools", build.stdout, msg=build.stdout)
+
+    def test_live_tree_ranks_the_canonical_pick(self):
+        """The three probe queries the ranking was tuned against, driven through the
+        REAL CLI on the live tree's own database. This is the retune anchor
+        VERDICT_LADDER names: a ranking change that buries a canonical pick for one of
+        these fails here. Skips on a machine with no built artifact (ADR-0006 gap)."""
+        live_db = os.path.join(ROOT, ".generated", "catalog.db")
+        if not os.path.exists(live_db):
+            self.skipTest("machine-local artifact not built (disclosed gap, ADR-0006)")
+        cases = (
+            ("recommended tools for agentic memory?", "claude-mem"),
+            ("browser automation testing", "playwright"),
+        )
+        for question, pick in cases:
+            r = subprocess.run(
+                [sys.executable, os.path.join(ROOT, "catalog-db.py"),
+                 "--ask", question, "--limit", "1"],
+                cwd=ROOT, capture_output=True, text=True, check=False)
+            self.assertEqual(r.returncode, 0, msg=r.stderr + r.stdout)
+            first = r.stdout.strip().splitlines()[0]
+            self.assertTrue(first.startswith(pick + " "),
+                            msg=f"{question!r} top hit {first!r}, expected {pick!r}")
+
+    def test_live_tree_check_reports_the_real_artifact(self):
+        """On a machine WITH the artifact, --check runs against the live tree and
+        must either agree (exit 0) or say STALE — never crash and never silently
+        pass. Runs against the repo's own default db path when present."""
+        live_db = os.path.join(ROOT, ".generated", "catalog.db")
+        if not os.path.exists(live_db):
+            self.skipTest("machine-local artifact not built (disclosed gap, ADR-0006)")
+        r = subprocess.run([sys.executable, os.path.join(ROOT, "catalog-db.py"),
+                            "--check"], cwd=ROOT, capture_output=True, text=True,
+                           check=False)
+        self.assertIn(r.returncode, (0, 1), msg=r.stdout + r.stderr)
+        self.assertTrue(r.stdout.startswith("catalog-db"), msg=r.stdout)
+
