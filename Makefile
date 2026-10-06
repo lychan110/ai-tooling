@@ -55,7 +55,7 @@ UV ?= uv
 RUFF ?= ruff
 MYPY ?= mypy
 
-.PHONY: check check-data check-offline fix lint lint-preflight
+.PHONY: check check-data check-offline fix index-db lint lint-preflight
 
 # A missing `uv` must say what to install, not "command not found: uv". Nothing else is
 # probed: ruff and mypy come from the locked `dev` group, so they cannot be absent on
@@ -108,6 +108,7 @@ check: lint-preflight
 	$(UV) run audit-evals.py --installs
 	-$(UV) run audit-evals.py --staleness
 	-$(UV) run audit-evals.py --metadata-staleness
+	-$(UV) run catalog-db.py --check
 
 # Everything in `check` except the network install resolver (A) — the fast local loop.
 # `check` remains the canonical gate; this is for iterating without paying ~22s of
@@ -120,6 +121,14 @@ check-offline: lint-preflight
 	$(UV) run -m unittest -q test_automation
 	-$(UV) run audit-evals.py --staleness
 	-$(UV) run audit-evals.py --metadata-staleness
+	-$(UV) run catalog-db.py --check
+
+# Build the laptop-local catalog search db (never committed; .generated/). Derived
+# from CATALOG.md/COMPARISON.md/evaluations, so it is rebuilt, not edited — the same
+# contract as the generated counts. `--check` (in the check targets, report-only)
+# verifies the built db still agrees with the tree; run it after a large doc change.
+index-db: lint-preflight
+	$(UV) run catalog-db.py
 
 fix: lint-preflight
 	$(UV) run $(RUFF) check --fix

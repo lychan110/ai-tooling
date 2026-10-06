@@ -51,6 +51,7 @@ Catalog rows have six cells: Name, Type, One-liner, Problem it solves, Overlaps 
 ## Canonical commands
 
 - `make check` — full local/CI integrity gate.
+- `make index-db` — build the laptop-local catalog search database (`.generated/catalog.db`, never committed; derived — see `docs/agents/catalog-db.md`).
 - `make fix` — apply canonical repairs, then run `make check`.
 - `uv run reconcile-counts.py --check` — validate generated counts and summaries.
 - `uv run audit-evals.py --offline` — run offline evaluation detectors.
