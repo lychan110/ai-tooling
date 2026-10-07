@@ -28,7 +28,7 @@ load from `.agents/skills/` (run `hermes skills trust` once, for Hermes).
 The plugin includes reference documents under `docs/`:
 - `CATALOG.md` — flat inventory of 907 tools across 13 categories with overlap markers
 - `WORKFLOW.md` — inner/outer dev loop stages, tools per stage, quality signals, adoption guide
-- `evaluations/` — 933 evaluation and comparison files
+- `evaluations/` — 935 evaluation and comparison files
 
 Skills reference these docs through the installer-resolved `~/.local/share/ai-tooling/docs/` path.
 
