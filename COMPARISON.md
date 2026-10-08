@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 907 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 909 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -135,6 +135,7 @@ All 907 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | orca | platform | ✓ | ✓ | discovery-log | REVIEW |
 | diri | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | hermes-conductor | reference | | ✓ | discovery-log | SOURCE-ONLY |
+| foreman | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | task-state-guard | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | conflux-agent-workflow-2026 | tool | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | flow (Aixle) | platform | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -288,6 +289,7 @@ All 907 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Baize | harness | | ✓ | discovery-log | SOURCE-ONLY |
 | phi | harness | | ✓ | discovery-log | SOURCE-ONLY |
 | pi | harness | | ✓ | discovery-log | SOURCE-ONLY |
+| mu | harness | | ✓ | discovery-log | SOURCE-ONLY |
 | FrontierAgent | harness | | ✓ | discovery-log | SOURCE-ONLY |
 | Jixu | harness | | ✓ | discovery-log | SOURCE-ONLY |
 | acryl | harness | | ✓ | discovery-log | SOURCE-ONLY |
@@ -992,7 +994,7 @@ All 907 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 81 | 35 | 6 | 43% |
-| Implement | 267 | 118 | 4 | 44% |
+| Implement | 269 | 118 | 4 | 44% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 94 | 28 | 3 | 30% |
 | Ship | 4 | 1 | 1 | 25% |
@@ -1003,4 +1005,4 @@ All 907 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **907** | **335** | **34** | **37%** |
+| **Total** | **909** | **335** | **34** | **37%** |
