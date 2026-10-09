@@ -67,6 +67,16 @@ it catalogued does.
 Re-open if Hermes Agent enters the supported-harness set.
 _Triaged 2026-08-04 by the P3 backlog band ([#268](https://github.com/mattbutlerengineering/ai-tooling/issues/268))._
 
+## 2026-10-09 addendum — hands-on deployment attempt (BLOCKED on this host); Evidence: MEASURED (blocker) / REVIEW (capability)
+
+The re-open trigger above has now FIRED for this fleet: Hermes Agent IS in the supported-harness set here. A deployment eval was attempted on the constrained box (2 CPU, 1.5 GB free, no sudo, agent deny-ruled). Full report + captured source details: [`docs/evals/memory-phase1a-2026-10/memoryos/`](https://github.com/mattbutlerengineering/ai-tooling/blob/main/docs/evals/memory-phase1a-2026-10/memoryos/REPORT.md).
+
+- **Blocking (measured):** `setup.sh` exits 1 without Docker; no non-Docker install mode exists. The docker socket is `root:docker 0660` and user `lychan` holds no `docker` gid (1000, 27(sudo), 100) — unblocking needs root (`usermod -aG docker lychan` + re-login), outside agent authority.
+- **Footprint (ESTIMATE, labeled):** 3 services (redis 512 MB cap, qdrant v1.17.1, ARQ worker with remote 4096-d embeddings) ≈ **1.5–2.5 GB RSS vs <1 GB headroom → HIGH OOM risk** on this box even unblocked.
+- **Source addendum captured for a future eval with zero rediscovery cost:** compose service list, SQLite schemas (`state.db`/`memory_store.db`), Icarus plugin load path (declares 15 tools/2 hooks vs docs' 16/4 — `fabric_brief` implemented but undeclared), fact-write path shape, 8-step resume checklist.
+
+**Verdict unchanged: SKIP (harness-disposition stands; the row keeps its catalog place).** The capability review is unchanged REVIEW; the deployment blocker is MEASURED on this hardware. Not disqualified on merit — blocked on (a) a root action this agent cannot perform and (b) a footprint this host cannot carry. Re-re-open when either changes: bigger host, or Docker gid granted.
+
 ## Catalog entry
 
 | Name | Type | One-liner | Problem it solves | Overlaps with |

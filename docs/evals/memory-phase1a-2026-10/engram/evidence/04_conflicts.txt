@@ -1,0 +1,28 @@
+CONFLICT SURFACING (fixture project eval-engram-test; ENGRAM_DATA_DIR=<workspace>/data)
+CLI path:
+  $ ./engram save "eval-bridge-port" "The eval bridge port is 5177." --project eval-engram-test --topic eval-bridge-port
+    -> Memory saved: #3 "eval-bridge-port" (manual)
+  $ ./engram save "eval-bridge-port" "The eval bridge port is 5178." --project eval-engram-test --topic eval-bridge-port
+    -> Memory saved: #3 "eval-bridge-port" (manual)   [SAME id: topic-key upsert REPLACED 5177 with 5178 —
+       same-topic contradiction is impossible via CLI save; pair collapsed to one row]
+  $ ./engram conflicts scan --project eval-engram-test
+    -> dry_run: true; inspected 3; candidates_found 0
+  $ ./engram conflicts scan --project eval-engram-test --apply
+    -> dry_run: false; inspected 5; candidates_found 0  (cross-topic near-duplicates "port is 5177/5178" also 0)
+  $ ./engram conflicts scan --project eval-engram-test --apply --semantic
+    -> error: ENGRAM_AGENT_CLI is not set; required for --semantic scan (set to 'claude' or 'opencode')  [exit 1]
+MCP path (engram mcp --tools=all --project eval-engram-test, JSON-RPC over stdio, 23 tools):
+  mem_compare {"memory_id_a":4,"memory_id_b":5,"relation":"conflicts_with","confidence":0.9,
+               "reasoning":"eval-bridge-port-v1 claims port 5177, v2 claims 5178; only one can be true"}
+    -> {"sync_id":"rel-f159e56251ddb06f"}   [conflict relation PERSISTED]
+  mem_judge {"judgment_id":"x","relation":"bridge port",...}
+    -> JudgeRelation: invalid relation verb "bridge port" — must be one of:
+       related, compatible, scoped, conflicts_with, supersedes, not_conflict   [schema enforced]
+  mem_save "bridge-port-v3" (port 5179) -> {"id":7,"judgment_required":false,...}
+    -> automatic judgment_required flow did NOT trigger on a plain save (no candidates[] in response)
+  mem_judge's intended flow needs a judgment_id from a judgment_required mem_save response; none produced here.
+CLI readback of the persisted relation:
+  $ ./engram conflicts list --project eval-engram-test
+    Total: 1 — id 1, sync_id rel-f159e56251ddb06f, relation conflicts_with, judgment_status judged,
+    source obs-c961edce7fdf08af (bridge-port-v1) -> target obs-1be6a06c226cb583 (bridge-port-v2)
+  $ ./engram conflicts stats --project eval-engram-test -> judged: 1, conflicts_with: 1

@@ -1,0 +1,13 @@
+TOPIC-KEY UPSERT (fixture: ENGRAM_DATA_DIR=<workspace>/data, project=eval-engram-test)
+$ ./engram save "eval-bridge-deprecation" "The eval bridge component is deprecated as of October 2026. Its HTTP port is 5177 ..." --project eval-engram-test --topic eval-bridge-deprecation
+  -> Memory saved: #1 "eval-bridge-deprecation" (manual)
+$ ./engram save "eval-bridge-deprecation" "UPDATED: ... Its HTTP port is 5178 and removal is scheduled for the NEXT major release ..." --project eval-engram-test --topic eval-bridge-deprecation
+  -> Memory saved: #1 "eval-bridge-deprecation" (manual)   [SAME id #1 — in-place update, no new row]
+$ ./engram search "bridge" --project eval-engram-test  -> Found 1 memories (UPDATED content shown)
+$ ./engram export evidence/export_after_upsert.json --project eval-engram-test -> "Observations: 2"
+Export JSON observation id 1 (verbatim):
+  "id": 1, "type": "manual", "title": "eval-bridge-deprecation",
+  "topic_key": "eval-bridge-deprecation", "revision_count": 2, "duplicate_count": 1,
+  "content": "UPDATED: ... port is 5178 ...", "created_at": "2026-10-09 03:08:38", "updated_at": "2026-10-09 03:08:44"
+=> revision_count INCREMENTED (1 -> 2) on same topic_key; exactly ONE row for the topic_key (NO duplicate row)
+Second fact: ./engram save "bridge-health-check" ... --topic bridge-health-check -> #2, revision_count 1

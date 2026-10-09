@@ -1,0 +1,23 @@
+MCP SURFACE (engram mcp --tools=all --project eval-engram-test; stdio JSON-RPC; initialize OK,
+serverInfo engram 3.2.1, protocolVersion 2024-11-05)
+TOOL_COUNT: 23
+Core (per server instructions): mem_save, mem_search, mem_context, mem_session_summary,
+  mem_get_observation, mem_save_prompt, mem_current_project, mem_judge, mem_compare
+Deferred: mem_update, mem_review, mem_pin, mem_unpin, mem_suggest_topic_key, mem_session_start,
+  mem_session_end, mem_doctor, mem_capture_passive, mem_stats, mem_delete, mem_timeline, mem_merge_projects
+Plus mem_list_projects = 23 total.
+Server instructions (verbatim excerpt):
+  "CONFLICT SURFACING — After mem_save: if judgment_required, iterate candidates[] and call mem_judge
+   once per entry using that entry's judgment_id ... relation in {supersedes, conflicts_with} AND type in
+   {architecture, policy, decision} ... resolve with related | compatible | scoped | not_conflict"
+Observed calls:
+  mem_search {"query":"bridge port"} -> "Found 4 memories" compact text + results[] with
+    id/topic_key/sync_id/state/type/scope/project per hit (progressive disclosure confirmed on MCP)
+  mem_get_observation {"id":1} -> full untruncated content incl. "Duplicates: 1 / Revisions: 2 / Created"
+  mem_timeline {"observation_id":4,"before":2,"after":2} -> before/after context
+  mem_compare -> persisted rel-f159e56251ddb06f (conflicts_with)
+  mem_judge -> schema validation error on bad verb; valid flow requires judgment_id from mem_save
+  mem_save -> {"id":7,"judgment_required":false,...,"truncation":{"original_bytes":29,"limit_bytes":50000,
+    "truncated":false}}  [content truncation guard at 50,000 bytes, not hit]
+HTTP API: ./engram serve 7437 started OK; GET / -> 404 (no root/openapi/docs route exposed; route
+list not discoverable without docs — HTTP API surface not exercised further).

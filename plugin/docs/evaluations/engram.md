@@ -2,8 +2,8 @@
 
 **Repo:** [Gentleman-Programming/engram](https://github.com/Gentleman-Programming/engram)
 **Stars:** 4,493 | **Last updated:** 2026-06-18 | **License:** MIT
-**Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-10-03  <!-- triaged: bulk -->
+**Last verified:** 2026-10-09  <!-- hands-on re-run on the box; see How we tested it -->
+**Last triaged:** 2026-10-09  <!-- triaged: human -->
 **Dev loop stage:** Reflect
 **Layer:** Infrastructure
 
@@ -11,67 +11,71 @@
 
 ## What it does
 
-Persistent memory for AI coding agents. A single Go binary with SQLite + FTS5 full-text search, exposed via 20 MCP tools, an HTTP API, a CLI, and a TUI. Works with any MCP-capable agent — Claude Code, OpenCode, Gemini CLI, Codex, VS Code, Cursor, Windsurf. The agent decides what's worth remembering (decisions, bugfixes, patterns) and calls `mem_save` with structured What/Why/Where/Learned content. Next session, the previous session context is auto-injected via hooks.
+Persistent memory for AI coding agents. A single Go binary with SQLite + FTS5 full-text search, exposed via MCP tools, an HTTP API, a CLI, and a TUI. Works with any MCP-capable agent — Claude Code, OpenCode, Gemini CLI, Codex, VS Code, Cursor, Windsurf. The agent decides what's worth remembering and saves with structured content; the store deduplicates by topic key.
 
 Ships as a proper Claude Code plugin with hooks for session lifecycle (start, stop, compaction recovery, subagent stop, user prompt submit) and an MCP server config. Also has first-class plugins for Pi, OpenCode, and Obsidian.
 
 ## How we tested it
 
-**Evidence:** REVIEW
+**Evidence:** MEASURED (prebuilt-binary posture, v3.2.1)
 
-Architecture review based on repo structure, README, ARCHITECTURE.md, hooks config, MCP tool surface, and plugin layout. Did not install and run (Go build dependency), so this is an architecture-level assessment, not a hands-on test.
+Two passes. First pass (2026-06-22, history in <details> below): architecture REVIEW — did not run (Go build dependency). Second pass (2026-10-09, this eval): installed the checksum-verified prebuilt linux/amd64 release binary (no Go toolchain, no sudo, no Docker) and exercised the real CLI + MCP stdio server on a 2-CPU / 1.5 GB-free constrained host. Full reports + evidence captures: [`docs/evals/memory-phase1a-2026-10/engram/`](https://github.com/mattbutlerengineering/ai-tooling/blob/main/docs/evals/memory-phase1a-2026-10/engram/REPORT.md). Follow-up on top of this eval: the auto-brain memory facade — engine selected by the engram-vs-delx fork in [ai-tooling#49](https://github.com/lychan110/ai-tooling/issues/49) Phase 2; 10 facade tests green against this binary; E2E over real MCP stdio (`mem_remember` upsert + conflict digest, `mem_recall` progressive disclosure, `mem_forget`, `mem_status`).
 
-```bash
-gh api repos/Gentleman-Programming/engram --jq '.description, .stargazers_count'
-# Read: README.md, docs/ARCHITECTURE.md, plugin/claude-code/hooks/hooks.json,
-#        plugin/claude-code/.mcp.json, plugin/claude-code/skills/
-```
+- **Install:** tarball (sha256 vs checksums.txt), `./engram --version` → `engram 3.2.1`. Store relocatable via `ENGRAM_DATA_DIR`.
+- **Upsert/dedup (decisive behavior):** two saves to the same `--topic` → ONE row, `revision_count` incremented, content = updated version, prior revision kept in `observation_versions`. Verified via independent SQLite reads + `engram export` JSON.
+- **Dedup-key correction (vs the June REVIEW):** the dedup key is the **`topic_key`, NOT the title** — differential probe: same topic + different title revises in place; same title + different topic creates two rows. June's "dedup via hash + project + scope + type + title" line is wrong as written.
+- **Progressive disclosure (MEASURED):** compact `#id (type) — title / snippet / timestamp | project | scope` rows; `mem_get_observation`/`export` return full content; `mem_timeline` adds before/after context.
+- **Conflict surfacing — weaker than June reviewed.** MCP `mem_compare` DOES persist a `conflicts_with` relation (read back); but CLI `conflicts scan` found **0 candidates** on deliberately contradictory pairs, `--semantic` requires an authed external LLM CLI (`ENGRAM_AGENT_CLI`), and the automatic `judgment_required` flow never fired on plain saves. Same-topic contradiction is impossible by design (topic upsert replaces).
+- **Footprint (measured):** ~19.6 MB peak RSS per CLI op, ~0.07 s wall, 0 swaps; stdio server stable on the constrained box.
+
+> **FTS5 caveat:** hyphenated query terms (e.g. `long-term`) parse as FTS5 column-filter syntax and miss records — same failure family as catalog-db #48 (merged PR #51). Identity lookups must not ride the text-search path.
 
 ## What worked
 
-- **20 MCP tools with progressive disclosure**: search returns compact results (~100 tokens each), then `mem_timeline` for context, then `mem_get_observation` for full content. Token-efficient by design.
-- **Topic-key upserts**: saves with the same `topic_key` update existing memories instead of creating duplicates. Evolving decisions stay in one memory with `revision_count` — solves the "100 versions of the same decision" problem.
-- **Agent-agnostic**: `engram setup <agent>` one-liner for 7+ agents. Genuine cross-editor portability — memories travel between Claude Code, Codex, Gemini CLI, etc.
-- **Conflict surfacing**: `mem_judge` and `mem_compare` detect contradictory memories and surface them for resolution. Beta feature but architecturally sound — no other memory tool in the catalog does this.
-- **Zero dependencies**: single Go binary, SQLite file in `~/.engram/`. No Node, no Python, no Docker for local use. `brew install` and done.
-- **Git sync**: compressed chunks export/import via git — share memories across machines without merge conflicts. Cloud sync is opt-in replication, local stays authoritative.
-- **Memory lifecycle**: `review_after` and `mem_review` let memories age and get reviewed rather than accumulating indefinitely. Includes dedup via hash + project + scope + type + title.
-- **Full Claude Code plugin**: hooks for SessionStart, Stop, SubagentStop, UserPromptSubmit, and compaction recovery — properly integrated, not just an MCP server bolted on.
+- **Topic-key upserts (MEASURED)** — the "100 versions of the same decision" problem dies at the data model.
+- **Prebuilt-binary install (MEASURED)** — zero deps, no Go, no sudo; ~20 MB RSS on a 1.5 GB-free box.
+- **Progressive disclosure (MEASURED)** — compact rows, full content one call away.
+- **Agent-agnostic**: `engram setup <agent>` one-liner for 7+ agents; MCP + CLI + HTTP.
+- **Git sync**: chunked export/import via git; cloud replication opt-in, local authoritative.
 
 ## What didn't work or surprised us
 
-- **Not hands-on tested**: Go build dependency and `brew install` workflow means we couldn't install in this evaluation session. Assessment is architecture-review only.
-- **Cloud complexity**: the cloud sync docs reveal a 4-step upgrade flow, repair scripts, and multiple failure modes (transport_failed, canonicalization failures). The local-only path is clean; cloud adds significant operational surface.
-- **Large repo**: 1,176 files suggests scope creep beyond "simple memory tool" into a full agentic platform (Pi integration, Obsidian plugin, cloud infrastructure, beta features).
-- **Competes with established tools**: claude-mem (ADOPT) has a simpler mental model and proven production track record. Engram's advantages (agent-agnostic, conflict surfacing, topic upserts) are real but may not justify the switching cost for Claude Code-only users.
+- **Conflict detection materially weaker than the June REVIEW** — auto-detection effectively off; `mem_compare` works but CLI scan finds nothing without a semantic pass backed by another LLM CLI. Treat as beta-at-best; a facade built on engram owns this mechanic.
+- **Update banner on every run** (3.2.1→3.3.0 nit) — stderr noise on every invocation; wrappers must strip it.
+- **Cloud complexity** (June REVIEW, unchanged): multi-step upgrade flow + repair scripts; local-only path is clean and is what we verified.
+- **v3.3.0 available but unmeasured** — this eval pins 3.2.1; upgrade is a tracked follow-up (auto-brain#25).
 
 ## Quality signals affected
 
 | Signal | Impact | Evidence |
 |--------|--------|----------|
-| Correctness | + | Conflict surfacing catches contradictory memories; topic upserts prevent stale duplicates |
-| Speed | + | Progressive disclosure prevents context flooding; auto-injection on session start |
-| Maintainability | + | Memory lifecycle with review_after prevents unbounded growth |
-| Safety | neutral | Local-first architecture; no external dependencies for core use |
-| Cost Efficiency | + | Progressive disclosure is token-efficient by design (~100 tokens per search result) |
+| Correctness | + | Topic-key upsert + revision_count proven on real saves; dedup key = topic_key (June review corrected) |
+| Speed | + | ~0.07 s wall per op; progressive disclosure holds |
+| Maintainability | + | Zero-dep binary; store = one SQLite file; upgrade = swap the binary |
+| Safety | + | Local-first; single file on disk; no telemetry observed |
+| Cost Efficiency | + | ~20 MB RSS; ~100 tokens per compact search row |
+| Verifiability | + | `engram export` JSON + SQLite reads make every claim independently checkable |
 
 ## Verdict
 
-**discovery-log — tentative read**
+**CONDITIONAL** — adopt-if: you want durable agent memory as a storage ENGINE behind a thin facade you own, on constrained hardware, agent-agnostic. Proven: topic-key dedup, progressive disclosure, tiny footprint, prebuilt install. Conflict surfacing is NOT fire-and-forget — own it in the calling layer (ours does). For wire-as-is shared stores with secret-blocking, see `delx-memory` (MEASURED same week); for Claude-Code-native capture, `claude-mem` stays the incumbent pick.
 
-Use when you work across multiple AI coding agents (Claude Code + Codex + Gemini CLI) and need shared memory, or when conflict surfacing for evolving architectural decisions matters. For Claude Code-only users, claude-mem (ADOPT) remains simpler and production-proven. Engram's unique strengths — agent-agnostic portability, topic-key upserts, and conflict surfacing — justify adoption when those capabilities are needed.
+<details>
+<summary>Historical: 2026-06-22 architecture REVIEW (pre-hands-on)</summary>
 
-## Triage note
+### What worked (review-only)
 
-Left at `discovery-log`, not SKIPped. Its recorded strengths — agent-agnostic
-portability across Claude Code + Codex + Gemini CLI, topic-key upserts, and **conflict surfacing**
-when architectural decisions evolve — are things [`claude-mem`](https://github.com/thedotmack/claude-mem)
-(STACK) does not do. The eval is explicit that claude-mem stays simpler for Claude-Code-only work,
-which is a fit statement, not a redundancy finding.
+- **20 MCP tools with progressive disclosure**; **topic-key upserts** keeping one memory per decision with `revision_count`; **agent-agnostic** `engram setup <agent>` for 7+ agents; **conflict surfacing** via `mem_judge`/`mem_compare` (beta, architecturally sound — no other catalog memory tool does this); **zero dependencies** (`brew install`); **git sync** (compressed chunks); **memory lifecycle** with `review_after` + `mem_review`.
 
-_Triaged 2026-08-04 by the P2 challenger band ([#264](https://github.com/mattbutlerengineering/ai-tooling/issues/264))._
+### What didn't work (review-only)
 
-**Re-triaged 2026-10-03 by the P2 challenger band:** no change — re-examined the recorded leave-outcome; its cited incumbent `claude-mem` still reads ADOPT/MEASURED on COMPARISON, and this eval's multi-agent differentiators still stand. Re-stamped to keep the fresh-lead sink honest. Left at `discovery-log`.
+- Not hands-on tested (Go build dependency). Cloud-complexity surface (4-step upgrade flow, repair scripts, transport failure modes). Large repo (1,176 files) = scope creep beyond simple memory. claude-mem (ADOPT) simpler for Claude-Code-only users.
+
+_Triaged 2026-08-04 by the P2 challenger band ([#264](https://github.com/mattbutlerengineering/ai-tooling/issues/264)). Re-triaged 2026-10-03 by the P2 challenger band: no change._
+
+</details>
+
+**2026-10-09 — hands-on MEASURED re-eval (this file):** evidence promoted `discovery-log` → `MEASURED`; human-attended run. Verdict now `CONDITIONAL` on the measured posture. Engine selected for the auto-brain memory facade ([ai-tooling#49](https://github.com/lychan110/ai-tooling/issues/49) Phase 2).
 
 ## Catalog entry
 
