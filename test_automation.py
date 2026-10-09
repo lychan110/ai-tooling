@@ -9294,6 +9294,41 @@ class TestCatalogDbEndToEnd(unittest.TestCase):
             self.assertEqual(build.returncode, 0, msg=build.stderr + build.stdout)
             self.assertIn("ingested 6 tools", build.stdout, msg=build.stdout)
 
+    def test_hyphen_and_punctuation_terms_do_not_break_fts_syntax(self):
+        """A question carrying a hyphenated or punctuated term queries instead of
+        crashing, and returns the row a user expects. Pre-fix, `long-term` reached
+        FTS5 MATCH raw where `-` is a column filter (no such column: term) and `c++`
+        died near '+'; both exited 1. Terms are now split as unicode61 splits the
+        index, so the hyphenated question tops out on the memory row and the C++
+        question reaches the compiler row. Fails if the raw-token form returns."""
+        with tempfile.TemporaryDirectory() as d:
+            self._fixture_repo(d)
+            _write(d, "CATALOG.md",
+                   "# Catalog\n\n## Memory\n\n"
+                   "| Name | Type | One-liner | Problem it solves | Overlaps with | Ships inside |\n"
+                   "|------|------|-----------|-------------------|---------------|--------------|\n"
+                   "| [MemoryVault](https://github.com/ex/memoryvault) | tool | "
+                   "Durable long-term agent memory | agents forget across sessions | tool | |\n\n"
+                   "## Compilers\n\n"
+                   "| Name | Type | One-liner | Problem it solves | Overlaps with | Ships inside |\n"
+                   "|------|------|-----------|-------------------|---------------|--------------|\n"
+                   "| [CppKit](https://github.com/ex/cppkit) | tool | "
+                   "A c++ build toolkit | need a c++ toolchain | tool | |\n")
+            _write(d, "COMPARISON.md", self._comparison({
+                ("MemoryVault", "tool"): ("ADOPT", "MEASURED"),
+                ("CppKit", "tool"): ("KEEP", "RUN")}))
+            self.assertEqual(self._run(d).returncode, 0)
+
+            hyphen = self._run(d, "--ask", "durable long-term agent memory")
+            self.assertEqual(hyphen.returncode, 0, msg=hyphen.stderr + hyphen.stdout)
+            self.assertTrue(hyphen.stdout.strip().splitlines()[0].startswith("MemoryVault "),
+                            msg=hyphen.stdout)
+
+            plus = self._run(d, "--ask", "c++ build toolkit")
+            self.assertEqual(plus.returncode, 0, msg=plus.stderr + plus.stdout)
+            self.assertTrue(plus.stdout.strip().splitlines()[0].startswith("CppKit "),
+                            msg=plus.stdout)
+
     def test_live_tree_ranks_the_canonical_pick(self):
         """The three probe queries the ranking was tuned against, driven through the
         REAL CLI on the live tree's own database. This is the retune anchor

@@ -93,8 +93,19 @@ def _match_expr(question):
     only breaks ties. --recommended is the recommendation filter, not the
     sort. bm25(): smaller (more negative) is better, so ascending rank is
     best-first. Recall-first on purpose: a missed match matters more than
-    an over-broad one."""
-    terms = [w for w in re.findall(r"[a-z0-9][a-z0-9+-]*", question.lower())
+    an over-broad one.
+
+    Terms are split EXACTLY as the indexer splits text (unicode61: on every
+    non-alphanumeric), so no query token can carry FTS5 query syntax into
+    MATCH. Keeping `+`/`-` inside a token is not harmless: `long-term` reaches
+    MATCH raw and FTS5 reads `-` as a column filter ("no such column: term"),
+    and `c++` dies with `fts5: syntax error near "+"` (both live, 2026-10-08).
+    Splitting also lets a `c++` query reach the C++ row: the index holds the
+    bare token `c` (unicode61 keeps no punctuation), so the bare token is the
+    one that matches. A single-char term is still dropped by the length guard
+    below, so a lone `c++` degrades to the no-term fallback rather than a
+    crash — widening that guard is a ranking change, not this fix."""
+    terms = [w for w in re.findall(r"[a-z0-9]+", question.lower())
              if w not in _STOPWORDS and len(w) > 1]
     return " OR ".join(terms) if terms else "ai"
 
