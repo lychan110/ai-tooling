@@ -1,0 +1,50 @@
+{
+  "version": "0.2.0",
+  "exported_at": "2026-10-09 03:09:05.926721830",
+  "sessions": [
+    {
+      "id": "manual-save-eval-engram-test",
+      "project": "eval-engram-test",
+      "ownership_mode": "project_owned",
+      "directory": "/home/lychan/.hermes/cache/scratch/eval-engram",
+      "started_at": "2026-10-09 03:08:38.490702134"
+    }
+  ],
+  "observations": [
+    {
+      "id": 1,
+      "sync_id": "obs-65b2877cf606fbcf",
+      "session_id": "manual-save-eval-engram-test",
+      "type": "manual",
+      "title": "eval-bridge-deprecation",
+      "content": "UPDATED: The eval bridge component is deprecated as of October 2026. Its HTTP port is 5178 and removal is scheduled for the NEXT major release. Replacement: the unified bridge service with /healthz endpoint.",
+      "project": "eval-engram-test",
+      "scope": "project",
+      "topic_key": "eval-bridge-deprecation",
+      "revision_count": 2,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-10-09 03:08:44",
+      "created_at": "2026-10-09 03:08:38",
+      "updated_at": "2026-10-09 03:08:44",
+      "pinned": false
+    },
+    {
+      "id": 2,
+      "sync_id": "obs-636d6a988a00950e",
+      "session_id": "manual-save-eval-engram-test",
+      "type": "manual",
+      "title": "bridge-health-check",
+      "content": "The bridge health endpoint /healthz returns HTTP 200 when the service is healthy and 503 while draining.",
+      "project": "eval-engram-test",
+      "scope": "project",
+      "topic_key": "bridge-health-check",
+      "revision_count": 1,
+      "duplicate_count": 1,
+      "last_seen_at": "2026-10-09 03:09:05",
+      "created_at": "2026-10-09 03:09:05",
+      "updated_at": "2026-10-09 03:09:05",
+      "pinned": false
+    }
+  ],
+  "prompts": null
+}

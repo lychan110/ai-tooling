@@ -1,0 +1,22 @@
+RELEASE FETCH — engram v3.2.1 (latest release, tag v3.2.1)
+Source: GET https://api.github.com/repos/Gentleman-Programming/engram/releases/latest (evidence/release_latest.json)
+Assets (v3.2.1, from release_latest.json):
+  checksums.txt
+  engram_3.2.1_darwin_amd64.tar.gz
+  engram_3.2.1_darwin_arm64.tar.gz
+  engram_3.2.1_linux_amd64.tar.gz   <-- downloaded (7,798,141 bytes)
+  engram_3.2.1_linux_arm64.tar.gz
+  engram_3.2.1_windows_amd64.zip
+  engram_3.2.1_windows_arm64.zip
+Download URL: https://github.com/Gentleman-Programming/engram/releases/download/v3.2.1/engram_3.2.1_linux_amd64.tar.gz
+sha256sum(local tarball): c5e0bbf77b3c4b196713d64d68593966d30a94582fad8dafe8e458a182c155a8
+checksums.txt linux_amd64 line:  c5e0bbf77b3c4b196713d64d68593966d30a94582fad8dafe8e458a182c155a8  engram_3.2.1_linux_amd64.tar.gz
+=> CHECKSUM MATCH
+Archive members (tar -tzf): tools/cloud-sync-projects.ps1, tools/cloud-sync-projects.sh, engram
+Binary: engram, 21,110,968 bytes, rwxr-xr-x (dynamically-linked Go binary; 'file' not installed on host)
+Invocation:
+  ./engram --version  -> "engram 3.2.1" (exit 0)
+  ./engram --help     -> full CLI: serve, mcp, tui, test, search, save, delete, timeline,
+                         conflicts (list/show/stats/scan/deferred), doctor, context, stats,
+                         export, import, init, projects, sync, cloud, obsidian-export, version, help
+  ENGRAM_DATA_DIR env var relocates the store (used: <workspace>/data)

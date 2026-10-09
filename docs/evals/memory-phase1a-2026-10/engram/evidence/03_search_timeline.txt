@@ -1,0 +1,20 @@
+SEARCH PROGRESSIVE DISCLOSURE + TIMELINE + FULL CONTENT
+$ ./engram search "bridge" --project eval-engram-test
+  Found 2 memories:
+  [1] #2 (manual) — bridge-health-check
+      The bridge health endpoint /healthz returns HTTP 200 when the service is healthy and 503 while draining.
+      2026-10-09 03:09:05 | project: eval-engram-test | scope: project
+  [2] #1 (manual) — eval-bridge-deprecation
+      UPDATED: ... 2026-10-09 03:08:38 | project: eval-engram-test | scope: project
+=> COMPACT ~100-token shape: #id (type) — title, content snippet, timestamp | project | scope. Confirmed on CLI and on MCP
+   (MCP mem_search returns same text plus a structured results[] array with id/topic_key/sync_id/state).
+$ ./engram timeline 1 --project eval-engram-test
+  Session: eval-engram-test (2026-10-09 03:08:38.490702134); Total observations in session: 2
+  >>> #1 [manual] eval-bridge-deprecation <<<  (full content)
+  ─── After ───  #2 [manual] bridge-health-check — ...
+=> mem_timeline equivalent adds chronological context. Numeric obs id required (sync_id string rejected).
+FULL CONTENT (mem_get_observation equivalent):
+  CLI: engram export JSON (evidence/export_after_upsert.json) carries full untruncated content.
+  MCP: mem_get_observation {"id": 1} ->
+    "#1 [manual] eval-bridge-deprecation\nUPDATED: ...\nSession: manual-save-eval-engram-test\nProject: eval-engram-test\nScope: project\nTopic: eval-bridge-deprecation\nDuplicates: 1\nRevisions: 2\nCreated: 2026-10-09 03:08:38"
+  MCP: mem_timeline {"observation_id": 4, before:2, after:2} -> before/after context listing #2..#6

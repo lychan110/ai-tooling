@@ -1,0 +1,12 @@
+RAM/RSS PRESSURE — /usr/bin/time -v (host: ~3.8GB RAM, 1.5GB free, 2GB swap used, 2 CPUs)
+$ /usr/bin/time -v ./engram save "rss-probe" "RSS probe fact: ..." --project eval-engram-test
+  Maximum resident set size (kbytes): 19596   (~19.1 MiB)
+  User time 0.03s, System time 0.02s, Elapsed 0:00.07, exit 0
+  Minor page faults 2286, Major 0, Swaps 0
+$ /usr/bin/time -v ./engram search "bridge" --project eval-engram-test
+  Maximum resident set size (kbytes): 19596   (~19.1 MiB)
+  User time 0.04s, System time 0.01s, Elapsed 0:00.07, exit 0
+  Minor page faults 2274, Major 0, Swaps 0
+=> Both CLI ops peak at ~19.6 MB RSS — trivial for a Go+SQLite binary on this constrained host.
+   Store (data/engram.db + WAL) sized for 8 observations: no meaningful disk footprint.
+   MCP stdio server (engram mcp) also ran fine on the same host during the fixture.

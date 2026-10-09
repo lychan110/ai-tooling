@@ -782,7 +782,7 @@ All 909 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Memori | platform | | ✓ | discovery-log | REVIEW |
 | OpenViking | platform | | ✓ | SKIP | REVIEW |
 | RAGFlow | platform | ✓ | ✓ | SKIP | REVIEW |
-| engram | tool | | ✓ | discovery-log | REVIEW |
+| engram | tool | | ✓ | CONDITIONAL | MEASURED |
 | ballast | plugin | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | mem0 | MCP server | | ✓ | discovery-log | REVIEW |
 | memoket-kite | tool | | ✓ | discovery-log | SOURCE-ONLY |
@@ -816,7 +816,7 @@ All 909 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | getspecstory | tool | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | mex | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | opencontext | MCP server | | ✓ | SKIP | SOURCE-ONLY |
-| delx-memory | MCP server | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| delx-memory | MCP server | ✓ | ✓ | CONDITIONAL | MEASURED |
 | gogol | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | llm-wiki-cli | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | KoragraphMCP | MCP server | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -1001,8 +1001,8 @@ All 909 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 76 | 21 | 2 | 28% |
 | Skills & Plugins | 121 | 42 | 4 | 35% |
-| Memory & Context | 80 | 27 | 2 | 34% |
+| Memory & Context | 80 | 29 | 2 | 36% |
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **909** | **335** | **34** | **37%** |
+| **Total** | **909** | **337** | **34** | **37%** |
