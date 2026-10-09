@@ -3,7 +3,7 @@
 **Repo:** [yusufkaraaslan/Skill_Seekers](https://github.com/yusufkaraaslan/Skill_Seekers)
 **Stars:** 14,197 | **Last updated:** 2026-06-16 (pushed; created 2025-10-17) | **License:** MIT
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-09  <!-- triaged: bulk -->
 **Dev loop stage:** Outer-loop **Reflect / setup** — a one-time ingestion step that converts external knowledge (docs sites, repos, PDFs, videos) into a reusable skill/RAG asset *before* the inner loop runs. Not invoked per task; you run it to provision a skill, then the inner loop consumes it.
 **Layer:** Tooling (a Python CLI + MCP server with a scraping/chunking/packaging pipeline; produces artifacts, does not run inside your dev session)
 
