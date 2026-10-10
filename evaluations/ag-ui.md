@@ -3,7 +3,7 @@
 **Repo:** [ag-ui-protocol/ag-ui](https://github.com/ag-ui-protocol/ag-ui)
 **Stars:** ~14,300 | **Last updated:** 2026-06-20 | **License:** MIT
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-10  <!-- triaged: bulk -->
 **Dev loop stage:** Reference (protocol / Implement when integrating)
 **Layer:** Infrastructure
 
@@ -63,7 +63,7 @@ In scope but adjacent: it matters when you are *building* an agent-backed produc
 you are using an agent to write code. The catalog's `generative-ui-frameworks` cluster is where this
 question actually lives, and `openui` and `MCP Apps (ext-apps)` are the two rows to read beside it.
 
-_Triaged 2026-08-04 by the P3 backlog band ([#268](https://github.com/mattbutlerengineering/ai-tooling/issues/268))._
+_Triaged 2026-10-10 by the P3 backlog band._
 
 ## Catalog entry
 

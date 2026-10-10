@@ -3,7 +3,7 @@
 **Repo:** [Egonex-AI/Understand-Anything](https://github.com/Egonex-AI/Understand-Anything)
 **Stars:** 77,525 | **Last updated:** 2026-07-30 (pushed) | **License:** MIT
 **Last verified:** 2026-09-14
-**Last triaged:** 2026-09-14  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-10  <!-- triaged: bulk -->
 **Dev loop stage:** Plan
 **Layer:** Tooling
 
