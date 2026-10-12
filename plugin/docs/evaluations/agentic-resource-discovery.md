@@ -1,7 +1,7 @@
 # Evaluation: agentic-resource-discovery
 
 **Repo:** [neuronto/agentic-resource-discovery](https://github.com/neuronto/agentic-resource-discovery)
-**Stars:** 51 | **Last updated:** 2026-09-02 (pushed) | **License:** Apache-2.0 (repo gone — 404 as of 2026-10-08, no successor evident)
+**Stars:** 51 | **Last updated:** 2026-09-02 (pushed) | **License:** Apache-2.0
 **Last verified:** 2026-10-08
 **Last triaged:** 2026-09-02  <!-- triaged: bulk -->
 **Dev loop stage:** Implement

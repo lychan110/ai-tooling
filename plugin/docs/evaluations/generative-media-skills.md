@@ -1,7 +1,7 @@
 # Evaluation: Generative-Media-Skills
 
 **Repo:** [SamurAIGPT/Generative-Media-Skills](https://github.com/SamurAIGPT/Generative-Media-Skills)
-**Stars:** 5,538 | **Last updated:** 2026-10-07 (pushed) | **License:** none declared (no SPDX record)
+**Stars:** 5,538 | **Last updated:** 2026-10-07 (pushed) | **License:** MIT
 **Last verified:** 2026-10-09
 **Last triaged:** 2026-10-09  <!-- triaged: bulk -->
 **Dev loop stage:** Implement (media assets for shipped work)

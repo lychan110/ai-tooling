@@ -11,8 +11,8 @@ Leads are grouped into **bands**, not a single ranked list. Within a band the or
 | **P0 measure** | score-ranked head | 25 | human or `eval-runner` only — the one band that may reach ADOPT |
 | **P1 successor-check** | `archived == true` | 0 | repoint the link to a successor, or SKIP "archived, no successor" |
 | **P2 challenger** | overlaps a tool already in STACK | 167 | SKIP "redundant with `<incumbent>`", or leave at discovery-log |
-| **P3 backlog** | everything else | 376 | leave; stamp `**Last triaged:**` only |
-| **P4 mechanical-skip** | vendored Type under a disqualifying license | 1 | SKIP — zero judgement |
+| **P3 backlog** | everything else | 377 | leave; stamp `**Last triaged:**` only |
+| **P4 mechanical-skip** | vendored Type under a disqualifying license | 0 | SKIP — zero judgement |
 | **P5 ships-inside** | the row declares a `Ships inside` container (#343) | 5 | settle the container, or SKIP "ships inside `<container>`" — never an independent lead |
 
 <!-- NEXT-EVALS:START -->
@@ -78,11 +78,11 @@ _Listing 12 of 167 — rerun `uv run triage.py` and read the source for the tail
 | skill-scanner | Review | 21.1 | challenges SkillSpector · pressure 7, gap 7.1 | `/triage-lead skill-scanner` |
 | agnix | Review | 21.1 | challenges SkillSpector · pressure 6, gap 7.1 | `/triage-lead agnix` |
 
-## P3 backlog — 376 leads
+## P3 backlog — 377 leads
 
 _leave; stamp `**Last triaged:**` only._
 
-_Listing 12 of 376 — rerun `uv run triage.py` and read the source for the tail (no silent cap)._
+_Listing 12 of 377 — rerun `uv run triage.py` and read the source for the tail (no silent cap)._
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
@@ -99,15 +99,13 @@ _Listing 12 of 376 — rerun `uv run triage.py` and read the source for the tail
 | ccpm | Plan | 21.7 | pressure 7, gap 5.7 | `/triage-lead ccpm` |
 | fast-agent | Implement | 21.6 | pressure 7, gap 5.6 | `/triage-lead fast-agent` |
 
-## P4 mechanical-skip — 1 leads
+## P4 mechanical-skip — 0 leads
 
 _SKIP — zero judgement._
 
 _Fact-driven: a row leaves when the license changes. A `**Last triaged:**` stamp changes nothing here._
 
-| Tool | Stage | Score | Why | Command |
-|------|-------|-------|-----|---------|
-| Generative-Media-Skills | Skills & Plugins | 6.5 | pressure 0, gap 6.5 | `/triage-lead Generative-Media-Skills` |
+_(none)_
 
 ## P5 ships-inside — 5 leads
 
