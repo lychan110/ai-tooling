@@ -70,6 +70,7 @@ true; a build must not fail because a laptop changed. Do not hand-edit the colum
 | claude-plugins-official | KEEP | Reference | no | First-party marketplace/install channel (umbrella entry); member plugins are installed individually | n/a |
 | dictionary-of-ai-coding | ADOPT | Reference | no | AI-coding terminology glossary — a reference to keep open, not an installable tool | n/a |
 | mcp-for-beginners | ADOPT | Reference | no | MCP-learning curriculum — teaches the protocol, nothing to install | n/a |
+| langfuse | KEEP | Reflect | no | Project-scoped tracing infrastructure (MEASURED 2026-10-11, keyless self-host); adopt-if a project's multi-session agent loops need per-trace retrospection — not a harness-default install; grep/jq baseline stays for single-run debugging | n/a |
 
 ## Batch exclusions
 
