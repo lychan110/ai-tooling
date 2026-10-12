@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 909 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 911 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -239,6 +239,7 @@ All 909 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | omp-best-of | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | omnigent | framework | | ✓ | discovery-log | REVIEW |
 | opencode | platform | | ✓ | CONDITIONAL | RUN |
+| OpenAgentCore | framework | | ✓ | discovery-log | SOURCE-ONLY |
 | deepseek-harness | harness | | ✓ | discovery-log | SOURCE-ONLY |
 | grok-build | harness | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | dsh-ios | plugin | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -471,6 +472,7 @@ All 909 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | security-guidance | plugin | | ✓ | ADOPT | MEASURED |
 | shadcn/improve | tool | | ✓ | discovery-log | REVIEW |
 | SkillSpector | tool | | ✓ | CONDITIONAL | MEASURED |
+| VulnHunter | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | skill-scanner | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | skilldoctor | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | skill-safety-checker | plugin | | ✓ | SKIP | SOURCE-ONLY |
@@ -994,9 +996,9 @@ All 909 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 81 | 35 | 6 | 43% |
-| Implement | 269 | 118 | 4 | 44% |
+| Implement | 270 | 118 | 4 | 44% |
 | Verify | 34 | 14 | 2 | 41% |
-| Review | 94 | 28 | 3 | 30% |
+| Review | 95 | 28 | 3 | 29% |
 | Ship | 4 | 1 | 1 | 25% |
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 76 | 21 | 2 | 28% |
@@ -1005,4 +1007,4 @@ All 909 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **909** | **337** | **34** | **37%** |
+| **Total** | **911** | **337** | **34** | **37%** |
