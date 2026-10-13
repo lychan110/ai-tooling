@@ -3,7 +3,7 @@
 **Repo:** [Kostakurta8/roundtable](https://github.com/Kostakurta8/roundtable)
 **Stars:** 14 | **Last updated:** 2026-08-10 (pushed) | **License:** MIT
 **Last verified:** 2026-08-10
-**Last triaged:** 2026-08-10  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-13  <!-- triaged: bulk -->
 **Dev loop stage:** Outer Loop
 **Layer:** Tooling
 
@@ -32,3 +32,5 @@ view either. Too early (14 stars, 6 days old) to call redundant; left at
 discovery-log for a real hands-on eval rather than a mechanical SKIP.
 
 _Triaged 2026-08-10 by the P2 challenger band._
+
+**Re-triaged 2026-10-13 by the P2 challenger band:** no change — re-examined the recorded leave-outcome; `abtop` (STACK, MEASURED) is still a live token/cost TUI, not a session-replay view, and no catalog observability row provides a replay; metadata now 21 stars, pushed 2026-09-27 — still real-hands-on territory rather than a mechanical SKIP. Re-stamped to keep the fresh-lead sink honest. Left at `discovery-log`.

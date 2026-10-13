@@ -3,7 +3,7 @@
 **Repo:** [strands-agents/harness-sdk](https://github.com/strands-agents/harness-sdk)
 **Stars:** 6,218 | **Last updated:** 2026-06-20 (pushed) | **License:** Apache-2.0 | **Language:** Python + TypeScript (PyPI: `strands-agents`; npm: `@strands-agents/sdk`)
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-13  <!-- triaged: bulk -->
 **Dev loop stage:** Agent Harnesses (agent-building SDK) — Implement
 **Layer:** Infrastructure (SDK/framework for building production agents)
 
@@ -74,6 +74,8 @@ Python/TypeScript, ★6.5K, AWS-backed, pushed today. The right row to reach for
 builds a harness rather than assembling one.
 
 _Triaged 2026-08-04 by the P2 challenger band ([#262](https://github.com/mattbutlerengineering/ai-tooling/issues/262))._
+
+**Re-triaged 2026-10-13 by the P2 challenger band:** no change — re-examined the recorded leave-outcome; `fastmcp` (STACK, RUN) still builds MCP servers rather than agent harnesses, so the banding-is-a-level-error read stands and the open "does it survive contact" question stays with the eval lane, not a triage guess. Re-stamped to keep the fresh-lead sink honest. Left at `discovery-log`.
 
 **From `strands-agents-harness-sdk.md`, merged 2026-08-07 (#433).** A second bulk pass wrote a placeholder for this tool beside this file, believing none existed; its reasoning is preserved here verbatim.
 

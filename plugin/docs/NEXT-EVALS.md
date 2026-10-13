@@ -65,7 +65,6 @@ _Listing 12 of 166 — rerun `uv run triage.py` and read the source for the tail
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| VulnHunter | Review | 7.1 | challenges SkillSpector · pressure 0, gap 7.1 | `/triage-lead VulnHunter` |
 | openskills | Skills & Plugins | 26.5 | challenges skill-creator · pressure 9, gap 6.5 | `/triage-lead openskills` |
 | Understand-Anything | Plan | 25.7 | challenges codegraph · pressure 10, gap 5.7 | `/triage-lead Understand-Anything` |
 | gstack | Implement | 25.6 | challenges GSD · pressure 9, gap 5.6 | `/triage-lead gstack` |
@@ -77,6 +76,7 @@ _Listing 12 of 166 — rerun `uv run triage.py` and read the source for the tail
 | skill-scanner | Review | 21.1 | challenges SkillSpector · pressure 7, gap 7.1 | `/triage-lead skill-scanner` |
 | agnix | Review | 21.1 | challenges SkillSpector · pressure 6, gap 7.1 | `/triage-lead agnix` |
 | Skill_Seekers | Skills & Plugins | 20.5 | challenges skill-creator · pressure 6, gap 6.5 | `/triage-lead Skill_Seekers` |
+| agentsview | Outer Loop | 19.1 | challenges abtop · pressure 5, gap 7.1 | `/triage-lead agentsview` |
 
 ## P3 backlog — 377 leads
 
