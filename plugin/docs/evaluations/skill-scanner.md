@@ -3,7 +3,7 @@
 **Repo:** [cisco-ai-defense/skill-scanner](https://github.com/cisco-ai-defense/skill-scanner)
 **Stars:** 2,399 | **Last updated:** 2026-08-04 (pushed) | **License:** NOASSERTION (Apache-2.0 per LICENSE text)
 **Last verified:** 2026-08-04
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-14  <!-- triaged: bulk -->
 **Dev loop stage:** Review (supply-chain safety)
 **Layer:** Tooling
 
@@ -46,6 +46,8 @@ GitHub reports `NOASSERTION` while the CATALOG row records Apache-2.0 from the L
 per this repo's rule `NOASSERTION` means unparsed, not absent.
 
 _Triaged 2026-08-04 by the P2 challenger band ([#267](https://github.com/mattbutlerengineering/ai-tooling/issues/267))._
+
+**Re-triaged 2026-10-14 by the P2 challenger band:** no change — metadata re-checked (`cisco-ai-defense/skill-scanner`: license still `NOASSERTION` on the record (unparsed, not absent), not archived, pushed 2026-10-09); the head-to-head against `SkillSpector` (STACK, MEASURED) is still the open question and still not answerable by a bulk pass. Left at `discovery-log`; still escalated as P0 head-to-head work. Re-stamped to keep the fresh-lead sink honest.
 
 ## Catalog entry
 

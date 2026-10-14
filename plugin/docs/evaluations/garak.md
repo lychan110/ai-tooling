@@ -3,7 +3,7 @@
 **Repo:** [NVIDIA/garak](https://github.com/NVIDIA/garak)
 **Stars:** ~8,150 | **Last updated:** 2026-06-17 | **License:** Apache-2.0
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-14  <!-- triaged: bulk -->
 **Dev loop stage:** Verify (security red-teaming)
 **Layer:** Tooling
 
@@ -70,6 +70,8 @@ Apache-2.0, NVIDIA-maintained, ★8.4K, actively pushed. The right row to keep a
 reach for the moment an LLM feature ships; `promptfoo`'s red-team mode is the lighter first step.
 
 _Triaged 2026-08-04 by the P2 challenger band ([#267](https://github.com/mattbutlerengineering/ai-tooling/issues/267))._
+
+**Re-triaged 2026-10-14 by the P2 challenger band:** no change — metadata re-checked (`nvidia/garak`: Apache-2.0, not archived, pushed 2026-10-10); the recorded leave-outcome still holds. `SkillSpector` remains the complementary read, not a replacement (it scans third-party skill packages before install; this red-teams a model endpoint you ship), so the band's overlap is still a category error and there is no incumbent to name in a SKIP. Left at `discovery-log`; the hands-on scan against a live endpoint it names is P0 work. Re-stamped to keep the fresh-lead sink honest.
 
 ## Catalog entry
 

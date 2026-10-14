@@ -3,7 +3,7 @@
 **Repo:** [yusufkaraaslan/Skill_Seekers](https://github.com/yusufkaraaslan/Skill_Seekers)
 **Stars:** 14,883 | **Last updated:** 2026-08-30 (pushed) | **License:** MIT
 **Last verified:** 2026-09-02
-**Last triaged:** 2026-09-02  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-14  <!-- triaged: bulk -->
 **Dev loop stage:** Plan
 **Layer:** Tooling
 
@@ -32,6 +32,8 @@ real evaluation rather than a mechanical SKIP.
 
 _Triaged 2026-09-02 by the P2 challenger band (daily discovery-and-triage routine, bulk,
 eliminate-only). Left, not SKIPped._
+
+**Re-triaged 2026-10-14 by the P2 challenger band:** no change — metadata re-checked (`yusufkaraaslan/skill_seekers`: MIT, not archived, ★15.1K, pushed 2026-09-30); still a substantial standalone source-to-skill compiler, and its catalog row's own distinction from `skill-creator` (authoring/optimizing vs ingest-and-export) still holds, so no incumbent can be named to justify a SKIP. Left at `discovery-log`. Re-stamped to keep the fresh-lead sink honest.
 
 ## Catalog entry
 

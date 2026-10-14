@@ -3,7 +3,7 @@
 **Repo:** [agent-sh/agnix](https://github.com/agent-sh/agnix)
 **Stars:** 293 | **Last updated:** 2026-06-19 (release v0.33.2, 2026-06-18) | **License:** MIT OR Apache-2.0
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-14  <!-- triaged: bulk -->
 **Dev loop stage:** Verify (lints config artifacts) — also Ship (CI gate) and Implement (in-editor LSP)
 **Layer:** Tooling
 
@@ -97,6 +97,8 @@ dependency. A measured read would run it over `.claude/` and `.opencode/` and co
 versus noise.
 
 _Triaged 2026-08-04 by the P2 challenger band ([#267](https://github.com/mattbutlerengineering/ai-tooling/issues/267))._
+
+**Re-triaged 2026-10-14 by the P2 challenger band:** no change — metadata re-checked (`agent-sh/agnix`: Apache-2.0, not archived, pushed 2026-10-12); the `SkillSpector` overlap is still complementary (config validity vs malice), and the nearer `reporails/cli` / `agentlint` overlaps the eval names are unchanged. Left at `discovery-log`; the measured read it asks for (run it over `.claude/` and `.opencode/`, count true findings vs noise) is P0 work. Re-stamped to keep the fresh-lead sink honest.
 
 ## Catalog entry
 
