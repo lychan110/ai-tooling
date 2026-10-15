@@ -1,7 +1,7 @@
 # Evaluation: diri
 
 **Repo:** [cristicretu/diri](https://github.com/cristicretu/diri)
-**Stars:** 178 | **License:** Apache-2.0
+**Stars:** 178 | **License:** AGPL-3.0
 **Last verified:** 2026-08-05
 **Last triaged:** 2026-08-05  <!-- triaged: bulk -->
 **Dev loop stage:** Implement

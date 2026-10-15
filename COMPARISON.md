@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 911 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 913 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -131,6 +131,7 @@ All 911 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | bifrost | tool | ✓ | ✓ | discovery-log | REVIEW |
 | claude-code-staff-engineer | harness | | ✓ | SKIP | REVIEW |
 | claude-squad | tool | | ✓ | CONDITIONAL | RUN |
+| sno-station | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | vibe-kanban | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | orca | platform | ✓ | ✓ | discovery-log | REVIEW |
 | diri | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -444,6 +445,7 @@ All 911 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Quant-Off/skills | skill | | ✓ | discovery-log | SOURCE-ONLY |
 | PR-Agent | tool | ✓ | ✓ | SKIP | REVIEW |
 | open-code-review | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| openqodex | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | claude-octopus | plugin | ✓ | ✓/$ | discovery-log | REVIEW |
 | crucible | plugin | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | tdd-guard | plugin | ✓ | ✓ | CONDITIONAL | RUN |
@@ -996,9 +998,9 @@ All 911 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 81 | 35 | 6 | 43% |
-| Implement | 270 | 118 | 4 | 44% |
+| Implement | 271 | 118 | 4 | 44% |
 | Verify | 34 | 14 | 2 | 41% |
-| Review | 95 | 28 | 3 | 29% |
+| Review | 96 | 28 | 3 | 29% |
 | Ship | 4 | 1 | 1 | 25% |
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 76 | 22 | 3 | 29% |
@@ -1007,4 +1009,4 @@ All 911 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **911** | **338** | **35** | **37%** |
+| **Total** | **913** | **338** | **35** | **37%** |

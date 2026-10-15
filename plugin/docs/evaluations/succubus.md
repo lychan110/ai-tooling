@@ -1,7 +1,7 @@
 # Evaluation: succubus
 
 **Repo:** [enowdev/succubus](https://github.com/enowdev/succubus)
-**Stars:** 13 | **Last updated:** 2026-07-28 (pushed) | **License:** MIT
+**Stars:** 13 | **Last updated:** 2026-07-28 (pushed) | **License:** MIT (repo gone — 404 as of 2026-10-15, no successor evident)
 **Last verified:** 2026-07-30
 **Last triaged:** 2026-07-30  <!-- triaged: bulk -->
 **Dev loop stage:** Implement
