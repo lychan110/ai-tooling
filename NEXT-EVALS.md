@@ -65,7 +65,6 @@ _Listing 12 of 167 — rerun `uv run triage.py` and read the source for the tail
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| sno-station | Implement | 5.6 | challenges claude-squad · pressure 0, gap 5.6 | `/triage-lead sno-station` |
 | openskills | Skills & Plugins | 26.5 | challenges skill-creator · pressure 9, gap 6.5 | `/triage-lead openskills` |
 | Understand-Anything | Plan | 25.7 | challenges codegraph · pressure 10, gap 5.7 | `/triage-lead Understand-Anything` |
 | gstack | Implement | 25.6 | challenges GSD · pressure 9, gap 5.6 | `/triage-lead gstack` |
@@ -77,6 +76,7 @@ _Listing 12 of 167 — rerun `uv run triage.py` and read the source for the tail
 | skill-scanner | Review | 21.1 | challenges SkillSpector · pressure 7, gap 7.1 | `/triage-lead skill-scanner` |
 | agnix | Review | 21.1 | challenges SkillSpector · pressure 6, gap 7.1 | `/triage-lead agnix` |
 | Skill_Seekers | Skills & Plugins | 20.5 | challenges skill-creator · pressure 6, gap 6.5 | `/triage-lead Skill_Seekers` |
+| agentsview | Outer Loop | 19.1 | challenges abtop · pressure 5, gap 7.1 | `/triage-lead agentsview` |
 
 ## P3 backlog — 378 leads
 
@@ -86,8 +86,6 @@ _Listing 12 of 378 — rerun `uv run triage.py` and read the source for the tail
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| openqodex | Review | 7.1 | pressure 0, gap 7.1 | `/triage-lead openqodex` |
-| OpenAgentCore | Implement | 5.6 | pressure 0, gap 5.6 | `/triage-lead OpenAgentCore` |
 | qwen-code | Implement | 25.6 | pressure 9, gap 5.6 | `/triage-lead qwen-code` |
 | CLIProxyAPI | Implement | 23.6 | pressure 9, gap 5.6 | `/triage-lead CLIProxyAPI` |
 | claude-code-router | Implement | 23.6 | pressure 8, gap 5.6 | `/triage-lead claude-code-router` |
@@ -98,6 +96,8 @@ _Listing 12 of 378 — rerun `uv run triage.py` and read the source for the tail
 | NeMo-Guardrails | Outer Loop | 23.1 | pressure 8, gap 7.1 | `/triage-lead NeMo-Guardrails` |
 | slidev | Skills & Plugins | 22.5 | pressure 7, gap 6.5 | `/triage-lead slidev` |
 | ccpm | Plan | 21.7 | pressure 7, gap 5.7 | `/triage-lead ccpm` |
+| fast-agent | Implement | 21.6 | pressure 7, gap 5.6 | `/triage-lead fast-agent` |
+| karpathy-llm-wiki | Reference | 21.1 | pressure 6, gap 7.1 | `/triage-lead karpathy-llm-wiki` |
 
 ## P4 mechanical-skip — 0 leads
 
