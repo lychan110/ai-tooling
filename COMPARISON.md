@@ -788,7 +788,7 @@ All 913 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | RAGFlow | platform | ✓ | ✓ | SKIP | REVIEW |
 | engram | tool | | ✓ | CONDITIONAL | MEASURED |
 | ballast | plugin | ✓ | ✓ | discovery-log | SOURCE-ONLY |
-| mem0 | MCP server | | ✓ | discovery-log | REVIEW |
+| mem0 | MCP server | | ✓ | CONDITIONAL | MEASURED |
 | memoket-kite | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | hypotree | MCP server | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | OMEGA | MCP server | ✓ | ✓/$ | KEEP | REVIEW |
@@ -1005,8 +1005,8 @@ All 913 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 76 | 22 | 3 | 29% |
 | Skills & Plugins | 121 | 42 | 4 | 35% |
-| Memory & Context | 80 | 29 | 2 | 36% |
+| Memory & Context | 80 | 30 | 2 | 38% |
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **913** | **338** | **35** | **37%** |
+| **Total** | **913** | **339** | **35** | **37%** |
