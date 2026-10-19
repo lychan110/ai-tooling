@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 913 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 915 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -353,6 +353,7 @@ All 913 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | cli-continues | tool | | ✓ | discovery-log | REVIEW |
 | export-md | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | weave | tool | ✓ | ✓ | discovery-log | REVIEW |
+| git-ai | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | moire | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | airship | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | trace-file-lineage | tool | | ✓ | discovery-log | SOURCE-ONLY |
@@ -592,6 +593,7 @@ All 913 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | rogue | tool | ✓ | ✓/$ | discovery-log | REVIEW |
 | giskard-oss | tool | ✓ | ✓ | discovery-log | REVIEW |
 | opik | platform | ✓ | ✓ | discovery-log | REVIEW |
+| Tracely | platform | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | agent-governance-toolkit | framework | ✓ | ✓ | discovery-log | REVIEW |
 | decern | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | ctrlrun | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -998,15 +1000,15 @@ All 913 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 81 | 35 | 6 | 43% |
-| Implement | 271 | 118 | 4 | 44% |
+| Implement | 272 | 118 | 4 | 43% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 96 | 28 | 3 | 29% |
 | Ship | 4 | 1 | 1 | 25% |
 | Reflect | 10 | 5 | 3 | 50% |
-| Outer Loop | 76 | 22 | 3 | 29% |
+| Outer Loop | 77 | 22 | 3 | 29% |
 | Skills & Plugins | 121 | 42 | 4 | 35% |
 | Memory & Context | 80 | 30 | 2 | 38% |
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **913** | **339** | **35** | **37%** |
+| **Total** | **915** | **339** | **35** | **37%** |
