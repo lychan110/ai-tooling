@@ -86,8 +86,6 @@ _Listing 12 of 380 — rerun `uv run triage.py` and read the source for the tail
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| Tracely | Outer Loop | 7.1 | pressure 0, gap 7.1 | `/triage-lead Tracely` |
-| git-ai | Implement | 5.7 | pressure 0, gap 5.7 | `/triage-lead git-ai` |
 | qwen-code | Implement | 25.7 | pressure 9, gap 5.7 | `/triage-lead qwen-code` |
 | CLIProxyAPI | Implement | 23.7 | pressure 9, gap 5.7 | `/triage-lead CLIProxyAPI` |
 | claude-code-router | Implement | 23.7 | pressure 8, gap 5.7 | `/triage-lead claude-code-router` |
@@ -98,6 +96,8 @@ _Listing 12 of 380 — rerun `uv run triage.py` and read the source for the tail
 | buildwithclaude | Reference | 23.1 | pressure 7, gap 7.1 | `/triage-lead buildwithclaude` |
 | slidev | Skills & Plugins | 22.5 | pressure 7, gap 6.5 | `/triage-lead slidev` |
 | ccpm | Plan | 21.7 | pressure 7, gap 5.7 | `/triage-lead ccpm` |
+| fast-agent | Implement | 21.7 | pressure 7, gap 5.7 | `/triage-lead fast-agent` |
+| Helicone | Outer Loop | 21.1 | pressure 6, gap 7.1 | `/triage-lead Helicone` |
 
 ## P4 mechanical-skip — 0 leads
 
