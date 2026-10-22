@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 915 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 917 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -286,6 +286,7 @@ All 915 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | aider | harness | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | eve | harness | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | Trellis | harness | | ✓ | SKIP | SOURCE-ONLY |
+| durable-harness | harness | | ✓ | discovery-log | SOURCE-ONLY |
 | software-factory-harness | harness | | ✓ | SKIP | SOURCE-ONLY |
 | command-code | harness | | ✓ | SKIP | SOURCE-ONLY |
 | Baize | harness | | ✓ | discovery-log | SOURCE-ONLY |
@@ -557,6 +558,7 @@ All 915 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Infracost | tool | ✓ | ✓/$ | SKIP | SOURCE-ONLY |
 | langfuse | platform | | ✓ | KEEP | MEASURED |
 | ccusage | tool | | ✓ | ADOPT | MEASURED |
+| optimaizr | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | agent-console | tool | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | token-step-tracker | tool | | ✓ | SKIP | SOURCE-ONLY |
 | opencode-cache-stats | plugin | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -1000,15 +1002,15 @@ All 915 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 81 | 35 | 6 | 43% |
-| Implement | 272 | 118 | 4 | 43% |
+| Implement | 273 | 118 | 4 | 43% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 96 | 28 | 3 | 29% |
 | Ship | 4 | 1 | 1 | 25% |
 | Reflect | 10 | 5 | 3 | 50% |
-| Outer Loop | 77 | 22 | 3 | 29% |
+| Outer Loop | 78 | 22 | 3 | 28% |
 | Skills & Plugins | 121 | 42 | 4 | 35% |
 | Memory & Context | 80 | 30 | 2 | 38% |
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **915** | **339** | **35** | **37%** |
+| **Total** | **917** | **339** | **35** | **37%** |
