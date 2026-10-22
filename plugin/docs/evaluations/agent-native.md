@@ -1,7 +1,7 @@
 # Evaluation: agent-native
 
 **Repo:** [BuilderIO/agent-native](https://github.com/BuilderIO/agent-native)
-**Stars:** 4,408 | **Last updated:** 2026-08-05 (pushed) | **License:** **none declared**
+**Stars:** 4,408 | **Last updated:** 2026-08-05 (pushed) | **License:** MIT
 **Dev loop stage:** Out of loop (product UI / app platform)
 **Layer:** Tooling
 **Last verified:** 2026-08-04
@@ -51,4 +51,4 @@ _Triaged 2026-08-04 by the P3 backlog band ([#268](https://github.com/mattbutler
 
 | Name | Type | One-liner | Problem it solves | Overlaps with |
 |------|------|-----------|-------------------|---------------|
-| [agent-native](https://github.com/BuilderIO/agent-native) | framework | Framework for building agent-native applications (MIT per README, ISC in package.json, no LICENSE file; ★3.2K) — structure apps so AI agents can operate them by design | Apps aren't built for agents to drive; want a framework that makes an app agent-operable by design | CopilotKit, tambo, CLI-Anything |
+| [agent-native](https://github.com/BuilderIO/agent-native) | framework | Framework for building agent-native applications (MIT, ★4.4K) — structure apps so AI agents can operate them by design | Apps aren't built for agents to drive; want a framework that makes an app agent-operable by design | CopilotKit, tambo, CLI-Anything |
