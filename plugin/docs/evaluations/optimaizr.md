@@ -3,6 +3,7 @@
 **Repo:** [blendbunjaku/optimaizr](https://github.com/blendbunjaku/optimaizr)
 **Stars:** 132 | **Last updated:** 2026-10-19 (pushed) | **License:** MIT
 **Last verified:** 2026-10-22
+**Last triaged:** 2026-10-23  <!-- triaged: bulk -->
 **Dev loop stage:** Reflect
 **Layer:** Tooling
 
@@ -30,6 +31,11 @@ from their README, not measurements taken here.
 ## Triage note
 
 Sits in the same outer-loop cost cluster as `ccusage` (ADOPT, MEASURED) and `codeburn` (ADOPT, MEASURED), so if a redundancy SKIP is ever considered, those two are the incumbents it must name. Not SKIPped on arrival: its mechanism is distinct from both — it does not just report spend, it gates the specific message that would pay for an expired cache and measures whether a change it applied actually helped. A real disposition needs a hands-on run on this machine's own logs, which is out of scope for an unattended discovery pass.
+
+_Re-examined 2026-10-23 by the P2 challenger band: the incumbent a redundancy SKIP would have to
+name is `ccusage` (ADOPT, MEASURED), and that one reports spend after the fact while this gates
+the message that would pay for an expired cache and measures whether a change it applied helped.
+No redundancy SKIP; left at `discovery-log` for a hands-on run._
 
 ## Catalog entry
 

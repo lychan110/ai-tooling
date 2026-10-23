@@ -3,6 +3,7 @@
 **Repo:** [vercel-labs/durable-harness](https://github.com/vercel-labs/durable-harness)
 **Stars:** 177 | **Last updated:** 2026-10-19 (pushed) | **License:** Apache-2.0
 **Last verified:** 2026-10-22
+**Last triaged:** 2026-10-23  <!-- triaged: bulk -->
 **Dev loop stage:** Implement
 **Layer:** Infrastructure
 
@@ -29,6 +30,10 @@ read at HEAD. Nothing here was installed, invoked, or benchmarked, and no run is
 ## Triage note
 
 P2/P3 on arrival — the `Overlaps with` cell names no STACK pick, so a redundancy SKIP has no incumbent to name, and the row arrived with no eval file so it could never carry a stamp. It is also `0.0.x` and explicitly experimental, so its API may change week to week; that is a reason to keep it a lead, not a reason to dispose of it. The differentiated mechanism is durability: resumable turns and never-repeated unsafe tool calls across five different harnesses is not something the catalogued harnesses offer natively.
+
+_Re-examined 2026-10-23 by the P3 backlog band: left at `discovery-log`. Its `Overlaps with` cell
+names no STACK pick (trigger.dev, deer-flow, ralph), so a redundancy SKIP has no incumbent to
+name; the stamp above is what sinks it behind the un-examined tail._
 
 ## Catalog entry
 

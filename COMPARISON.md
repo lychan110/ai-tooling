@@ -352,7 +352,7 @@ All 917 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | rune | tool | | ✓ | SKIP | SOURCE-ONLY |
 | h5i | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | cli-continues | tool | | ✓ | discovery-log | REVIEW |
-| export-md | tool | | ✓ | discovery-log | SOURCE-ONLY |
+| export-md | tool | | ✓ | SKIP | SOURCE-ONLY |
 | weave | tool | ✓ | ✓ | discovery-log | REVIEW |
 | git-ai | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | moire | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -1002,7 +1002,7 @@ All 917 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 81 | 35 | 6 | 43% |
-| Implement | 273 | 118 | 4 | 43% |
+| Implement | 273 | 119 | 4 | 44% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 96 | 28 | 3 | 29% |
 | Ship | 4 | 1 | 1 | 25% |
@@ -1013,4 +1013,4 @@ All 917 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **917** | **339** | **35** | **37%** |
+| **Total** | **917** | **340** | **35** | **37%** |
