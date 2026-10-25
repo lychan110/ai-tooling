@@ -23,7 +23,6 @@ _human or `eval-runner` only — the one band that may reach ADOPT._
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| OpenHands | Implement | 37.6 | pressure 15, gap 5.6 | `/evaluate-tool OpenHands` |
 | goose | Implement | 37.6 | pressure 15, gap 5.6 | `/evaluate-tool goose` |
 | supermemory | Memory & Context | 34.2 | pressure 13, gap 6.2 | `/evaluate-tool supermemory` |
 | sandcastle | Implement | 33.6 | pressure 13, gap 5.6 | `/evaluate-tool sandcastle` |
@@ -35,6 +34,7 @@ _human or `eval-runner` only — the one band that may reach ADOPT._
 | vet | Review | 49.1 | pressure 20, gap 7.1 | `/evaluate-tool vet` |
 | orca | Implement | 45.6 | pressure 19, gap 5.6 | `/evaluate-tool orca` |
 | aider | Implement | 41.6 | pressure 18, gap 5.6 | `/evaluate-tool aider` |
+| OpenHands | Implement | 37.6 | pressure 15, gap 5.6 | `/evaluate-tool OpenHands` |
 | gastown | Implement | 37.6 | pressure 15, gap 5.6 | `/evaluate-tool gastown` |
 | ghostsecurity/skills | Review | 35.1 | pressure 13, gap 7.1 | `/evaluate-tool ghostsecurity/skills` |
 | agentmemory | Memory & Context | 34.2 | pressure 13, gap 6.2 | `/evaluate-tool agentmemory` |

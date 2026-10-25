@@ -28,7 +28,7 @@ Candidates the [STACK.md](STACK.md) prose flags for a hands-on eval before any p
 | [brooks-lint](https://github.com/hyhmrright/brooks-lint) | flagged for a hands-on eval |
 
 <!-- WATCHLIST:STALE:START -->
-## 3. Stale / undated evals (175 stale)
+## 3. Stale / undated evals (174 stale)
 
 A point-in-time eval rots. The staleness sweep flags evals whose `**Last verified:**` date is older than its category threshold. This section is a **report**, refreshed by `make fix` — it is the one part of this page derived from today's date rather than from file content, so `watchlist.py --check` does not gate on it. Ages are not printed; only the crossing matters.
 
@@ -156,7 +156,6 @@ A point-in-time eval rots. The staleness sweep flags evals whose `**Last verifie
 | open-interpreter | harness | 2026-06-22 | 120 |
 | open-multi-agent | framework | 2026-06-22 | 120 |
 | opendocswork-mcp | MCP server | 2026-06-22 | 120 |
-| openhands | platform | 2026-06-22 | 120 |
 | openrewrite | framework | 2026-06-22 | 120 |
 | openspec | framework | 2026-06-22 | 120 |
 | opensquilla | platform | 2026-06-22 | 120 |
