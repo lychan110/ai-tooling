@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 917 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 919 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -155,6 +155,7 @@ All 917 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | skill-view | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | align-dev | tool | | ✓ | SKIP | REVIEW |
 | cc-switch | tool | | ✓ | SKIP | REVIEW |
+| magpie | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | claude-account | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | claude-rotate | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | BossConsole | platform | | ✓ | SKIP | SOURCE-ONLY |
@@ -596,6 +597,7 @@ All 917 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | giskard-oss | tool | ✓ | ✓ | discovery-log | REVIEW |
 | opik | platform | ✓ | ✓ | discovery-log | REVIEW |
 | Tracely | platform | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| agentplay | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | agent-governance-toolkit | framework | ✓ | ✓ | discovery-log | REVIEW |
 | decern | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | ctrlrun | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -1002,15 +1004,15 @@ All 917 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 81 | 35 | 6 | 43% |
-| Implement | 273 | 119 | 4 | 44% |
+| Implement | 274 | 119 | 4 | 43% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 96 | 28 | 3 | 29% |
 | Ship | 4 | 1 | 1 | 25% |
 | Reflect | 10 | 5 | 3 | 50% |
-| Outer Loop | 78 | 22 | 3 | 28% |
+| Outer Loop | 79 | 22 | 3 | 28% |
 | Skills & Plugins | 121 | 42 | 4 | 35% |
 | Memory & Context | 80 | 30 | 2 | 38% |
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **917** | **340** | **35** | **37%** |
+| **Total** | **919** | **340** | **35** | **37%** |
