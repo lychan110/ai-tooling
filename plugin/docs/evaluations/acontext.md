@@ -3,7 +3,7 @@
 **Repo:** [memodb-io/Acontext](https://github.com/memodb-io/Acontext)
 **Stars:** ~3,500 | **Last updated:** 2026-06-16 | **License:** Apache-2.0
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-10-27  <!-- triaged: bulk -->
 **Dev loop stage:** Reflect (Memory & Context)
 **Layer:** Infrastructure
 
@@ -50,9 +50,10 @@ gh api repos/memodb-io/Acontext/readme --jq '.content' | base64 -d
 
 ## Verdict
 
-**discovery-log — tentative read**
-
-Adopt for agents that run repeated tasks and benefit from compounding, inspectable learnings — especially in skill-file-native ecosystems (Claude Code, AI SDK). For a solo user already on claude-mem + OMEGA, it overlaps existing memory; the draw is the skill-file representation if you want portable, hand-editable learnings. Re-evaluate hands-on against memU and ACE for a memory-layer decision.
+**SKIP** — archived (2026) with no successor: upstream declares Acontext "no longer maintained"
+and points the work at the commercial alook.ai workspace, which is not a repository, so nothing
+inherits this row. Its catalogued neighbours (`memU`, `ACE`, `evolver`) are independent tools, not
+continuations of it. An unmaintained skill-file memory layer is not worth a first-time hands-on eval.
 
 ## Triage note
 
@@ -69,6 +70,11 @@ installed" is a CONDITIONAL shape, not a SKIP one — the same call `storm` got 
 The comparison the eval asks for is specific and worth queueing as written: hands-on against `memU` and
 `ACE`, since all three are variations on compounding, inspectable learnings. That is one measured
 session covering three rows, which is a better use of a P0 slot than any of them alone.
+
+**Re-triaged 2026-10-27 (P1 successor-check band).** The repo is archived and its README now opens
+with "Acontext is no longer maintained", so the question this note left open is moot: the successor
+check found no repository to repoint the row at (the team's stated continuation is the commercial
+alook.ai workspace), and the row is SKIPped above rather than left.
 
 _Triaged 2026-08-04 by the P3 backlog band ([#268](https://github.com/mattbutlerengineering/ai-tooling/issues/268))._
 

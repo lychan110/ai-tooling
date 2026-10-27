@@ -3,6 +3,7 @@
 **Repo:** [yetone/magpie](https://github.com/yetone/magpie)
 **Stars:** 22172 | **Last updated:** 2026-10-26 (pushed) | **License:** MIT
 **Last verified:** 2026-10-26
+**Last triaged:** 2026-10-27  <!-- triaged: bulk -->
 **Dev loop stage:** Plan
 **Layer:** Tooling
 
@@ -27,6 +28,12 @@ We did **not** install or run this tool. This evaluation is source-grounded only
 ## Triage note
 
 Sits in the same model-routing cluster as `claude-code-router`, `litellm`, `CLIProxyAPI` and `cc-switch`; not SKIPped on arrival: its mechanism is distinct from those proxy/account-rotation tools — it rewrites each agent's own config and fails over between subscriptions behind one local gateway. A real disposition needs a hands-on run against this machine's own agents, which is out of scope for an unattended discovery pass.
+
+**Re-triaged 2026-10-27 (P3 backlog band).** Left at `discovery-log` and stamped. No redundancy SKIP
+applies to this row: `claude-code-router`, `litellm`, `cc-switch` and `CLIProxyAPI` are catalogued
+peers and none of the four is a STACK pick, so there is no incumbent it is redundant *with*. Rewriting
+each agent's own config and failing over between subscriptions behind one gateway is a mechanism none
+of them shares, so a real read is the honest disposition.
 
 ## Catalog entry
 

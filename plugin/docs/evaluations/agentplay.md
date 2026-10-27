@@ -3,6 +3,7 @@
 **Repo:** [Entelligence-AI/agentplay](https://github.com/Entelligence-AI/agentplay)
 **Stars:** 314 | **Last updated:** 2026-10-26 (pushed) | **License:** Apache-2.0
 **Last verified:** 2026-10-26
+**Last triaged:** 2026-10-27  <!-- triaged: bulk -->
 **Dev loop stage:** Review
 **Layer:** Tooling
 
@@ -27,6 +28,11 @@ We did **not** install or run this tool. This evaluation is source-grounded only
 ## Triage note
 
 Sits in the same session-observability cluster as `Tracely`, `agentsview` and `tracecrate`; not SKIPped on arrival: its mechanism is distinct — a redacted, replayable map/timeline of what a session touched, built locally from transcripts the agent already wrote, rather than a cost report, a cross-session search index, or a CI regression gate. A real disposition needs a hands-on run against this machine's own transcripts, which is out of scope for an unattended discovery pass.
+
+**Re-triaged 2026-10-27 (P3 backlog band).** Left at `discovery-log` and stamped. No redundancy SKIP
+applies to this row: `Tracely`, `agentsview` and `tracecrate` are catalogued peers, and none of the
+three is a STACK pick, so there is no incumbent it is redundant *with*. The replay-map mechanism is
+distinct enough to deserve its own read rather than a mechanical SKIP.
 
 ## Catalog entry
 

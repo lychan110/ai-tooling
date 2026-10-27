@@ -756,7 +756,7 @@ All 919 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | open-index | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | kaas | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | PageIndex | tool | ✓ | ✓/$ | discovery-log | REVIEW |
-| Acontext | tool | ✓ | ✓ | discovery-log | REVIEW |
+| Acontext | tool | ✓ | ✓ | SKIP | REVIEW |
 | byterover-cli | tool | ✓ | ✓/$ | SKIP | REVIEW |
 | LightRAG | tool | ✓ | ✓ | discovery-log | REVIEW |
 | memvid | tool | ✓ | ✓ | discovery-log | REVIEW |
@@ -1011,8 +1011,8 @@ All 919 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 79 | 22 | 3 | 28% |
 | Skills & Plugins | 121 | 42 | 4 | 35% |
-| Memory & Context | 80 | 30 | 2 | 38% |
+| Memory & Context | 80 | 31 | 2 | 39% |
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **919** | **340** | **35** | **37%** |
+| **Total** | **919** | **341** | **35** | **37%** |
