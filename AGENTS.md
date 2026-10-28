@@ -27,7 +27,7 @@ Maintain a high-signal inventory and evaluation of AI tools, skills, agents, har
 
 ## Supported harness
 
-opencode and Hermes both read this file as project context; neither needs wiring here. Keep instructions here current, concise, and executable. Enabling the Hermes harness is documented in `docs/agents/hermes-harness.md`. Put long explanations, postmortems, detector history, and issue-specific rationale in `docs/agents/` or ADRs.
+opencode and Hermes both read this file as project context. Put long explanations, postmortems, detector history, and issue-specific rationale in `docs/agents/` or ADRs; enabling the Hermes harness is in `docs/agents/hermes-harness.md`.
 
 ## Catalog format
 
