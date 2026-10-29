@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 919 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 921 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -24,6 +24,7 @@ All 919 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | context7 | MCP server | ✓ | ✓ | KEEP | RUN |
 | feature-dev | plugin | | ✓ | KEEP | MEASURED |
 | graphify | skill | | ✓ | CONDITIONAL | MEASURED |
+| graphicle | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | source-reading-methodology | skill | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | gentleman-book-mcp | MCP server | ✓ | ✓ | SKIP | REVIEW |
 | git-mcp | MCP server | ✓ | ✓ | discovery-log | REVIEW |
@@ -151,6 +152,7 @@ All 919 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | claude-task-master | tool | | ✓ | SKIP | REVIEW |
 | capa | tool | | ✓ | discovery-log | REVIEW |
 | ai-rules-sync | tool | | ✓ | discovery-log | SOURCE-ONLY |
+| agent-purge | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | cc-devenv-doctor | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | skill-view | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | align-dev | tool | | ✓ | SKIP | REVIEW |
@@ -1003,8 +1005,8 @@ All 919 tools from CATALOG.md with dev loop stage, automation capability, pricin
 
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
-| Plan | 81 | 35 | 6 | 43% |
-| Implement | 274 | 119 | 4 | 43% |
+| Plan | 82 | 35 | 6 | 43% |
+| Implement | 275 | 119 | 4 | 43% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 96 | 28 | 3 | 29% |
 | Ship | 4 | 1 | 1 | 25% |
@@ -1015,4 +1017,4 @@ All 919 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 19 | 2 | 33% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **919** | **341** | **35** | **37%** |
+| **Total** | **921** | **341** | **35** | **37%** |
