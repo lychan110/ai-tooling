@@ -885,7 +885,7 @@ All 921 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | warden | MCP server | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | ref-tools-mcp | MCP server | ✓ | ✓/$ | SKIP | REVIEW |
 | briefing | MCP server | | ✓ | discovery-log | SOURCE-ONLY |
-| Mintlify Index | MCP server | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| Mintlify Index | MCP server | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | exeora | MCP server | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | DesktopCommanderMCP | MCP server | ✓ | ✓ | SKIP | REVIEW |
 | mac-developer-bridge | MCP server | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -1014,7 +1014,7 @@ All 921 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Outer Loop | 79 | 22 | 3 | 28% |
 | Skills & Plugins | 121 | 42 | 4 | 35% |
 | Memory & Context | 80 | 31 | 2 | 39% |
-| MCP Servers | 57 | 19 | 2 | 33% |
+| MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **921** | **341** | **35** | **37%** |
+| **Total** | **921** | **342** | **35** | **37%** |

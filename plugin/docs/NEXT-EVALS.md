@@ -1,15 +1,15 @@
 # Next evals — a banded promotion queue
 
-The 580 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
+The 579 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
 
-Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 98 distinct values across these 580 leads (252 have zero overlap pressure; largest tie: 45) — enough to pick a head, not to rank a tail. In the score-based bands (`P2`/`P3`) a lead stamped `**Last triaged:**` sinks within its band so each pass surfaces un-examined ones. **The structural bands do not work that way**: `P1`/`P4`/`P5` hold a row because of a metadata fact (`archived`, a disqualifying license, `Ships inside`), so a stamp neither clears nor reorders them — a one-row structural band means the fact is still true, not that the queue is exhausted.
+Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 104 distinct values across these 579 leads (251 have zero overlap pressure; largest tie: 45) — enough to pick a head, not to rank a tail. In the score-based bands (`P2`/`P3`) a lead stamped `**Last triaged:**` sinks within its band so each pass surfaces un-examined ones. **The structural bands do not work that way**: `P1`/`P4`/`P5` hold a row because of a metadata fact (`archived`, a disqualifying license, `Ships inside`), so a stamp neither clears nor reorders them — a one-row structural band means the fact is still true, not that the queue is exhausted.
 
 **Eliminate-only.** Outside `P0 measure`, an unattended agent may SKIP a lead or leave it at `discovery-log`; it may never write ADOPT/KEEP/CONDITIONAL. A false SKIP is cheap and reversible; a false ADOPT poisons STACK. Detector Q gates this.
 
 | Band | Definition | Leads | An agent may conclude |
 |------|------------|-------|-----------------------|
 | **P0 measure** | score-ranked head | 25 | human or `eval-runner` only — the one band that may reach ADOPT |
-| **P1 successor-check** | `archived == true` | 1 | repoint the link to a successor, or SKIP "archived, no successor" |
+| **P1 successor-check** | `archived == true` | 0 | repoint the link to a successor, or SKIP "archived, no successor" |
 | **P2 challenger** | overlaps a tool already in STACK | 167 | SKIP "redundant with `<incumbent>`", or leave at discovery-log |
 | **P3 backlog** | everything else | 382 | leave; stamp `**Last triaged:**` only |
 | **P4 mechanical-skip** | vendored Type under a disqualifying license | 0 | SKIP — zero judgement |
@@ -49,15 +49,13 @@ _human or `eval-runner` only — the one band that may reach ADOPT._
 | claude-octopus | Review | 27.1 | pressure 9, gap 7.1 | `/evaluate-tool claude-octopus` |
 | openskills | Skills & Plugins | 26.5 | pressure 9, gap 6.5 | `/evaluate-tool openskills` |
 
-## P1 successor-check — 1 leads
+## P1 successor-check — 0 leads
 
 _repoint the link to a successor, or SKIP "archived, no successor"._
 
 _Fact-driven: a row leaves when `archived` clears or its successor is linked. A `**Last triaged:**` stamp changes nothing here._
 
-| Tool | Stage | Score | Why | Command |
-|------|-------|-------|-----|---------|
-| Mintlify Index | MCP Servers | 6.7 | pressure 0, gap 6.7 | `/triage-lead Mintlify Index` |
+_(none)_
 
 ## P2 challenger — 167 leads
 
@@ -67,7 +65,6 @@ _Listing 12 of 167 — rerun `uv run triage.py` and read the source for the tail
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| graphicle | Plan | 5.7 | challenges codegraph, serena · pressure 0, gap 5.7 | `/triage-lead graphicle` |
 | Understand-Anything | Plan | 25.7 | challenges codegraph · pressure 10, gap 5.7 | `/triage-lead Understand-Anything` |
 | gstack | Implement | 25.7 | challenges GSD · pressure 9, gap 5.7 | `/triage-lead gstack` |
 | memU | Memory & Context | 24.1 | challenges claude-mem · pressure 9, gap 6.1 | `/triage-lead memU` |
@@ -79,6 +76,7 @@ _Listing 12 of 167 — rerun `uv run triage.py` and read the source for the tail
 | skill-scanner | Review | 21.1 | challenges SkillSpector · pressure 7, gap 7.1 | `/triage-lead skill-scanner` |
 | agnix | Review | 21.1 | challenges SkillSpector · pressure 6, gap 7.1 | `/triage-lead agnix` |
 | Skill_Seekers | Skills & Plugins | 20.5 | challenges skill-creator · pressure 6, gap 6.5 | `/triage-lead Skill_Seekers` |
+| andrej-karpathy-skills | Skills & Plugins | 18.5 | challenges agent-skills, documentation-and-adrs, mattpocock/skills · pressure 5, gap 6.5 | `/triage-lead andrej-karpathy-skills` |
 
 ## P3 backlog — 382 leads
 
@@ -88,7 +86,6 @@ _Listing 12 of 382 — rerun `uv run triage.py` and read the source for the tail
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| agent-purge | Implement | 5.7 | pressure 0, gap 5.7 | `/triage-lead agent-purge` |
 | CLIProxyAPI | Implement | 25.7 | pressure 10, gap 5.7 | `/triage-lead CLIProxyAPI` |
 | claude-code-router | Implement | 25.7 | pressure 9, gap 5.7 | `/triage-lead claude-code-router` |
 | qwen-code | Implement | 25.7 | pressure 9, gap 5.7 | `/triage-lead qwen-code` |
@@ -100,6 +97,7 @@ _Listing 12 of 382 — rerun `uv run triage.py` and read the source for the tail
 | slidev | Skills & Plugins | 22.5 | pressure 7, gap 6.5 | `/triage-lead slidev` |
 | ccpm | Plan | 21.7 | pressure 7, gap 5.7 | `/triage-lead ccpm` |
 | fast-agent | Implement | 21.7 | pressure 7, gap 5.7 | `/triage-lead fast-agent` |
+| Helicone | Outer Loop | 21.2 | pressure 6, gap 7.2 | `/triage-lead Helicone` |
 
 ## P4 mechanical-skip — 0 leads
 
@@ -117,10 +115,10 @@ _Fact-driven: a row leaves when its container is settled. A container that is it
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| prisma | MCP Servers | 14.7 | ships inside `prisma/prisma` · pressure 3, gap 6.7 | `/triage-lead prisma` |
-| confluence | MCP Servers | 8.7 | ships inside `sooperset/mcp-atlassian` · pressure 0, gap 6.7 | `/triage-lead confluence` |
-| jira | MCP Servers | 8.7 | ships inside `sooperset/mcp-atlassian` · pressure 0, gap 6.7 | `/triage-lead jira` |
+| prisma | MCP Servers | 14.5 | ships inside `prisma/prisma` · pressure 3, gap 6.5 | `/triage-lead prisma` |
 | typescript-mcp-server-generator | Skills & Plugins | 8.5 | ships inside `github/awesome-copilot` · pressure 0, gap 6.5 | `/triage-lead typescript-mcp-server-generator` |
+| confluence | MCP Servers | 8.5 | ships inside `sooperset/mcp-atlassian` · pressure 0, gap 6.5 | `/triage-lead confluence` |
+| jira | MCP Servers | 8.5 | ships inside `sooperset/mcp-atlassian` · pressure 0, gap 6.5 | `/triage-lead jira` |
 | presentation-creator | Skills & Plugins | 6.5 | ships inside `getsentry/skills` · pressure 0, gap 6.5 | `/triage-lead presentation-creator` |
 
 <!-- NEXT-EVALS:END -->

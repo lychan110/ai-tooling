@@ -3,6 +3,7 @@
 **Repo:** [ZiChuanLan/agent-purge](https://github.com/ZiChuanLan/agent-purge)
 **Stars:** 861 | **Last updated:** 2026-10-29 (pushed) | **License:** MIT
 **Last verified:** 2026-10-29
+**Last triaged:** 2026-10-30  <!-- triaged: bulk -->
 **Dev loop stage:** Implement
 **Layer:** Tooling (harness system-prompt control)
 
@@ -58,6 +59,13 @@ commands* between editors, while this one rewrites the *system prompt itself* â€
 layer those tools all leave alone. Two supported harnesses are the ones this workspace runs
 (Hermes, via a temporary `HOME` with a swapped `SOUL.md`, and opencode, via an in-place
 `output.system` plugin), so exercising it here is cheap. Left for the P0/eval-runner lane.
+
+**Triaged 2026-10-30 by the lead-triage band (P3 backlog):** left at `discovery-log`, stamped. No
+incumbent exists for a redundancy SKIP to name â€” the three config-surface neighbours (`capa`,
+`ai-rules-sync`, `gentle-ai`) are none of them a STACK pick, and the mechanism itself (rewriting
+the harness system prompt rather than sharing skills, rules or commands) is uncatalogued here. The
+chronology and the 633-fork/861-star ratio recorded above are reasons for a human to look before
+installing, not grounds for an eliminate-only SKIP, so this lane neither promotes nor buries it.
 
 ## Catalog entry
 

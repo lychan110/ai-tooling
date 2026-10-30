@@ -3,6 +3,7 @@
 **Repo:** [Graphicle-AI/graphicle](https://github.com/Graphicle-AI/graphicle)
 **Stars:** 427 | **Last updated:** 2026-10-28 (pushed) | **License:** Apache-2.0
 **Last verified:** 2026-10-29
+**Last triaged:** 2026-10-30  <!-- triaged: bulk -->
 **Dev loop stage:** Plan
 **Layer:** Tooling (code graph + agent memory)
 
@@ -53,6 +54,15 @@ memory plus cited, budgeted context in one install with no Python, Docker or dat
 is also 15 days old and at `0.1.x`, which is a reason to keep it a lead rather than dispose of
 it. Left for the P0/eval-runner lane to exercise; a hands-on comparison against `codegraph` on
 the same repository is the deciding test.
+
+**Triaged 2026-10-30 by the lead-triage band (P2 challenger):** left at `discovery-log`, stamped.
+The incumbent a redundancy SKIP would have had to name is `codegraph` (STACK pick, ADOPT,
+MEASURED), and it does not cover the claim: `codegraph` is a graph, not a graph plus code-anchored
+memory plus cited token-budgeted excerpts. The other neighbours named in the catalog cell
+(`graphify`, `code-review-graph`, `serena`, `codebase-memory-mcp`, `neuromesh`) are either graph
+readers or memory stores; none ships both halves in one local binary. A `0.1.x` repo 15 days old
+is a reason to keep looking rather than to dispose, so the row stays a lead and the deciding test
+remains a measured run against `codegraph` — which is not this lane's call.
 
 ## Catalog entry
 
