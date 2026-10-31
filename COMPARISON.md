@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 921 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 922 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -523,6 +523,7 @@ All 921 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | bernstein | harness | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | claude-code-action | tool | ✓ | ✓ | ADOPT | RUN |
 | worktrunk | tool | | $ | discovery-log | REVIEW |
+| gitbutler | tool | ✓ | ✓ | CONDITIONAL | RUN |
 | no-negative-echo | skill | | ✓ | discovery-log | SOURCE-ONLY |
 
 ## Reflect
@@ -1009,7 +1010,7 @@ All 921 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Implement | 275 | 119 | 4 | 43% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 96 | 28 | 3 | 29% |
-| Ship | 4 | 1 | 1 | 25% |
+| Ship | 5 | 2 | 1 | 40% |
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 79 | 22 | 3 | 28% |
 | Skills & Plugins | 121 | 42 | 4 | 35% |
@@ -1017,4 +1018,4 @@ All 921 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **921** | **342** | **35** | **37%** |
+| **Total** | **922** | **343** | **35** | **37%** |

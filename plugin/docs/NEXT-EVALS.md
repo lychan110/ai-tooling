@@ -38,7 +38,7 @@ _human or `eval-runner` only — the one band that may reach ADOPT._
 | gastown | Implement | 37.7 | pressure 15, gap 5.7 | `/evaluate-tool gastown` |
 | ghostsecurity/skills | Review | 35.1 | pressure 13, gap 7.1 | `/evaluate-tool ghostsecurity/skills` |
 | agentmemory | Memory & Context | 34.1 | pressure 13, gap 6.1 | `/evaluate-tool agentmemory` |
-| worktrunk | Ship | 33.5 | pressure 12, gap 7.5 | `/evaluate-tool worktrunk` |
+| worktrunk | Ship | 34.0 | pressure 13, gap 6.0 | `/evaluate-tool worktrunk` |
 | impeccable | Skills & Plugins | 32.5 | pressure 12, gap 6.5 | `/evaluate-tool impeccable` |
 | ui-ux-pro-max | Skills & Plugins | 32.5 | pressure 12, gap 6.5 | `/evaluate-tool ui-ux-pro-max` |
 | ralph-claude-code | Implement | 31.7 | pressure 12, gap 5.7 | `/evaluate-tool ralph-claude-code` |
@@ -76,7 +76,7 @@ _Listing 12 of 167 — rerun `uv run triage.py` and read the source for the tail
 | skill-scanner | Review | 21.1 | challenges SkillSpector · pressure 7, gap 7.1 | `/triage-lead skill-scanner` |
 | agnix | Review | 21.1 | challenges SkillSpector · pressure 6, gap 7.1 | `/triage-lead agnix` |
 | Skill_Seekers | Skills & Plugins | 20.5 | challenges skill-creator · pressure 6, gap 6.5 | `/triage-lead Skill_Seekers` |
-| andrej-karpathy-skills | Skills & Plugins | 18.5 | challenges agent-skills, documentation-and-adrs, mattpocock/skills · pressure 5, gap 6.5 | `/triage-lead andrej-karpathy-skills` |
+| weave | Implement | 19.7 | challenges resolving-merge-conflicts · pressure 6, gap 5.7 | `/triage-lead weave` |
 
 ## P3 backlog — 382 leads
 

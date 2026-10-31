@@ -2965,6 +2965,16 @@
     "resolved_name": "Giskard-AI/giskard-oss",
     "stars": 5934
   },
+  "gitbutlerapp/gitbutler": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-10-31",
+    "license_lost": false,
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-10-31T19:35:59Z",
+    "resolved_name": "gitbutlerapp/gitbutler",
+    "stars": 21895
+  },
   "github/awesome-copilot": {
     "archived": false,
     "discontinued": null,
