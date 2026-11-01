@@ -181,7 +181,7 @@ All 922 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | buildd | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | stargate | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | agentweaver | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
-| goose | platform | | ✓ | discovery-log | REVIEW |
+| goose | platform | | ✓ | CONDITIONAL | MEASURED |
 | open-interpreter | harness | | ✓ | discovery-log | REVIEW |
 | kilocode | platform | | ✓ | discovery-log | REVIEW |
 | grok-cli | platform | | ✓ | discovery-log | REVIEW |
@@ -1007,7 +1007,7 @@ All 922 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 82 | 35 | 6 | 43% |
-| Implement | 275 | 119 | 4 | 43% |
+| Implement | 275 | 120 | 4 | 44% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 96 | 28 | 3 | 29% |
 | Ship | 5 | 2 | 1 | 40% |
@@ -1018,4 +1018,4 @@ All 922 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **922** | **343** | **35** | **37%** |
+| **Total** | **922** | **344** | **35** | **37%** |
