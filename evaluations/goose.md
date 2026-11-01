@@ -1,8 +1,8 @@
 # Evaluation: goose
 
 **Repo:** [aaif-goose/goose](https://github.com/aaif-goose/goose) (moved from block/goose to Linux Foundation AAIF)
-**Stars:** 49,786 | **Last updated:** 2026-06-19 | **License:** Apache-2.0
-**Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
+**Stars:** 56,063 | **Last updated:** 2026-11-01 | **License:** Apache-2.0
+**Last verified:** 2026-11-01
 **Dev loop stage:** Implement
 **Layer:** Tooling
 
@@ -10,57 +10,121 @@
 
 ## What it does
 
-A general-purpose open-source AI agent — desktop app (macOS/Linux/Windows), full CLI, and embeddable REST API — built in Rust for performance and portability. Works with 15+ providers (Anthropic, OpenAI, Google, Ollama, OpenRouter, Azure, Bedrock, and more) via API keys or existing subscriptions through ACP (Agentic Context Protocol). Connects to 70+ extensions via MCP. Designed as a standalone agent runtime, not a Claude Code enhancement — you use goose *instead of* Claude Code, not alongside it.
+A general-purpose open-source AI agent — desktop app (macOS/Linux/Windows), full CLI, and embeddable REST API — built in Rust for performance and portability. Works with 15+ providers (Anthropic, OpenAI, Google, Ollama, OpenRouter, Azure, Bedrock, and more) via API keys or existing subscriptions through ACP (Agentic Context Protocol). Connects to 70+ extensions via MCP. Designed as a standalone agent runtime, not an enhancement to another harness — you use goose *instead of* your current harness, not alongside it.
 
 The architecture is clean: a `goosed` server process exposes a REST API that any frontend (CLI, Electron desktop, custom web/mobile) can consume. Extensions are MCP servers. Providers are pluggable via a trait system. "Recipes" (YAML-based task definitions) enable guided workflows and multi-step automation. Custom distributions ("white labelling") let organizations ship preconfigured goose variants with their own providers, extensions, and branding.
 
 ## How we tested it
 
-**Evidence:** REVIEW
+**Evidence:** MEASURED
 
-Architecture review of the Rust crate structure (458 .rs files across 10 crates), CUSTOM_DISTROS.md, AGENTS.md, provider system, MCP integration, and recipe system. Compared against Claude Code (proprietary, model-locked) and opencode (CONDITIONAL, TypeScript/Effect, 176K stars) on developer surface, extensibility, and ecosystem maturity.
+> Scope: one measured task set (below), run 2026-11-01 against the v1.57.0 release binary. The
+> provider-matrix, custom-distro and governance points carried over from the June 2026 review are
+> review-grade notes, not measurements, and are labelled as such.
+
+Downloaded the release binary (no build step), pointed it at an OpenAI-compatible gateway, and ran
+it headless on three defect-repair tasks. Each task has its own `node test.js` oracle that prints
+`RESULT k/N` and exits non-zero on failure, and I re-ran that oracle myself after every goose run
+instead of trusting the agent's own summary.
 
 ```bash
-gh api repos/aaif-goose/goose --jq '.description, .stargazers_count, .updated_at, .license.spdx_id'
-gh api repos/aaif-goose/goose/releases --jq '.[0:3] | .[] | "\(.tag_name) \(.published_at)"'
-gh api "repos/aaif-goose/goose/git/trees/main?recursive=1" --jq '.tree[].path' | grep '^crates/[^/]*$'
+curl -sLf -o goose.tar.bz2 \
+  https://github.com/aaif-goose/goose/releases/download/v1.57.0/goose-x86_64-unknown-linux-gnu.tar.bz2
+tar -xjf goose.tar.bz2 && ./goose --version     # 1.57.0 — 199 MB static binary, 54 MB download
+
+# headless run: no `goose configure`, no keyring, config comes from the environment
+GOOSE_PROVIDER=openai OPENAI_HOST=https://api.kilo.ai/api/gateway \
+GOOSE_MODEL=deepseek/deepseek-v4.1-flash-1017 GOOSE_MODE=auto \
+OPENAI_API_KEY=<gateway key> GOOSE_DISABLE_KEYRING=1 \
+./goose run --no-session -q --max-turns 15 \
+  -t "You are in a Node project directory whose test suite currently fails. Make 'node test.js'
+      pass by fixing the source files. Do not modify test.js or SPEC.md. Verify by running the
+      suite yourself and report the final RESULT line."
+
+node test.js                                     # the oracle, run independently of goose's claim
 ```
+
+## Test design
+
+- **Task/corpus:** three throwaway Node fixtures, each a buggy module set plus a `SPEC.md` and a
+  plain-`node` test script (`RESULT k/N` + exit code). **A** — 3 modules, 3 planted defects,
+  8 assertions. **B** — the same repo, prompt only (no file contents in the prompt). **C** — 2
+  modules, 2 planted defects, 5 assertions, prompt only.
+- **Baseline (without the tool):** the *same* model (`deepseek/deepseek-v4.1-flash-1017`, pinned,
+  same gateway, `temperature: 0`) given one turn and no tools. For task A the baseline gets the
+  fixture files inlined — its best case. For B and C it gets the identical prompt goose got, so its
+  only disadvantage is the one being measured: no file access.
+- **Metric:** assertions passed `k/N` and the process exit code — a mechanical oracle — plus
+  wall-clock per task. **Reproduce:** the commands above; fixtures are ~40 lines each.
+- **Correctness:** `with 3/3 tasks` vs `without 1/3 tasks`.
+
+| Task | Oracle | Without (one turn, no tools) | With goose |
+|------|--------|------------------------------|------------|
+| A — 3 defects, files inlined | `node test.js` | 8/8, exit 0 | 8/8, exit 0 (16.1 s) |
+| B — same repo, prompt only | `node test.js` | 2/8, exit 1 — empty reply, it cannot see files | 8/8, exit 0 (17.1 s) |
+| C — 2 defects, prompt only | `node test.js` | 3/5, exit 1 | 5/5, exit 0 (14.5 s) |
+
+In both goose runs the test file stayed byte-identical to the original (`md5sum` unchanged), so it
+fixed the code rather than the oracle.
 
 ## What worked
 
-- **Rust foundation is a genuine advantage.** 458 .rs files with clean crate separation (goose core, goose-cli, goose-server, goose-mcp, goose-providers, goose-sdk). Binary distribution means no Node/Python dependency hell — one binary, runs everywhere.
-- **Provider abstraction is production-grade.** 15+ providers including ACP (use existing Claude/ChatGPT/Gemini subscriptions without API keys), declarative provider definitions in `crates/goose/src/providers/declarative/`, and a clean Provider trait for custom additions.
-- **Custom distro system is unique.** No other coding agent in the catalog explicitly supports white-labelling — preconfigured providers, bundled extensions, custom branding, targeted audiences (devs, legal, designers). This makes goose viable as an enterprise platform, not just a dev tool.
-- **Linux Foundation governance.** GOVERNANCE.md, MAINTAINERS.md, SECURITY.md, AAIF foundation membership — institutional backing that de-risks adoption for enterprises. OSSF Scorecard integration shows maturity.
-- **Active development.** v1.38.0 (June 17), weekly releases, 5,273 forks, 214 open issues (manageable for a project this size), CI passing.
-- **Recipe system for automation.** YAML-based task definitions with sub-recipes and subagents enable guided workflows without code — lower barrier than Claude Code's Workflow tool.
+- **It actually runs headless.** One 54 MB download, no toolchain, no `goose configure` — provider,
+  base URL and model come from four environment variables, and `goose run --no-session -q` returned
+  a task result in a shell.
+- **The harness delta is real and measured.** Where the model alone had no file access it produced
+  nothing (2/8 and 3/5, exit 1); the same model through goose read the repo, edited the right
+  modules, ran the suite itself and reached 8/8 and 5/5. That is 3/3 tasks solved with it, 1/3
+  without.
+- **It stayed inside the instruction.** Across all three runs it never touched `test.js` despite
+  that being the shortest path to green, and it re-ran the suite and quoted the `RESULT` line.
+- **Fixes were minimal.** Three files changed on task A, each a one-line-to-five-line edit at the
+  offending expression; no scaffolding, no test rewrites.
+- **Sane self-reporting.** On task A it flagged that the spec is silent on non-integer durations and
+  `page = 0`, and declined to invent error semantics rather than adding defensive code.
 
 ## What didn't work or surprised us
 
-- **Replaces Claude Code entirely.** There's no "use goose alongside Claude Code" story. It's a different runtime with a different CLI, different config format, different extension model. Skills (.goosehints vs SKILL.md) overlap in concept but aren't interoperable without adaptation.
-- **Ecosystem is thinner.** 70+ MCP extensions vs Claude Code's 200+ plugins, 50+ skills, and marketplace. The skill/recipe ecosystem is nascent compared to the Claude Code skill explosion (antigravity lists 1,595 SKILL.md files).
-- **No built-in TDD enforcement or review workflow.** Claude Code's superpowers/agent-skills provide structured development methodology; goose provides raw agent capability. You'd need to build the methodology yourself via recipes or extensions.
-- **Documentation is split.** goose-docs.ai for user docs, CUSTOM_DISTROS.md for white-labelling, AGENTS.md for development, README for overview — no single comprehensive reference.
-- **ACP adds provider complexity.** Using existing AI subscriptions via ACP is clever but adds a proxy layer and authentication complexity that API keys don't have.
+- **`GOOSE_MODE=auto` is an unattended shell.** It executed shell commands and wrote files with no
+  approval step, which is what makes headless runs useful and also what makes a live checkout a bad
+  place to run it. Sandbox it; the curated alternative costs a permission prompt per call.
+- **A provider account is the real prerequisite, not the binary.** The first attempt against a
+  different OpenAI-compatible endpoint returned `402` — the install is trivial, the credits are not.
+  Provider parity with Anthropic/Google/Bedrock is **untested here** (no keys available); only the
+  OpenAI-compatible path was exercised.
+- **Exit 0 is not success.** `goose run` returns 0 when the run completed, not when the work is
+  right. The oracle has to be yours — the same trap as any agent harness.
+- **Model routing is the gateway's.** With an alias model the upstream model varies per request; the
+  measurement above pins a concrete model name precisely because of that.
+- **It replaces the harness, it does not plug into one.** goose cannot be dropped into the
+  opencode/Hermes install lists — using it means putting the current harness aside for that work.
+- **Refreshed facts.** 56,063 stars (was 49,786), v1.57.0 published 2026-10-28 (was v1.38.0 in June),
+  536 open issues (was 214), 6,530 forks.
 
 ## Quality signals affected
 
 | Signal | Impact | Evidence |
 |--------|--------|----------|
-| Correctness | neutral | Same LLM-powered capabilities as Claude Code; no unique correctness advantages |
-| Speed | + | Rust binary starts faster; recipe system enables automation without context overhead |
-| Maintainability | + | Clean crate architecture; Provider trait makes adding models straightforward |
-| Safety | + | Linux Foundation governance, OSSF Scorecard, SECURITY.md with responsible disclosure |
-| Cost Efficiency | + | Model-agnostic lets you pick cheaper providers; ACP avoids API key costs for subscription users |
+| Correctness | + | 3/3 repair tasks solved vs 1/3 for the same model with no tools; the delta is file access plus self-verification |
+| Speed | neutral | 14.5–17.1 s per task (median 16.1 s) for the agent loop; a no-tools turn is one request when it can answer at all, so the loop buys capability, not speed |
+| Maintainability | neutral | Edits stayed at 3 files and a few lines each at the offending expression; no scaffolding or test rewrites |
+| Safety | - | `GOOSE_MODE=auto` runs shell and edits files with no approval gate; the sandbox, not goose, has to contain it |
+| Cost Efficiency | neutral | 212–479 output tokens per task on a cheap pinned model; the saving available is provider choice, not anything goose adds |
+| Verifiability | + | It re-ran the oracle itself and its report matched an independent run; the `RESULT` line and exit code leave no room for a rosy summary |
 
 ## Verdict
 
-**discovery-log — tentative read**
+**CONDITIONAL**
 
-Use goose when you need a model-agnostic agent platform (multi-provider support is its primary differentiator), when you're building a custom agent distribution for an organization, or when you want to avoid Claude Code's model lock-in. Choose Claude Code when you want the deepest ecosystem (skills, plugins, marketplace), structured development methodology (superpowers, agent-skills), and Anthropic-optimized performance. The two don't compose — it's a platform choice.
+Adopt if you want an agent runtime you can point at any OpenAI-compatible endpoint and run headless
+against a checkout — a one-shot repair loop in CI, or a provider-neutral runtime where the harness
+must not be Hermes/opencode. It measured strictly better than the same model without tools (3/3
+tasks vs 1/3) and never worse where one turn already sufficed. It is not a STACK install: it
+replaces the harness rather than plugging into one, and `GOOSE_MODE=auto` hands it an unattended
+shell — run it in a disposable checkout, never a live one.
 
 ## Catalog entry
 
 | Name | Type | One-liner | Problem it solves | Overlaps with |
 |------|------|-----------|-------------------|---------------|
-| [goose](https://github.com/aaif-goose/goose) | platform | Model-agnostic AI agent with desktop, CLI, API — Rust, 15+ providers, custom distros (49.8K stars) | Want a provider-neutral, extensible agent platform with enterprise governance | OpenHands, opencode, claude-squad |
+| [goose](https://github.com/aaif-goose/goose) | platform | Model-agnostic AI agent with desktop, CLI, API — Rust, 15+ providers, custom distros (56.1K stars) | Want a provider-neutral, extensible agent platform with enterprise governance | OpenHands, opencode, claude-squad |
