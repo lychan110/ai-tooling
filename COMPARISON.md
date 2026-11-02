@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 922 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 924 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -196,6 +196,7 @@ All 922 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | headroom | tool | ✓ | ✓ | CONDITIONAL | MEASURED |
 | ctxwise | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | claude-context-optimizer | plugin | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| TokenEconomizer | plugin | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | hive | harness | | ✓ | SKIP | REVIEW |
 | humanlayer | harness | | ✓ | SKIP | REVIEW |
 | KARIMO | plugin | | ✓ | SKIP | REVIEW |
@@ -290,6 +291,7 @@ All 922 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | eve | harness | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | Trellis | harness | | ✓ | SKIP | SOURCE-ONLY |
 | durable-harness | harness | | ✓ | discovery-log | SOURCE-ONLY |
+| uncut | harness | | ✓ | discovery-log | SOURCE-ONLY |
 | software-factory-harness | harness | | ✓ | SKIP | SOURCE-ONLY |
 | command-code | harness | | ✓ | SKIP | SOURCE-ONLY |
 | Baize | harness | | ✓ | discovery-log | SOURCE-ONLY |
@@ -1007,7 +1009,7 @@ All 922 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 82 | 35 | 6 | 43% |
-| Implement | 275 | 120 | 4 | 44% |
+| Implement | 277 | 120 | 4 | 43% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 96 | 28 | 3 | 29% |
 | Ship | 5 | 2 | 1 | 40% |
@@ -1018,4 +1020,4 @@ All 922 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **922** | **344** | **35** | **37%** |
+| **Total** | **924** | **344** | **35** | **37%** |
