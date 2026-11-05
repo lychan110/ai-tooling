@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 924 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 926 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -115,6 +115,7 @@ All 924 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | succubus | tool | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | fleetpost | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | agent-link | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| reason-network | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | aster | harness | | ✓ | SKIP | SOURCE-ONLY |
 | caveman | skill | | ✓ | ADOPT | MEASURED |
 | tldr | skill | | ✓ | discovery-log | SOURCE-ONLY |
@@ -706,6 +707,7 @@ All 924 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | video-to-skill | tool | | ✓ | SKIP | SOURCE-ONLY |
 | SkillOpt | framework | | ✓ | DEFER | REVIEW |
 | SkillAdam | plugin | | ✓ | SKIP | SOURCE-ONLY |
+| hermes-agent-self-evolution | framework | | ✓ | discovery-log | SOURCE-ONLY |
 | stop-slop | skill | | ✓ | discovery-log | REVIEW |
 | taste-skill | skill | | ✓ | discovery-log | REVIEW |
 | agent-vision-toolkit | skill | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -1009,15 +1011,15 @@ All 924 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 82 | 35 | 6 | 43% |
-| Implement | 277 | 120 | 4 | 43% |
+| Implement | 278 | 120 | 4 | 43% |
 | Verify | 34 | 14 | 2 | 41% |
 | Review | 96 | 28 | 3 | 29% |
 | Ship | 5 | 2 | 1 | 40% |
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 79 | 22 | 3 | 28% |
-| Skills & Plugins | 121 | 42 | 4 | 35% |
+| Skills & Plugins | 122 | 42 | 4 | 34% |
 | Memory & Context | 80 | 31 | 2 | 39% |
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **924** | **344** | **35** | **37%** |
+| **Total** | **926** | **344** | **35** | **37%** |
