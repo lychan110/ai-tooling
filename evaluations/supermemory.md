@@ -2,7 +2,7 @@
 
 **Repo:** [supermemoryai/supermemory](https://github.com/supermemoryai/supermemory)
 **Stars:** 27,206 | **Last updated:** 2026-06-19 (pushed) | **License:** MIT | **Packages:** npm `supermemory`, PyPI `supermemory`
-**Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
+**Last verified:** 2026-11-08  <!-- re-checked this run: not runnable in this environment (see How we tested it); source-grounded review only -->
 **Dev loop stage:** Memory & Context (cross-cutting — persistent memory + context layer for AI apps and agents)
 **Layer:** Infrastructure (memory/context engine + hosted app; cloud API or fully self-hostable)
 
@@ -27,6 +27,8 @@ It ships TS + Python SDKs, a hosted dashboard/console, and a documented self-hos
 **Evidence:** REVIEW
 
 **Source-grounded inspection — not installed, not run.** No SDK wired in, no memory store exercised, no benchmark reproduced. Claims (including the #1 benchmark positioning and the ~50ms profile latency) come from the repository's own README and metadata, not observed behavior.
+
+**Environment check (2026-11-08):** self-hosting supermemory means the documented docker-compose stack (Postgres/pgvector, Redis, the Node engine); the docker API socket is unreachable from this user (no docker gid) and `sudo` is off-limits, so it cannot be started here. The npm `supermemory` and PyPI `supermemory` packages are client SDKs only — they require a running instance and an API key, neither available on this box. No hands-on run was possible, so this stays a source-grounded review and the verdict remains `discovery-log`.
 
 ```bash
 gh api repos/supermemoryai/supermemory --jq '{stars,license:.license.spdx_id,pushed:.pushed_at}'   # 27.2K, MIT
