@@ -1,17 +1,17 @@
 # Next evals — a banded promotion queue
 
-The 582 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
+The 584 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
 
-Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 104 distinct values across these 582 leads (251 have zero overlap pressure; largest tie: 45) — enough to pick a head, not to rank a tail. In the score-based bands (`P2`/`P3`) a lead stamped `**Last triaged:**` sinks within its band so each pass surfaces un-examined ones. **The structural bands do not work that way**: `P1`/`P4`/`P5` hold a row because of a metadata fact (`archived`, a disqualifying license, `Ships inside`), so a stamp neither clears nor reorders them — a one-row structural band means the fact is still true, not that the queue is exhausted.
+Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 104 distinct values across these 584 leads (251 have zero overlap pressure; largest tie: 45) — enough to pick a head, not to rank a tail. In the score-based bands (`P2`/`P3`) a lead stamped `**Last triaged:**` sinks within its band so each pass surfaces un-examined ones. **The structural bands do not work that way**: `P1`/`P4`/`P5` hold a row because of a metadata fact (`archived`, a disqualifying license, `Ships inside`), so a stamp neither clears nor reorders them — a one-row structural band means the fact is still true, not that the queue is exhausted.
 
 **Eliminate-only.** Outside `P0 measure`, an unattended agent may SKIP a lead or leave it at `discovery-log`; it may never write ADOPT/KEEP/CONDITIONAL. A false SKIP is cheap and reversible; a false ADOPT poisons STACK. Detector Q gates this.
 
 | Band | Definition | Leads | An agent may conclude |
 |------|------------|-------|-----------------------|
 | **P0 measure** | score-ranked head | 25 | human or `eval-runner` only — the one band that may reach ADOPT |
-| **P1 successor-check** | `archived == true` | 0 | repoint the link to a successor, or SKIP "archived, no successor" |
+| **P1 successor-check** | `archived == true` | 1 | repoint the link to a successor, or SKIP "archived, no successor" |
 | **P2 challenger** | overlaps a tool already in STACK | 167 | SKIP "redundant with `<incumbent>`", or leave at discovery-log |
-| **P3 backlog** | everything else | 385 | leave; stamp `**Last triaged:**` only |
+| **P3 backlog** | everything else | 386 | leave; stamp `**Last triaged:**` only |
 | **P4 mechanical-skip** | vendored Type under a disqualifying license | 0 | SKIP — zero judgement |
 | **P5 ships-inside** | the row declares a `Ships inside` container (#343) | 5 | settle the container, or SKIP "ships inside `<container>`" — never an independent lead |
 
@@ -49,13 +49,15 @@ _human or `eval-runner` only — the one band that may reach ADOPT._
 | openskills | Skills & Plugins | 26.6 | pressure 9, gap 6.6 | `/evaluate-tool openskills` |
 | Understand-Anything | Plan | 25.7 | pressure 10, gap 5.7 | `/evaluate-tool Understand-Anything` |
 
-## P1 successor-check — 0 leads
+## P1 successor-check — 1 leads
 
 _repoint the link to a successor, or SKIP "archived, no successor"._
 
 _Fact-driven: a row leaves when `archived` clears or its successor is linked. A `**Last triaged:**` stamp changes nothing here._
 
-_(none)_
+| Tool | Stage | Score | Why | Command |
+|------|-------|-------|-----|---------|
+| UI-TARS-desktop | Implement | 17.7 | pressure 5, gap 5.7 | `/triage-lead UI-TARS-desktop` |
 
 ## P2 challenger — 167 leads
 
@@ -78,14 +80,16 @@ _Listing 12 of 167 — rerun `uv run triage.py` and read the source for the tail
 | weave | Implement | 19.7 | challenges resolving-merge-conflicts · pressure 6, gap 5.7 | `/triage-lead weave` |
 | andrej-karpathy-skills | Skills & Plugins | 18.6 | challenges agent-skills, documentation-and-adrs, mattpocock/skills · pressure 5, gap 6.6 | `/triage-lead andrej-karpathy-skills` |
 
-## P3 backlog — 385 leads
+## P3 backlog — 386 leads
 
 _leave; stamp `**Last triaged:**` only._
 
-_Listing 12 of 385 — rerun `uv run triage.py` and read the source for the tail (no silent cap)._
+_Listing 12 of 386 — rerun `uv run triage.py` and read the source for the tail (no silent cap)._
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
+| agent-hud-open | Outer Loop | 7.2 | pressure 0, gap 7.2 | `/triage-lead agent-hud-open` |
+| scrawl | Review | 7.1 | pressure 0, gap 7.1 | `/triage-lead scrawl` |
 | reason-network | Implement | 5.7 | pressure 0, gap 5.7 | `/triage-lead reason-network` |
 | CLIProxyAPI | Implement | 25.7 | pressure 10, gap 5.7 | `/triage-lead CLIProxyAPI` |
 | claude-code-router | Implement | 25.7 | pressure 9, gap 5.7 | `/triage-lead claude-code-router` |
@@ -96,8 +100,6 @@ _Listing 12 of 385 — rerun `uv run triage.py` and read the source for the tail
 | awesome-claude-skills (Composio) | Reference | 23.1 | pressure 7, gap 7.1 | `/triage-lead awesome-claude-skills (Composio)` |
 | buildwithclaude | Reference | 23.1 | pressure 7, gap 7.1 | `/triage-lead buildwithclaude` |
 | slidev | Skills & Plugins | 22.6 | pressure 7, gap 6.6 | `/triage-lead slidev` |
-| ccpm | Plan | 21.7 | pressure 7, gap 5.7 | `/triage-lead ccpm` |
-| fast-agent | Implement | 21.7 | pressure 7, gap 5.7 | `/triage-lead fast-agent` |
 
 ## P4 mechanical-skip — 0 leads
 

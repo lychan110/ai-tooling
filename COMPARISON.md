@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 926 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 928 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -423,6 +423,7 @@ All 926 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Tool | Type | Auto | Free | Evaluated | Evidence |
 |------|------|------|------|------|------|
 | agentlint | tool | ✓ | ✓ | CONDITIONAL | RUN |
+| scrawl | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | numbat | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | old-coder | skill | | ✓ | SKIP | SOURCE-ONLY |
 | hubo | skill | | ✓ | SKIP | SOURCE-ONLY |
@@ -574,6 +575,7 @@ All 926 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | tracecrate | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | cross-code-organizer | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | claude-monitor | tool | ✓ | ✓ | CONDITIONAL | REVIEW |
+| agent-hud-open | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | claude-statusline-burnrate | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | brink | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | vibe-log-cli | tool | | ✓ | SKIP | SOURCE-ONLY |
@@ -1013,13 +1015,13 @@ All 926 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Plan | 82 | 35 | 6 | 43% |
 | Implement | 278 | 120 | 4 | 43% |
 | Verify | 34 | 14 | 2 | 41% |
-| Review | 96 | 28 | 3 | 29% |
+| Review | 97 | 28 | 3 | 29% |
 | Ship | 5 | 2 | 1 | 40% |
 | Reflect | 10 | 5 | 3 | 50% |
-| Outer Loop | 79 | 22 | 3 | 28% |
+| Outer Loop | 80 | 22 | 3 | 28% |
 | Skills & Plugins | 122 | 42 | 4 | 34% |
 | Memory & Context | 80 | 31 | 2 | 39% |
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **926** | **344** | **35** | **37%** |
+| **Total** | **928** | **344** | **35** | **37%** |
