@@ -86,7 +86,6 @@ _Listing 12 of 385 — rerun `uv run triage.py` and read the source for the tail
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| hermes-agent-self-evolution | Skills & Plugins | 6.6 | pressure 0, gap 6.6 | `/triage-lead hermes-agent-self-evolution` |
 | reason-network | Implement | 5.7 | pressure 0, gap 5.7 | `/triage-lead reason-network` |
 | CLIProxyAPI | Implement | 25.7 | pressure 10, gap 5.7 | `/triage-lead CLIProxyAPI` |
 | claude-code-router | Implement | 25.7 | pressure 9, gap 5.7 | `/triage-lead claude-code-router` |
@@ -98,6 +97,7 @@ _Listing 12 of 385 — rerun `uv run triage.py` and read the source for the tail
 | buildwithclaude | Reference | 23.1 | pressure 7, gap 7.1 | `/triage-lead buildwithclaude` |
 | slidev | Skills & Plugins | 22.6 | pressure 7, gap 6.6 | `/triage-lead slidev` |
 | ccpm | Plan | 21.7 | pressure 7, gap 5.7 | `/triage-lead ccpm` |
+| fast-agent | Implement | 21.7 | pressure 7, gap 5.7 | `/triage-lead fast-agent` |
 
 ## P4 mechanical-skip — 0 leads
 
