@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 928 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 930 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -147,6 +147,7 @@ All 928 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | HolyClaude | platform | ✓ | ✓ | discovery-log | REVIEW |
 | Nimbalyst | platform | | ✓ | SKIP | REVIEW |
 | agent-of-empires | tool | | ✓ | SKIP | REVIEW |
+| devvm | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | useagent | tool | | ✓ | SKIP | SOURCE-ONLY |
 | vicoa | platform | | ✓ | discovery-log | SOURCE-ONLY |
 | AgentsMesh | platform | ✓ | ✓ | SKIP | REVIEW |
@@ -412,6 +413,7 @@ All 928 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | qodo-cover | tool | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | passmark | tool | ✓ | ✓ | SKIP | REVIEW |
 | pixelpact | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| sandbox-mcp | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | diagnosing-bugs | skill | | ✓ | SKIP | REVIEW |
 | mirrord | tool | | ✓/$ | discovery-log | REVIEW |
 | browser-act/skills | skill | ✓ | ✓ | SKIP | SOURCE-ONLY |
@@ -1013,8 +1015,8 @@ All 928 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 82 | 35 | 6 | 43% |
-| Implement | 278 | 120 | 4 | 43% |
-| Verify | 34 | 14 | 2 | 41% |
+| Implement | 279 | 120 | 4 | 43% |
+| Verify | 35 | 14 | 2 | 40% |
 | Review | 97 | 28 | 3 | 29% |
 | Ship | 5 | 2 | 1 | 40% |
 | Reflect | 10 | 5 | 3 | 50% |
@@ -1024,4 +1026,4 @@ All 928 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **928** | **344** | **35** | **37%** |
+| **Total** | **930** | **344** | **35** | **37%** |
