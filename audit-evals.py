@@ -748,9 +748,15 @@ def brew_tap_exists(triple):
     Homebrew's convention is that a tap lives at `owner/homebrew-<tap>` on GitHub, and
     that repo is the authority on whether the tap exists. Reuses `gh_repo_exists` rather
     than adding a second GitHub probe. The finding is reported against the token the page
-    writes (`Kilo-Org/tap/kilo`), not the repo slug derived from it."""
+    writes (`Kilo-Org/tap/kilo`), not the repo slug derived from it.
+
+    `tap` itself may already carry the `homebrew-` prefix (a naked tap slug vs. the
+    full tap repo name); prefixing blindly double-produces `homebrew-homebrew-<tap>`,
+    which 404s on an otherwise-valid tap. Only prepend when absent."""
     owner, tap, _name = triple.split("/", 2)
-    return gh_repo_exists(f"{owner}/homebrew-{tap}")
+    if not tap.startswith("homebrew-"):
+        tap = f"homebrew-{tap}"
+    return gh_repo_exists(f"{owner}/{tap}")
 
 # ---------------------------------------------------------------- A. installs
 # Resolvable forms: pip/pipx, npm, brew, cargo, generic npx (incl. `npx skills add
