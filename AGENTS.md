@@ -1,5 +1,7 @@
 # AI Tooling
 
+> **Three layers:** root invariants → `central-brain/global-instructions/AGENTS.md` · role → `~/.hermes/agents/sabine-wren.md` · scope = this file (catalog format, required invariants, canonical commands, triage/elimination rules).
+
 Documentation-only repository; no default build, test, or deploy command.
 
 ## Purpose
