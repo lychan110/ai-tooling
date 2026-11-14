@@ -3,7 +3,7 @@
 **Repo:** [bytedance/UI-TARS-desktop](https://github.com/bytedance/UI-TARS-desktop)
 **Stars:** ~37,000 | **Last updated:** 2026-06-18 | **License:** Apache-2.0
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-11-14  <!-- triaged: bulk -->
 **Dev loop stage:** Implement (GUI agent stack)
 **Layer:** Tooling
 
@@ -20,7 +20,9 @@ The defining capability is vision-driven control: the agent perceives a real GUI
 
 ## How we tested it
 
-**Evidence:** REVIEW
+**Evidence:** SOURCE-ONLY
+
+We did **not** install or run this tool. This evaluation is source-grounded only: repo metadata (archival status) plus the CATALOG "Ships inside" cell. That supports a SKIP that turns on the repo being archived with no successor; it would not support an ADOPT, and this eval offers none.
 
 Architecture review against the README and the two-project structure (Agent TARS CLI/Web UI + MCP integration; UI-TARS Desktop native GUI agent with computer/browser operators powered by the UI-TARS model). Confirmed the multimodal/vision-driven control model and the local+remote operator support. Did not run the desktop app or drive a live GUI, so condition-gated.
 
@@ -53,24 +55,15 @@ gh api repos/bytedance/UI-TARS-desktop/readme --jq '.content' | base64 -d
 
 ## Verdict
 
-**discovery-log — tentative read**
+**SKIP** — archived, no successor. repo-metadata.json (fetched 2026-11-12) marks bytedance/ui-tars-desktop `archived: true`; `resolved_name` is the repo itself, so there is no successor to repoint the link to.
 
 Adopt when you need an agent to operate real GUIs/browsers — desktop automation, computer-use, or web tasks without APIs — and can run it under supervision/sandboxing given the action risk. As a coding-dev-loop tool it's adjacent (automation/QA infra rather than code authoring). Strong, well-backed option in the GUI-agent space; weigh the safety surface and compute needs.
 
 ## Triage note
 
-Left at `discovery-log`. Apache-2.0, ★38.4K, pushed 2026-08-02.
+Moved from `discovery-log` to `SKIP` by the P1 successor-check band: the repo is archived with no successor catalogued.
 
-Its eval contains the closest thing in this slice to a scope concession — "as a coding-dev-loop tool
-it's **adjacent** (automation/QA infra rather than code authoring)" — and adjacent is deliberately not
-out. The two preceding slices disposed thirty-three rows that build *the product*; this one drives
-real GUIs and browsers, which is Verify-stage automation on software you are working on. Different
-side of the same line, and the same distinction that kept `hermes-webui` in the previous pass.
-
-The Safety surface is the real item: a vision agent driving your actual mouse, keyboard and browser
-needs supervision or isolation, and the eval says so. That is a condition, not a disposal.
-
-_Triaged 2026-08-04 by the P3 backlog band ([#268](https://github.com/mattbutlerengineering/ai-tooling/issues/268))._
+_Triaged 2026-11-14 by the P1 successor-check band._
 
 ## Catalog entry
 

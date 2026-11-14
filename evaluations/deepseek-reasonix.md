@@ -3,7 +3,7 @@
 **Repo:** [esengine/DeepSeek-Reasonix](https://github.com/esengine/DeepSeek-Reasonix)
 **Stars:** 23,214 | **Last updated:** 2026-06-19 (pushed; created 2026-04-21) | **License:** MIT
 **Last verified:** 2026-06-22  <!-- backfilled from last git edit; not a hands-on re-check -->
-**Last triaged:** 2026-08-04  <!-- triaged: bulk -->
+**Last triaged:** 2026-11-14  <!-- triaged: bulk -->
 **Dev loop stage:** Implement (inner loop) — a terminal coding agent you point at a repo (`reasonix run "implement the TODOs in main.go"`), with the same agentic surface as Claude Code / opencode: tools, plugins (MCP), slash commands, `@` references, permissions/sandbox, checkpoints. Touches Plan and Verify only insofar as the agent plans-then-edits-then-tests inside one session.
 **Layer:** Infrastructure (a single static Go binary harness that drives an LLM over your codebase) + Tooling (config-driven provider/tool/plugin registry)
 
@@ -17,7 +17,9 @@ The pitch is narrow and concrete: a harness **tuned around DeepSeek's prefix cac
 
 ## How we tested it
 
-**Evidence:** REVIEW
+**Evidence:** SOURCE-ONLY
+
+We did **not** install or run this tool. This evaluation is source-grounded only: repo metadata (archival status) plus the CATALOG entry. That supports a SKIP that turns on the repo being archived with no successor; it would not support an ADOPT, and this eval offers none.
 
 **Source-grounded inspection — not installed, not run.** No binary was installed, no `reasonix.toml` was written, no `reasonix run` was executed against a repo, and no DeepSeek API key was used. Every claim below comes from the repository (GitHub metadata, README, recursive file tree, CHANGELOG, commit/release/contributor counts) — not from observed agent behavior. The "low token cost / cache-stable" framing is the authors' design claim; we did not measure tokens, latency, or edit quality. The oosmetrics "Top 2 in Agents by velocity" badges in the README are third-party velocity rankings, not correctness benchmarks.
 
@@ -58,23 +60,15 @@ gh api repos/esengine/DeepSeek-Reasonix/contributors --jq 'length'  # 30 (page-1
 
 ## Verdict
 
-**discovery-log — tentative read: adopt only if DeepSeek (or MiMo) is your primary coding model; otherwise DEFER.** Reasonix is a genuinely well-engineered terminal coding agent: static Go binary, signed releases, MCP plugins, checkpoints, two-model setup, and a clear, honest thesis (cost-optimize around one provider's prefix cache). That thesis is also its boundary — the differentiating optimization only pays off on DeepSeek/MiMo, the project is 2 months old with a just-completed Go rewrite and active config-path migrations, and the headline cost claims are unmeasured. For a DeepSeek-on-a-budget shop running long sessions it is a strong, specific pick worth piloting; for a Claude Code / GPT user it's a generic agent without its raison d'être.
+**SKIP** — archived, no successor. repo-metadata.json (fetched 2026-11-12) marks esengine/deepseek-reasonix `archived: true`, `discontinued: "no longer maintained"`; `resolved_name` is the repo itself, so there is no successor to repoint the link to. Reasonix is a genuinely well-engineered terminal coding agent: static Go binary, signed releases, MCP plugins, checkpoints, two-model setup, and a clear, honest thesis (cost-optimize around one provider's prefix cache). That thesis is also its boundary — the differentiating optimization only pays off on DeepSeek/MiMo, the project is 2 months old with a just-completed Go rewrite and active config-path migrations, and the headline cost claims are unmeasured. For a DeepSeek-on-a-budget shop running long sessions it is a strong, specific pick worth piloting; for a Claude Code / GPT user it's a generic agent without its raison d'être.
 
 Compared to neighbors: **opencode** and **goose** are more mature, model-agnostic platforms — better defaults if you're not married to DeepSeek. **qwen-code** is the closest analog (a vendor-native CLI agent built around one model family); Reasonix differs by optimizing for *cache economics* rather than model capability. Against all three, Reasonix wins only on the narrow axis of DeepSeek token efficiency and Go-binary distribution; it does not yet have the track record or breadth to displace them as a default.
 
 ## Triage note
 
-Left at `discovery-log`. MIT, ★30.7K, pushed today. See the cluster note on [`gemini-cli`](./gemini-cli.md) for the finding that governs this whole section: ~20 catalog rows answer one question, and every eval in it independently says the choice is made on model and ecosystem rather than capability.
+Moved from `discovery-log` to `SKIP` by the P1 successor-check band: the repo is archived, discontinued ("no longer maintained"), and has no successor catalogued.
 
-Its thesis is unusual enough to be worth preserving: it optimizes for **prefix-cache economics** on
-one provider rather than for model capability — a Cost-Efficiency play, not a Correctness one. That
-makes it non-substitutable with the capability-led members of the cluster.
-
-Compared with `clawcodex`, which chases the same DeepSeek cache economics: this one is the
-better-engineered of the pair (static Go binary, signed releases, ★30.7K vs ★848). Not enough to
-dispose the other — see its note — but recorded so the comparison is not re-derived.
-
-_Triaged 2026-08-04 by the P3 backlog band ([#268](https://github.com/mattbutlerengineering/ai-tooling/issues/268))._
+_Triaged 2026-11-14 by the P1 successor-check band._
 
 ## Catalog entry
 

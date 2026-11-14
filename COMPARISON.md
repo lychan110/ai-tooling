@@ -169,7 +169,7 @@ All 930 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Continuous-Claude-v3 | harness | ✓ | ✓ | SKIP | REVIEW |
 | CowAgent | harness | | ✓ | SKIP | REVIEW |
 | deer-flow | harness | | ✓ | SKIP | REVIEW |
-| DeepSeek-Reasonix | platform | | ✓ | discovery-log | REVIEW |
+| DeepSeek-Reasonix | platform | | ✓ | SKIP | SOURCE-ONLY |
 | dify | platform | | ✓ | SKIP | REVIEW |
 | activepieces | platform | | ✓ | SKIP | SOURCE-ONLY |
 | onyx | platform | | ✓ | SKIP | SOURCE-ONLY |
@@ -324,7 +324,7 @@ All 930 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | beta9 | platform | ✓ | ✓/$ | discovery-log | REVIEW |
 | cua | harness | ✓ | ✓/$ | discovery-log | REVIEW |
 | txtai | framework | ✓ | ✓ | SKIP | REVIEW |
-| UI-TARS-desktop | harness | ✓ | ✓ | discovery-log | REVIEW |
+| UI-TARS-desktop | harness | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | LongHorizon-Harness | harness | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | opensquilla | tool | | ✓ | SKIP | REVIEW |
 | architect-loop | skill |  | ✓ | CONDITIONAL | REVIEW |
@@ -1015,7 +1015,7 @@ All 930 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 82 | 35 | 6 | 43% |
-| Implement | 279 | 120 | 4 | 43% |
+| Implement | 279 | 122 | 4 | 44% |
 | Verify | 35 | 14 | 2 | 40% |
 | Review | 97 | 28 | 3 | 29% |
 | Ship | 5 | 2 | 1 | 40% |
@@ -1026,4 +1026,4 @@ All 930 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **930** | **344** | **35** | **37%** |
+| **Total** | **930** | **346** | **35** | **37%** |
