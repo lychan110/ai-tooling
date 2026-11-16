@@ -54,7 +54,7 @@ reference harness (plans 016-019). Measured 2026-10-01 (`total_count` per topic)
 
 | Tier | Topics |
 |------|--------|
-| **Agnostic (run first)** | `agent-skills` · `mcp-server` · `ai-agents` · `coding-agent` · `ai-coding-agent` · `agent-harness` |
+| **Agnostic (run first)** | `agent-skills` · `mcp-server` · `ai-agents` · `coding-agent` · `ai-coding-agent` · `agent-harness` · `agent-client-protocol` · `acp-client` · `p2p-agent` · `distributed-agents` |
 | **Harness-named (run second)** | `opencode` · `hermes-agent` |
 | **Benched (run last, heavy dedup)** | `claude-code` · `claude-skills` |
 
