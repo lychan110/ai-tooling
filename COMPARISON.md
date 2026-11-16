@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 930 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 932 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -100,6 +100,7 @@ All 930 tools from CATALOG.md with dev loop stage, automation capability, pricin
 
 | Tool | Type | Auto | Free | Evaluated | Evidence |
 |------|------|------|------|------|------|
+| stalemap | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | agency-agents | harness | | ✓ | SKIP | REVIEW |
 | sol-skill | skill | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | CoordClaw | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
@@ -721,6 +722,7 @@ All 930 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | tech-leads-club/agent-skills | skill | | ✓ | discovery-log | REVIEW |
 | softaworks/agent-toolkit | skill | | ✓ | discovery-log | SOURCE-ONLY |
 | NVIDIA/skills | skill | | ✓ | discovery-log | SOURCE-ONLY |
+| BeautifulRust | skill | | ✓ | discovery-log | SOURCE-ONLY |
 | loopy | skill | | ✓ | discovery-log | SOURCE-ONLY |
 | company-os-starter-kit | plugin | | ✓ | SKIP | SOURCE-ONLY |
 | council-of-high-intelligence | tool | | ✓ | discovery-log | SOURCE-ONLY |
@@ -1015,15 +1017,15 @@ All 930 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 82 | 35 | 6 | 43% |
-| Implement | 279 | 122 | 4 | 44% |
+| Implement | 280 | 122 | 4 | 44% |
 | Verify | 35 | 14 | 2 | 40% |
 | Review | 97 | 28 | 3 | 29% |
 | Ship | 5 | 2 | 1 | 40% |
 | Reflect | 10 | 5 | 3 | 50% |
 | Outer Loop | 80 | 22 | 3 | 28% |
-| Skills & Plugins | 122 | 42 | 4 | 34% |
+| Skills & Plugins | 123 | 42 | 4 | 34% |
 | Memory & Context | 80 | 31 | 2 | 39% |
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **930** | **346** | **35** | **37%** |
+| **Total** | **932** | **346** | **35** | **37%** |

@@ -1,8 +1,8 @@
 # Next evals — a banded promotion queue
 
-The 584 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
+The 586 `discovery-log` leads, **derived** (not hand-maintained) from data already in the repo plus `repo-metadata.json`. Regenerate with `uv run triage.py`; do not edit between the markers.
 
-Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 103 distinct values across these 584 leads (252 have zero overlap pressure; largest tie: 46) — enough to pick a head, not to rank a tail. In the score-based bands (`P2`/`P3`) a lead stamped `**Last triaged:**` sinks within its band so each pass surfaces un-examined ones. **The structural bands do not work that way**: `P1`/`P4`/`P5` hold a row because of a metadata fact (`archived`, a disqualifying license, `Ships inside`), so a stamp neither clears nor reorders them — a one-row structural band means the fact is still true, not that the queue is exhausted.
+Leads are grouped into **bands**, not a single ranked list. Within a band the order is `2*overlap_pressure + stage_gap_weight + evidence_bonus` (see `next-evals.py`), but that score has only 102 distinct values across these 586 leads (253 have zero overlap pressure; largest tie: 47) — enough to pick a head, not to rank a tail. In the score-based bands (`P2`/`P3`) a lead stamped `**Last triaged:**` sinks within its band so each pass surfaces un-examined ones. **The structural bands do not work that way**: `P1`/`P4`/`P5` hold a row because of a metadata fact (`archived`, a disqualifying license, `Ships inside`), so a stamp neither clears nor reorders them — a one-row structural band means the fact is still true, not that the queue is exhausted.
 
 **Eliminate-only.** Outside `P0 measure`, an unattended agent may SKIP a lead or leave it at `discovery-log`; it may never write ADOPT/KEEP/CONDITIONAL. A false SKIP is cheap and reversible; a false ADOPT poisons STACK. Detector Q gates this.
 
@@ -11,7 +11,7 @@ Leads are grouped into **bands**, not a single ranked list. Within a band the or
 | **P0 measure** | score-ranked head | 25 | human or `eval-runner` only — the one band that may reach ADOPT |
 | **P1 successor-check** | `archived == true` | 0 | repoint the link to a successor, or SKIP "archived, no successor" |
 | **P2 challenger** | overlaps a tool already in STACK | 167 | SKIP "redundant with `<incumbent>`", or leave at discovery-log |
-| **P3 backlog** | everything else | 387 | leave; stamp `**Last triaged:**` only |
+| **P3 backlog** | everything else | 389 | leave; stamp `**Last triaged:**` only |
 | **P4 mechanical-skip** | vendored Type under a disqualifying license | 0 | SKIP — zero judgement |
 | **P5 ships-inside** | the row declares a `Ships inside` container (#343) | 5 | settle the container, or SKIP "ships inside `<container>`" — never an independent lead |
 
@@ -78,14 +78,16 @@ _Listing 12 of 167 — rerun `uv run triage.py` and read the source for the tail
 | HolyClaude | Implement | 19.6 | challenges claude-squad · pressure 6, gap 5.6 | `/triage-lead HolyClaude` |
 | weave | Implement | 19.6 | challenges resolving-merge-conflicts · pressure 6, gap 5.6 | `/triage-lead weave` |
 
-## P3 backlog — 387 leads
+## P3 backlog — 389 leads
 
 _leave; stamp `**Last triaged:**` only._
 
-_Listing 12 of 387 — rerun `uv run triage.py` and read the source for the tail (no silent cap)._
+_Listing 12 of 389 — rerun `uv run triage.py` and read the source for the tail (no silent cap)._
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
+| BeautifulRust | Skills & Plugins | 6.6 | pressure 0, gap 6.6 | `/triage-lead BeautifulRust` |
+| stalemap | Implement | 5.6 | pressure 0, gap 5.6 | `/triage-lead stalemap` |
 | CLIProxyAPI | Implement | 25.6 | pressure 10, gap 5.6 | `/triage-lead CLIProxyAPI` |
 | claude-code-router | Implement | 25.6 | pressure 9, gap 5.6 | `/triage-lead claude-code-router` |
 | qwen-code | Implement | 25.6 | pressure 9, gap 5.6 | `/triage-lead qwen-code` |
@@ -96,8 +98,6 @@ _Listing 12 of 387 — rerun `uv run triage.py` and read the source for the tail
 | buildwithclaude | Reference | 23.1 | pressure 7, gap 7.1 | `/triage-lead buildwithclaude` |
 | slidev | Skills & Plugins | 22.6 | pressure 7, gap 6.6 | `/triage-lead slidev` |
 | ccpm | Plan | 21.7 | pressure 7, gap 5.7 | `/triage-lead ccpm` |
-| fast-agent | Implement | 21.6 | pressure 7, gap 5.6 | `/triage-lead fast-agent` |
-| Helicone | Outer Loop | 21.2 | pressure 6, gap 7.2 | `/triage-lead Helicone` |
 
 ## P4 mechanical-skip — 0 leads
 
