@@ -86,11 +86,6 @@ _Listing 12 of 387 — rerun `uv run triage.py` and read the source for the tail
 
 | Tool | Stage | Score | Why | Command |
 |------|-------|-------|-----|---------|
-| agent-hud-open | Outer Loop | 7.2 | pressure 0, gap 7.2 | `/triage-lead agent-hud-open` |
-| scrawl | Review | 7.1 | pressure 0, gap 7.1 | `/triage-lead scrawl` |
-| sandbox-mcp | Verify | 6.0 | pressure 0, gap 6.0 | `/triage-lead sandbox-mcp` |
-| devvm | Implement | 5.6 | pressure 0, gap 5.6 | `/triage-lead devvm` |
-| reason-network | Implement | 5.6 | pressure 0, gap 5.6 | `/triage-lead reason-network` |
 | CLIProxyAPI | Implement | 25.6 | pressure 10, gap 5.6 | `/triage-lead CLIProxyAPI` |
 | claude-code-router | Implement | 25.6 | pressure 9, gap 5.6 | `/triage-lead claude-code-router` |
 | qwen-code | Implement | 25.6 | pressure 9, gap 5.6 | `/triage-lead qwen-code` |
@@ -98,6 +93,11 @@ _Listing 12 of 387 — rerun `uv run triage.py` and read the source for the tail
 | NeMo-Guardrails | Outer Loop | 23.2 | pressure 8, gap 7.2 | `/triage-lead NeMo-Guardrails` |
 | ag-ui | Reference | 23.1 | pressure 7, gap 7.1 | `/triage-lead ag-ui` |
 | awesome-claude-skills (Composio) | Reference | 23.1 | pressure 7, gap 7.1 | `/triage-lead awesome-claude-skills (Composio)` |
+| buildwithclaude | Reference | 23.1 | pressure 7, gap 7.1 | `/triage-lead buildwithclaude` |
+| slidev | Skills & Plugins | 22.6 | pressure 7, gap 6.6 | `/triage-lead slidev` |
+| ccpm | Plan | 21.7 | pressure 7, gap 5.7 | `/triage-lead ccpm` |
+| fast-agent | Implement | 21.6 | pressure 7, gap 5.6 | `/triage-lead fast-agent` |
+| Helicone | Outer Loop | 21.2 | pressure 6, gap 7.2 | `/triage-lead Helicone` |
 
 ## P4 mechanical-skip — 0 leads
 
