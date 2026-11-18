@@ -3,6 +3,7 @@
 **Repo:** [Umair/stalemap](https://github.com/Umair/stalemap)
 **Stars:** 109 | **Last updated:** 2026-11-01 (pushed) | **License:** MIT
 **Last verified:** 2026-11-16
+**Last triaged:** 2026-11-18  <!-- triaged: bulk -->
 **Dev loop stage:** Implement
 **Layer:** Tooling
 
