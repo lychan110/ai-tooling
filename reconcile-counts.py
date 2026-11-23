@@ -38,7 +38,7 @@ if _spec is None or _spec.loader is None:  # a sibling in this repo — absent m
 ae = importlib.util.module_from_spec(_spec); _spec.loader.exec_module(ae)
 
 def read(p):  return Path(ROOT, p).read_text(encoding="utf-8")
-def write(p, s): Path(ROOT, p).write_text(s, encoding="utf-8")
+def write(p, s): Path(ROOT, p).write_text(s, encoding="utf-8", newline="\n")
 
 def catalog_count(root=None):
     # `root` is injectable for tests (#199); the CLI always counts this repo's tree.

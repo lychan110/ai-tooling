@@ -112,7 +112,7 @@ def main():
         if new != text:
             changed.append(os.path.relpath(path, ROOT))
             if not check:
-                Path(path).write_text(new, encoding="utf-8")
+                Path(path).write_text(new, encoding="utf-8", newline="\n")
 
     # Built from a fresh DetectorContext AFTER the eval rewrites above, so the
     # map reflects any Evidence fields this run just inserted (#199/#201).
@@ -122,7 +122,7 @@ def main():
     if cnew != ctext:
         changed.append("COMPARISON.md")
         if not check:
-            Path(COMPARISON).write_text(cnew, encoding="utf-8")
+            Path(COMPARISON).write_text(cnew, encoding="utf-8", newline="\n")
 
     if check:
         if changed:

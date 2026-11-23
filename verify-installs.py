@@ -288,7 +288,7 @@ def main(argv):
     if new == text:
         print("install-evidence: already current")
         return 0
-    Path(LEDGER).write_text(new, encoding="utf-8")
+    Path(LEDGER).write_text(new, encoding="utf-8", newline="\n")
     counts = {}
     for v in exact.values():
         counts[v.split()[0]] = counts.get(v.split()[0], 0) + 1

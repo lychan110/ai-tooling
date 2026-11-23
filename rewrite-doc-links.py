@@ -80,7 +80,12 @@ def rewrite_tree(dest_dir, repo_root):
                 text = fh.read()
             fixed = rewrite_text(text, root_rel, dest_dir, repo_root)
             if fixed != text:
-                with open(path, "w", encoding="utf-8") as fh:
+                # newline="\n" so the rewrite emits LF on every platform. The default
+                # (text mode) translates to CRLF on Windows, which turned every
+                # rewritten file in plugin/docs/ into CRLF drift against the LF git
+                # object — the reason `but status` showed reconfigured docs as
+                # modified on this host.
+                with open(path, "w", encoding="utf-8", newline="\n") as fh:
                     fh.write(fixed)
                 changed += 1
     return changed

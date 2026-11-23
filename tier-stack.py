@@ -107,7 +107,7 @@ def main():
         print("tier-stack check: OK — STACK.md evidence tiers match the Evidence data")
         sys.exit(0)
     if new != text:
-        Path(STACK).write_text(new, encoding="utf-8")
+        Path(STACK).write_text(new, encoding="utf-8", newline="\n")
         print("tier-stack: regenerated the Evidence tiers block in STACK.md")
     else:
         print("tier-stack: STACK.md already up to date")

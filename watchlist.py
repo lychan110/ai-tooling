@@ -362,7 +362,7 @@ def main():
         print("watchlist check: OK — WATCHLIST.md matches the derived watchlist")
         sys.exit(0)
     if new != current:
-        Path(WATCHLIST).write_text(new, encoding="utf-8")
+        Path(WATCHLIST).write_text(new, encoding="utf-8", newline="\n")
         print("watchlist: regenerated WATCHLIST.md")
     else:
         print("watchlist: WATCHLIST.md already up to date")
