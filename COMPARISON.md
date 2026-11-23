@@ -1,6 +1,6 @@
 # Tool Comparison
 
-All 932 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
+All 934 tools from CATALOG.md with dev loop stage, automation capability, pricing, and evaluation status at a glance.
 
 **Verdict vocabulary** (per [ADR-0005](docs/adr/0005-verdict-vocabulary.md), implemented in #69):
 
@@ -107,6 +107,7 @@ All 932 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | IvyClaw | framework | | ✓ | SKIP | SOURCE-ONLY |
 | opendot | harness | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | filesnap | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| rust-anything | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | agent-orchestrator | tool | ✓ | ✓ | discovery-log | REVIEW |
 | sigbound | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | agmsg | tool | ✓ | ✓ | discovery-log | REVIEW |
@@ -630,6 +631,7 @@ All 932 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | agit | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | ltrace | tool | | ✓ | discovery-log | SOURCE-ONLY |
 | agent-track | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| kanzo | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | Clawdeck | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | CodingPlanQuota | tool | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 
@@ -1017,15 +1019,15 @@ All 932 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 82 | 35 | 6 | 43% |
-| Implement | 280 | 122 | 4 | 44% |
+| Implement | 281 | 122 | 4 | 43% |
 | Verify | 35 | 14 | 2 | 40% |
 | Review | 97 | 28 | 3 | 29% |
 | Ship | 5 | 2 | 1 | 40% |
 | Reflect | 10 | 5 | 3 | 50% |
-| Outer Loop | 80 | 22 | 3 | 28% |
+| Outer Loop | 81 | 22 | 3 | 27% |
 | Skills & Plugins | 123 | 42 | 4 | 34% |
 | Memory & Context | 80 | 31 | 2 | 39% |
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **932** | **346** | **35** | **37%** |
+| **Total** | **934** | **346** | **35** | **37%** |
