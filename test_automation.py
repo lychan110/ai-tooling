@@ -3061,10 +3061,14 @@ class TestInstallHarness(unittest.TestCase):
     def _run(self, *args, home):
         # `bash <script>` rather than `./<script>`: chmod is deny-ruled on the authoring
         # host, so a file created through ctx_patch has no exec bit.
+        # Forward-slash HOME/XDG_DATA_HOME: the script's `sed`/`mkdir`/`cp` are MSYS tools
+        # that read backslashes as escapes, so a native Windows temp path corrupts the
+        # rendered pointer.
+        home = home.replace("\\", "/")
         return subprocess.run(["bash", os.path.join(ROOT, "install-harness.sh"), *args],
                               capture_output=True, text=True, check=False,
                               env={**os.environ, "HOME": home,
-                                   "XDG_DATA_HOME": os.path.join(home, ".local", "share")})
+                                   "XDG_DATA_HOME": os.path.join(home, ".local", "share").replace("\\", "/")})
 
     def test_install_renders_both_harnesses_and_the_pointer_resolves(self):
         """The one e2e case: run the real script, then follow the pointer it wrote."""
@@ -3080,7 +3084,7 @@ class TestInstallHarness(unittest.TestCase):
                 self.assertNotIn("${AI_TOOLING_DOCS}", text, msg="token left unresolved")
 
                 # Follow the rendered pointer: the doc the skill names must exist on disk.
-                pointer = re.search(r"/\S*/ai-tooling/docs/STACK\.md", text)
+                pointer = re.search(r"(?:[A-Za-z]:)?[\\/][^\s`]*ai-tooling[\\/]docs[\\/]STACK\.md", text)
                 self.assertIsNotNone(pointer, msg="no resolved docs pointer in the skill")
                 self.assertTrue(Path(pointer.group(0)).is_file(), msg=pointer.group(0))
                 self.assertTrue(os.path.realpath(pointer.group(0)).startswith(os.path.realpath(home)),
@@ -4372,6 +4376,13 @@ class TestLinkRotUnknowns(unittest.TestCase):
         with open(p, "w", encoding="utf-8") as f:
             f.write("#!/bin/sh\n" + body + "\n")
         os.chmod(p, 0o755)
+        # Windows CreateProcess cannot exec an extensionless script, so add a .cmd shim
+        # that runs the same body through the host's sh. `sh` is resolved absolutely —
+        # the subprocess PATH is stripped to this dir, so a bare name would not resolve.
+        sh = shutil.which("sh") or shutil.which("bash")
+        if os.name == "nt" and sh:
+            with open(os.path.join(bindir, "gh.cmd"), "w", encoding="utf-8", newline="") as f:
+                f.write(f'@echo off\r\n"{sh}" "%~dp0gh" %*\r\n')
         return bindir
 
     def _run(self, gh_body, catalog=None):
@@ -4461,6 +4472,12 @@ class TestArchivedProbe(unittest.TestCase):
         with open(p, "w", encoding="utf-8") as f:
             f.write("#!/bin/sh\n" + body + "\n")
         os.chmod(p, 0o755)
+        # Windows CreateProcess cannot exec an extensionless script, so add a .cmd shim
+        # (see TestLinkRotUnknowns._fake_gh for the rationale).
+        sh = shutil.which("sh") or shutil.which("bash")
+        if os.name == "nt" and sh:
+            with open(os.path.join(bindir, "gh.cmd"), "w", encoding="utf-8", newline="") as f:
+                f.write(f'@echo off\r\n"{sh}" "%~dp0gh" %*\r\n')
         return bindir
 
     def _run(self, gh_body=None, catalog=None):
@@ -4642,7 +4659,9 @@ class TestSweepWorkflow(unittest.TestCase):
         comment and the INCONCLUSIVE handling both need revisiting again — fail here
         rather than let the workflow quietly describe a transport it no longer uses."""
         src = inspect.getsource(audit.check_repo)
-        self.assertIn('"gh", "api"', src)
+        # `_gh_exe()` resolves the `gh` binary (so a PATHEXT shim, gh.cmd/gh.bat, works
+        # on Windows); the call is still the authenticated `gh api`.
+        self.assertIn('_gh_exe(), "api"', src)
         self.assertIn("subprocess.run", src)
         self.assertNotIn("urllib.request.urlopen", src)
 

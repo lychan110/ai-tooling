@@ -10,6 +10,10 @@ REPO_ROOT="$(cd "$(dirname "$0")" && pwd)"
 SKILLS_SRC="$REPO_ROOT/plugin/skills"
 DOCS_SRC="$REPO_ROOT/plugin/docs"
 DOCS_DEST="${XDG_DATA_HOME:-$HOME/.local/share}/ai-tooling/docs"
+# Forward slashes only: DOCS_DEST is both a filesystem path (fine with "/" on Windows)
+# and a sed replacement, where a backslash is eaten as an escape — which silently
+# corrupted the docs pointer a Windows install wrote into each rendered SKILL.md.
+DOCS_DEST="${DOCS_DEST//\\//}"
 
 skills_dest_for() {
   case "$1" in
@@ -30,8 +34,11 @@ render_skills() {
 }
 
 install_docs() {
+  # rsync on this Windows host parses a C:/ path as an ssh host, so the mirror is done
+  # with POSIX tools that read MSYS paths: clear the target, then copy the tree in.
+  [ -n "$DOCS_DEST" ] && rm -rf -- "$DOCS_DEST"
   mkdir -p "$DOCS_DEST"
-  rsync -a --delete "$DOCS_SRC/" "$DOCS_DEST/"
+  cp -R "$DOCS_SRC/." "$DOCS_DEST/"
 }
 
 check_installed() {
