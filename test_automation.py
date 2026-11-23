@@ -4374,12 +4374,12 @@ class TestLinkRotUnknowns(unittest.TestCase):
         os.chmod(p, 0o755)
         return bindir
 
-    def _run(self, gh_body):
+    def _run(self, gh_body, catalog=None):
         """(stdout+stderr) of a real `--links` run against a 2-row catalog."""
         with tempfile.TemporaryDirectory() as d:
             shutil.copy(os.path.join(ROOT, "audit-evals.py"), os.path.join(d, "audit-evals.py"))
             shutil.copy(os.path.join(ROOT, "catalog_lib.py"), os.path.join(d, "catalog_lib.py"))
-            _write(d, "CATALOG.md", self.CATALOG)
+            _write(d, "CATALOG.md", catalog or self.CATALOG)
             bindir = self._fake_gh(d, gh_body)
             r = subprocess.run([sys.executable, "audit-evals.py", "--links"], cwd=d,
                                capture_output=True, text=True, check=False,
@@ -4413,6 +4413,19 @@ class TestLinkRotUnknowns(unittest.TestCase):
         out = self._run('case "$2" in repos/x/a) echo "x/a" ;; repos/x/b) echo "y/b" ;; esac')
         self.assertIn("MOVED x/b -> y/b", out)
         self.assertNotIn("MOVED x/a", out)
+
+    def test_a_tombstoned_moved_row_is_not_reported_as_moved(self):
+        # awesome-hermes-agent: the entry already records the repo as GONE/repurposed
+        # (SKIP tombstone). gh still resolves it to a new slug, but that must print as
+        # an already-recorded `tombstoned` line, never an actionable `MOVED` (repointing
+        # is a whole-class decision, not the sweep's).
+        cat = self.CATALOG.replace(
+            "| [b](https://github.com/x/b) | tool | one | two | none |",
+            "| [b](https://github.com/x/b) | tool | one | two | GONE, repurposed; SKIP tombstone |")
+        out = self._run('case "$2" in repos/x/a) echo "x/a" ;; repos/x/b) echo "y/b" ;; esac',
+                        catalog=cat)
+        self.assertIn("tombstoned x/b", out)
+        self.assertNotIn("MOVED x/b", out)
 
     def test_reporting_says_inconclusive_not_ok(self):
         # End-to-end through main(): the output a maintainer actually reads must not
@@ -4592,6 +4605,7 @@ class TestSweepWorkflow(unittest.TestCase):
         for line in [
             "  tombstoned 0xwilliamortiz/agents-council — 404 already recorded in the entry",
             "  tombstoned vkhanhqui/figma-mcp-go — 451 access blocked, already recorded in the entry",
+            "  tombstoned x/b — already recorded in the entry",
         ]:
             self.assertFalse(self._matches(line), msg=f"must not be actionable: {line!r}")
 
