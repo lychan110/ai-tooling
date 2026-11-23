@@ -94,7 +94,7 @@ def main():
         if new != text:
             changed.append(rel)
             if not check:
-                Path(path).write_text(new, encoding="utf-8")
+                Path(path).write_text(new, encoding="utf-8", newline="\n")
 
     if check:
         if changed:

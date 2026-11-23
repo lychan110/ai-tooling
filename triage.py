@@ -433,7 +433,7 @@ def main():
         print("triage check: OK — NEXT-EVALS.md matches the derived bands")
         sys.exit(0)
     if new != current:
-        Path(NEXT).write_text(new, encoding="utf-8")
+        Path(NEXT).write_text(new, encoding="utf-8", newline="\n")
         print("triage: regenerated NEXT-EVALS.md")
     else:
         print("triage: NEXT-EVALS.md already up to date")
