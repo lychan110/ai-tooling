@@ -620,6 +620,7 @@ import importlib.util
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import urllib.error
@@ -629,6 +630,16 @@ from pathlib import Path
 import catalog_lib
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
+
+
+def _md_files(root, *patterns):
+    """Sorted forward-slash rel paths for `patterns` under `root`.
+
+    `glob` returns Windows backslash separators under `root_dir` on this host, but every
+    consumer (`ctx.path`/`ctx.read` and a finding's `rel`) wants the "/" form the rest of
+    the repo uses — a backslash leaks straight into findings and the tests."""
+    return sorted(p.replace(os.sep, "/")
+                  for pat in patterns for p in glob.glob(pat, root_dir=root))
 
 
 def _load_sibling(name, filename):
@@ -724,8 +735,14 @@ def _run_status(cmd):
 def npm_exists(pkg):
     return _run_status(["npm", "view", pkg, "version"])
 
+def _gh_exe():
+    """Absolute path to `gh`, so a PATHEXT shim (`gh.cmd`/`gh.bat`) resolves on Windows.
+    A bare `gh` goes through CreateProcess, which only ever appends `.exe` and so cannot
+    execute a `.cmd`; resolving here lets both the real binary and a shim be found."""
+    return shutil.which("gh") or "gh"
+
 def gh_repo_exists(slug):
-    return _run_status(["gh", "api", f"repos/{slug}", "--jq", ".full_name"])
+    return _run_status([_gh_exe(), "api", f"repos/{slug}", "--jq", ".full_name"])
 
 def pypi_exists(pkg):   return http_status(f"https://pypi.org/pypi/{pkg}/json")
 def crates_exists(pkg): return http_status(f"https://crates.io/api/v1/crates/{pkg}")
@@ -948,7 +965,7 @@ def audit_installs(ctx):
     Findings name the token the page writes, so a tap failure reads
     `[tap] owner/tap/name`, not the repo slug derived from it."""
     import concurrent.futures
-    files = ["STACK.md", "CATALOG.md", *sorted(glob.glob("evaluations/*.md", root_dir=ctx.root))]
+    files = ["STACK.md", "CATALOG.md", *_md_files(ctx.root, "evaluations/*.md")]
     checkers = {"pypi": pypi_exists, "crates": crates_exists, "npm": npm_exists,
                 "gh": gh_repo_exists, "brew": brew_formula_exists,
                 "cask": brew_cask_exists, "tap": brew_tap_exists}
@@ -1036,7 +1053,7 @@ def check_repo(slug):
     GitHub's redirect for a renamed repo, so a moved slug still resolves to its
     canonical `full_name` in one request — no separate rename probe needed."""
     try:
-        r = subprocess.run(["gh", "api", f"repos/{slug}", "--jq", ".full_name"],
+        r = subprocess.run([_gh_exe(), "api", f"repos/{slug}", "--jq", ".full_name"],
                            capture_output=True, text=True, timeout=TIMEOUT, check=False)
     except subprocess.TimeoutExpired:
         return _unknown("timeout")
@@ -1191,7 +1208,7 @@ def tombstoned(text, slug):
 def check_archived(slug):
     """`ArchivedProbe` — archived / live / gone / unchecked, with a reason."""
     try:
-        r = subprocess.run(["gh", "api", f"repos/{slug}", "--jq", "[.archived, .pushed_at[0:7]]"],
+        r = subprocess.run([_gh_exe(), "api", f"repos/{slug}", "--jq", "[.archived, .pushed_at[0:7]]"],
                            capture_output=True, text=True, check=False, timeout=TIMEOUT * 2)
     except FileNotFoundError:
         # `gh` absent is the case `_run_status` calls out: returning a verdict here counted
@@ -3810,8 +3827,7 @@ def audit_link_identity(ctx):
     """
     idx = catalog_lib.link_index(ctx.catalog)
     by_name, by_key = _text_row_index(ctx.catalog)
-    files = [*LINK_IDENTITY_FILES,
-             *sorted(glob.glob("evaluations/*.md", root_dir=ctx.root))]
+    files = [*LINK_IDENTITY_FILES, *_md_files(ctx.root, "evaluations/*.md")]
     findings, walked = [], 0
     for rel in files:
         if not os.path.exists(ctx.path(rel)):
@@ -4574,9 +4590,7 @@ def audit_claude_verbs(ctx):
     leaves a link broken everywhere alone. Gating is a later call once those are
     dispositioned, mirroring the `--overlaps` lifecycle.
     """
-    files = [*CLAUDE_VERB_PAGES,
-             *sorted(glob.glob("evaluations/*.md", root_dir=ctx.root)),
-             *sorted(glob.glob("discovery/*.md", root_dir=ctx.root))]
+    files = [*CLAUDE_VERB_PAGES, *_md_files(ctx.root, "evaluations/*.md", "discovery/*.md")]
     findings, walked = [], 0
     for rel in files:
         if not os.path.exists(ctx.path(rel)):
@@ -4659,9 +4673,7 @@ def audit_hermes_verbs(ctx):
     remedy for a live finding is a human's — guessing at a replacement is how a fix launders
     a wrong command into a plausible-looking one.
     """
-    files = [*HERMES_VERB_PAGES,
-             *sorted(glob.glob("evaluations/*.md", root_dir=ctx.root)),
-             *sorted(glob.glob("discovery/*.md", root_dir=ctx.root))]
+    files = [*HERMES_VERB_PAGES, *_md_files(ctx.root, "evaluations/*.md", "discovery/*.md")]
     findings, walked = [], 0
     for rel in files:
         if not os.path.exists(ctx.path(rel)):
