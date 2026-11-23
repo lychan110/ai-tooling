@@ -4918,8 +4918,10 @@ def main():
                 # An already-tombstoned death is recorded, not drifting: report it as
                 # such so the sweep's actionable grep does not re-fire on it every week
                 # (#22). It stays printed — the population is still fully reported.
-                if res == "dead" and tombstoned(ctx.catalog, slug):
-                    print(f"  tombstoned {slug} — 404 already recorded in the entry")
+                # `moved:` rows are suppressed too: a repoint is a whole-class decision,
+                # so an entry already tombstoned (SKIP) must not re-fire MOVED each sweep.
+                if (res == "dead" or res.startswith("moved:")) and tombstoned(ctx.catalog, slug):
+                    print(f"  tombstoned {slug} — already recorded in the entry")
                 else:
                     print(f"  {'DEAD' if res=='dead' else 'MOVED'} {slug}" + (f" -> {res[6:]}" if res.startswith('moved:') else ""))
         if unknowns:
