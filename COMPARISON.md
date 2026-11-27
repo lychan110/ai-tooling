@@ -210,7 +210,7 @@ All 934 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | LangChain.js | framework | | ✓ | SKIP | REVIEW |
 | LangGraph.js | framework | | ✓ | SKIP | REVIEW |
 | langchain | framework | | ✓ | SKIP | REVIEW |
-| autogen | framework | ✓ | ✓ | discovery-log | SOURCE-ONLY |
+| autogen | framework | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | MetaGPT | framework | ✓ | ✓ | discovery-log | SOURCE-ONLY |
 | llama_index | framework | ✓ | ✓ | SKIP | SOURCE-ONLY |
 | semantic-kernel | framework | ✓ | ✓ | SKIP | SOURCE-ONLY |
@@ -1019,7 +1019,7 @@ All 934 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | Stage | Tools | Validated | Recommended | Validated % |
 |-------|-------|-----------|-------------|-------------|
 | Plan | 82 | 35 | 6 | 43% |
-| Implement | 281 | 122 | 4 | 43% |
+| Implement | 281 | 123 | 4 | 44% |
 | Verify | 35 | 14 | 2 | 40% |
 | Review | 97 | 28 | 3 | 29% |
 | Ship | 5 | 2 | 1 | 40% |
@@ -1030,4 +1030,4 @@ All 934 tools from CATALOG.md with dev loop stage, automation capability, pricin
 | MCP Servers | 57 | 20 | 2 | 35% |
 | Research & Discovery | 24 | 8 | 1 | 33% |
 | Reference | 59 | 17 | 4 | 29% |
-| **Total** | **934** | **346** | **35** | **37%** |
+| **Total** | **934** | **347** | **35** | **37%** |

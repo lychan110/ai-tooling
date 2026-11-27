@@ -89,6 +89,16 @@
     "resolved_name": "1jehuang/jcode",
     "stars": 21997
   },
+  "1weiho/open-slide": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "MIT",
+    "pushed_at": "2026-11-25T10:01:32Z",
+    "resolved_name": "open-slide/open-slide",
+    "stars": 9915
+  },
   "2akouwu/reverify": {
     "archived": false,
     "discontinued": null,
@@ -199,10 +209,10 @@
     "resolved_name": "activepieces/activepieces",
     "stars": 25683
   },
-  "adand-91/gpt-6-astra-skill": {
+  "adand-91/requirement-ledger": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "MIT",
     "pushed_at": "2026-09-16T01:52:19Z",
@@ -430,16 +440,6 @@
     "resolved_name": null,
     "stars": null
   },
-  "agithq/agit": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "Apache-2.0",
-    "pushed_at": "2026-10-25T13:37:32Z",
-    "resolved_name": "agitHQ/agit",
-    "stars": 7
-  },
   "agno-agi/agno": {
     "archived": false,
     "discontinued": null,
@@ -480,15 +480,15 @@
     "resolved_name": "AgriciDaniel/claude-seo",
     "stars": 31771
   },
-  "ahujasid/mcp-for-blender": {
+  "ahujasid/blender-mcp": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "MIT",
     "pushed_at": "2026-11-18T10:27:07Z",
     "resolved_name": "ahujasid/mcp-for-blender",
-    "stars": 35465
+    "stars": 35740
   },
   "aider-ai/aider": {
     "archived": false,
@@ -1220,16 +1220,6 @@
     "resolved_name": "BoundaryML/baml",
     "stars": 9532
   },
-  "brandynfisher/toolreplay": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "MIT",
-    "pushed_at": "2026-09-14T12:09:08Z",
-    "resolved_name": "brandynfisher/ToolReplay",
-    "stars": 50
-  },
   "browser-act/skills": {
     "archived": false,
     "discontinued": null,
@@ -1260,15 +1250,15 @@
     "resolved_name": "bsab/italia-mcp-servers",
     "stars": 79
   },
-  "bug0inc/qa-agent": {
+  "bug0inc/passmark": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "NOASSERTION",
     "pushed_at": "2026-09-25T18:21:14Z",
     "resolved_name": "bug0inc/qa-agent",
-    "stars": 1338
+    "stars": 1339
   },
   "buildd-ai/buildd": {
     "archived": false,
@@ -1427,16 +1417,6 @@
     "pushed_at": "2026-08-15T15:31:52Z",
     "resolved_name": "charlie947/show-me",
     "stars": 111
-  },
-  "cheaper-inference/omniroute": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "MIT",
-    "pushed_at": "2026-11-23T11:22:25Z",
-    "resolved_name": "cheaper-inference/OmniRoute",
-    "stars": 89739
   },
   "cherryhq/cherry-studio": {
     "archived": false,
@@ -1668,16 +1648,6 @@
     "resolved_name": "cofy-x/axern",
     "stars": 65
   },
-  "coipond/coi": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "MIT",
-    "pushed_at": "2026-11-23T11:18:11Z",
-    "resolved_name": "coipond/coi",
-    "stars": 792
-  },
   "colbymchenry/codegraph": {
     "archived": false,
     "discontinued": null,
@@ -1863,15 +1833,15 @@
     "resolved_name": "CopilotKit/CopilotKit",
     "stars": 38908
   },
-  "copilotkit/openintelligentui": {
+  "copilotkit/opengenerativeui": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "MIT",
-    "pushed_at": "2026-11-20T00:13:47Z",
+    "pushed_at": "2026-11-23T17:12:11Z",
     "resolved_name": "CopilotKit/OpenIntelligentUI",
-    "stars": 4271
+    "stars": 4295
   },
   "coplaydev/unity-mcp": {
     "archived": false,
@@ -2063,15 +2033,15 @@
     "resolved_name": "deepaksinghcs14/deadeye-cc",
     "stars": 6
   },
-  "deeplethe/sandstorm": {
+  "deeplethe/forkd": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "Apache-2.0",
     "pushed_at": "2026-11-20T17:27:05Z",
     "resolved_name": "deeplethe/sandstorm",
-    "stars": 6103
+    "stars": 6111
   },
   "deepseek-ai/deepseek-harness": {
     "archived": false,
@@ -2142,6 +2112,16 @@
     "pushed_at": "2026-11-10T23:00:18Z",
     "resolved_name": "dheerajjha/mcp-migrate",
     "stars": 13
+  },
+  "diegosouzapw/omniroute": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "MIT",
+    "pushed_at": "2026-11-25T11:51:16Z",
+    "resolved_name": "cheaper-inference/OmniRoute",
+    "stars": 90223
   },
   "diet103/claude-code-infrastructure-showcase": {
     "archived": false,
@@ -2608,10 +2588,10 @@
     "resolved_name": "eze-is/web-access",
     "stars": 9471
   },
-  "ezra144israel/agent-teamwork-kit": {
+  "ezra144israel/governed-agent-skills": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "MIT",
     "pushed_at": "2026-10-07T10:18:23Z",
@@ -2808,15 +2788,15 @@
     "resolved_name": "FramY2/ctxwise",
     "stars": 8
   },
-  "francyjglisboa/agent-skills-platform": {
+  "francyjglisboa/agent-skill-creator": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "MIT",
     "pushed_at": "2026-09-15T17:31:46Z",
     "resolved_name": "FrancyJGLisboa/agent-skills-platform",
-    "stars": 2417
+    "stars": 2416
   },
   "frankbria/ralph-claude-code": {
     "archived": false,
@@ -2958,6 +2938,16 @@
     "resolved_name": "getagentseal/codeburn",
     "stars": 11891
   },
+  "getsentry/sentry-mcp": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "NOASSERTION",
+    "pushed_at": "2026-11-25T09:22:32Z",
+    "resolved_name": "getsentry/toolkit",
+    "stars": 976
+  },
   "getsentry/skills": {
     "archived": false,
     "discontinued": null,
@@ -2970,16 +2960,6 @@
     "pushed_at": "2026-11-14T19:39:01Z",
     "resolved_name": "getsentry/skills",
     "stars": 1195
-  },
-  "getsentry/toolkit": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "NOASSERTION",
-    "pushed_at": "2026-11-23T10:47:47Z",
-    "resolved_name": "getsentry/toolkit",
-    "stars": 973
   },
   "ghostsecurity/skills": {
     "archived": false,
@@ -3911,15 +3891,15 @@
     "resolved_name": "Jeffallan/claude-skills",
     "stars": 12495
   },
-  "jeremylongshore/tons-of-skills-marketplace": {
+  "jeremylongshore/claude-code-plugins-plus-skills": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "MIT",
-    "pushed_at": "2026-11-22T12:31:18Z",
+    "pushed_at": "2026-11-25T11:36:30Z",
     "resolved_name": "jeremylongshore/tons-of-skills-marketplace",
-    "stars": 2944
+    "stars": 2948
   },
   "jhochenbaum/herdr-hunk-diff": {
     "archived": false,
@@ -3941,6 +3921,16 @@
     "resolved_name": "jiabaobei/skills-constitution",
     "stars": 236
   },
+  "jimliu/baoyu-design": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-11-25T11:10:24Z",
+    "resolved_name": "JimLiu/open-artifact",
+    "stars": 523
+  },
   "jimliu/baoyu-skills": {
     "archived": false,
     "discontinued": null,
@@ -3950,16 +3940,6 @@
     "pushed_at": "2026-11-20T05:47:41Z",
     "resolved_name": "JimLiu/baoyu-skills",
     "stars": 27818
-  },
-  "jimliu/open-artifact": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "Apache-2.0",
-    "pushed_at": "2026-11-23T09:35:03Z",
-    "resolved_name": "JimLiu/open-artifact",
-    "stars": 404
   },
   "jinhanbuilds/hoist-the-elephant": {
     "archived": false,
@@ -4175,6 +4155,16 @@
     "pushed_at": "2026-11-22T08:37:26Z",
     "resolved_name": "kenryu42/cc-safety-net",
     "stars": 2095
+  },
+  "kepano/obsidian-skills": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "MIT",
+    "pushed_at": "2026-11-20T19:22:47Z",
+    "resolved_name": "obsidianmd/obsidian-skills",
+    "stars": 53715
   },
   "keploy/keploy": {
     "archived": false,
@@ -4824,6 +4814,16 @@
     "resolved_name": "matt1398/claude-devtools",
     "stars": 4052
   },
+  "matthew0822/toolreplay": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "MIT",
+    "pushed_at": "2026-09-14T12:09:08Z",
+    "resolved_name": "brandynfisher/ToolReplay",
+    "stars": 47
+  },
   "mattpocock/dictionary-of-ai-coding": {
     "archived": false,
     "discontinued": null,
@@ -5061,6 +5061,16 @@
     "resolved_name": "memvid/memvid",
     "stars": 17437
   },
+  "mensfeld/code-on-incus": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "MIT",
+    "pushed_at": "2026-11-25T11:50:21Z",
+    "resolved_name": "coipond/coi",
+    "stars": 792
+  },
   "mervinpraison/praisonai": {
     "archived": false,
     "discontinued": null,
@@ -5111,10 +5121,10 @@
     "resolved_name": "mex-memory/mex",
     "stars": 1796
   },
-  "michielhdoteth/squish-memory": {
+  "michielhdoteth/squish": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "MIT",
     "pushed_at": "2026-11-23T00:28:04Z",
@@ -5707,6 +5717,16 @@
     "resolved_name": "nextlevelbuilder/ui-ux-pro-max-skill",
     "stars": 153083
   },
+  "nexu-io/html-anything": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-11-25T11:58:20Z",
+    "resolved_name": "nexu-io/openmotion",
+    "stars": 16186
+  },
   "nexu-io/open-design": {
     "archived": false,
     "discontinued": null,
@@ -5716,16 +5736,6 @@
     "pushed_at": "2026-11-23T11:12:25Z",
     "resolved_name": "nexu-io/open-design",
     "stars": 109079
-  },
-  "nexu-io/openmotion": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "Apache-2.0",
-    "pushed_at": "2026-11-23T11:57:15Z",
-    "resolved_name": "nexu-io/openmotion",
-    "stars": 15587
   },
   "nickelsec/bough": {
     "archived": false,
@@ -5932,16 +5942,6 @@
     "resolved_name": "obra/superpowers",
     "stars": 324606
   },
-  "obsidianmd/obsidian-skills": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "MIT",
-    "pushed_at": "2026-11-20T19:22:47Z",
-    "resolved_name": "obsidianmd/obsidian-skills",
-    "stars": 53518
-  },
   "oil-oil/oil-skill-creator": {
     "archived": false,
     "discontinued": null,
@@ -5962,13 +5962,13 @@
     "resolved_name": "okf-memory/okf-agent-memory",
     "stars": 872
   },
-  "omaekumiko2-create/openkeylet": {
+  "omaekumiko2-create/kru": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "MIT",
-    "pushed_at": "2026-11-23T09:53:10Z",
+    "pushed_at": "2026-11-24T14:08:37Z",
     "resolved_name": "omaekumiko2-create/OpenKeylet",
     "stars": 136
   },
@@ -6061,16 +6061,6 @@
     "pushed_at": "2026-11-22T13:51:16Z",
     "resolved_name": "open-multi-agent/open-multi-agent",
     "stars": 7071
-  },
-  "open-slide/open-slide": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "MIT",
-    "pushed_at": "2026-11-20T08:12:45Z",
-    "resolved_name": "open-slide/open-slide",
-    "stars": 9839
   },
   "openai/codex": {
     "archived": false,
@@ -6182,6 +6172,16 @@
     "resolved_name": "opensesh/KARIMO",
     "stars": 292
   },
+  "opensquilla/opensquilla": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-11-22T19:24:43Z",
+    "resolved_name": "TokenRhythm/opensquilla",
+    "stars": 7164
+  },
   "oraios/serena": {
     "archived": false,
     "discontinued": null,
@@ -6201,16 +6201,6 @@
     "pushed_at": "2026-10-11T02:56:34Z",
     "resolved_name": "Orchestra-Research/AI-Research-SKILLs",
     "stars": 14764
-  },
-  "orchestratorinc/agent-orchestrator": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "Apache-2.0",
-    "pushed_at": "2026-11-23T12:12:24Z",
-    "resolved_name": "OrchestratorInc/agent-orchestrator",
-    "stars": 15042
   },
   "osaurus-ai/osaurus": {
     "archived": false,
@@ -6291,16 +6281,6 @@
     "pushed_at": "2026-11-22T15:12:07Z",
     "resolved_name": "Panniantong/Agent-Reach",
     "stars": 114150
-  },
-  "paradevai/paradev": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "MIT",
-    "pushed_at": "2026-11-23T09:44:36Z",
-    "resolved_name": "ParadevAI/Paradev",
-    "stars": 16504
   },
   "parallel-web/search-mcp": {
     "archived": false,
@@ -6452,16 +6432,6 @@
     "resolved_name": "pioner92/symbolpeek-mcp",
     "stars": 21
   },
-  "pku-dair/autosci": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "MIT",
-    "pushed_at": "2026-11-22T14:23:26Z",
-    "resolved_name": "PKU-DAIR/AutoSci",
-    "stars": 1741
-  },
   "plandex-ai/plandex": {
     "archived": false,
     "discontinued": null,
@@ -6522,15 +6492,15 @@
     "resolved_name": "PrefectHQ/fastmcp",
     "stars": 28716
   },
-  "prisma/orm": {
+  "prisma/prisma": {
     "archived": false,
     "discontinued": null,
-    "fetched_at": "2026-11-23",
+    "fetched_at": "2026-11-25",
     "license_lost": false,
     "license_spdx": "Apache-2.0",
-    "pushed_at": "2026-11-23T12:01:59Z",
+    "pushed_at": "2026-11-25T12:01:49Z",
     "resolved_name": "prisma/orm",
-    "stars": 47693
+    "stars": 47769
   },
   "prismorsec/patchbot": {
     "archived": false,
@@ -7287,6 +7257,16 @@
     "resolved_name": "sjsyrek/design-council",
     "stars": 184
   },
+  "skyllwt/autosci": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "MIT",
+    "pushed_at": "2026-11-22T14:23:26Z",
+    "resolved_name": "PKU-DAIR/AutoSci",
+    "stars": 1742
+  },
   "slidevjs/slidev": {
     "archived": false,
     "discontinued": null,
@@ -7625,6 +7605,16 @@
     "resolved_name": "supermemoryai/supermemory",
     "stars": 31691
   },
+  "superset-sh/superset": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "MIT",
+    "pushed_at": "2026-11-25T11:57:11Z",
+    "resolved_name": "ParadevAI/Paradev",
+    "stars": 16633
+  },
   "surefirestudios/tldr": {
     "archived": false,
     "discontinued": null,
@@ -7883,6 +7873,16 @@
     "resolved_name": "thedotmack/claude-mem",
     "stars": 119207
   },
+  "thegoodengineers/agit": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-10-25T13:37:32Z",
+    "resolved_name": "agitHQ/agit",
+    "stars": 7
+  },
   "thesysdev/openui": {
     "archived": false,
     "discontinued": null,
@@ -7952,16 +7952,6 @@
     "pushed_at": "2026-11-16T21:54:55Z",
     "resolved_name": "tirth8205/code-review-graph",
     "stars": 32911
-  },
-  "tokenrhythm/opensquilla": {
-    "archived": false,
-    "discontinued": null,
-    "fetched_at": "2026-11-23",
-    "license_lost": false,
-    "license_spdx": "Apache-2.0",
-    "pushed_at": "2026-11-22T19:24:43Z",
-    "resolved_name": "TokenRhythm/opensquilla",
-    "stars": 7162
   },
   "toolmonsters/handoff-skill": {
     "archived": false,
@@ -8152,6 +8142,16 @@
     "pushed_at": "2026-11-21T15:56:27Z",
     "resolved_name": "unstablebuild/rune",
     "stars": 1836
+  },
+  "untrivial-ai/agent-orchestrator": {
+    "archived": false,
+    "discontinued": null,
+    "fetched_at": "2026-11-25",
+    "license_lost": false,
+    "license_spdx": "Apache-2.0",
+    "pushed_at": "2026-11-25T12:01:40Z",
+    "resolved_name": "OrchestratorInc/agent-orchestrator",
+    "stars": 15118
   },
   "upstash/context7": {
     "archived": false,

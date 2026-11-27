@@ -1,9 +1,9 @@
 # Evaluation: autogen
 
 **Repo:** [microsoft/autogen](https://github.com/microsoft/autogen)
-**Stars:** 59,615 | **Last updated:** 2026-04-15 (pushed) | **License:** CC-BY-4.0
-**Last verified:** 2026-08-03
-**Last triaged:** 2026-08-03  <!-- triaged: bulk -->
+**Stars:** 61,965 | **Last updated:** 2026-11-12 (pushed) | **License:** CC-BY-4.0
+**Last verified:** 2026-11-25
+**Last triaged:** 2026-11-25  <!-- triaged: bulk -->
 **Dev loop stage:** Implement
 **Layer:** Process (framework)
 
@@ -23,12 +23,31 @@ plus the CATALOG "Overlaps with" cell (microsoft/agent-framework, langchain, cre
 semantic-kernel). That is sufficient to place the lead, not to support an ADOPT — this eval offers
 none.
 
-## Triage note
+## Successor
 
-Left at `discovery-log`: at ~60K stars, autogen is a major first-party Microsoft multi-agent
-framework, largely out of this catalog's dev-loop scope (general agent-backend framework rather
-than a coding-agent tool) but too significant and too widely deployed to mechanically SKIP as
-redundant. Note the unusual CC-BY-4.0 license (not a standard permissive code license) if this ever
-reaches a real eval. Left for the P0/eval-runner lane.
+`microsoft/agent-framework` — Microsoft's own successor, and already a catalogued row in its own
+right (CATALOG: `microsoft/agent-framework`, itself at SKIP for this catalog's scope). The archived
+AutoGen README names it for new users and links the AutoGen → Agent Framework migration guide.
 
-_Triaged 2026-08-03 by today's discovery lead (5-oldest-untriaged pass)._
+One caveat on that successor, recorded because a reader will follow the link: on 2026-11-25
+`microsoft/agent-framework` answered a GitHub API request with **404** (its own cached metadata
+record already reads unreachable, fetched 2026-11-23), while `microsoft/agent-framework-go` — live,
+701★, pushed 2026-11-25 — still points at that upstream repository as the place the .NET and Python
+implementations live. That successor-link problem belongs to the `microsoft/agent-framework` row and
+to the drift lane, not to this row's disposition; this row's own fact is that AutoGen is archived
+and the project names its successor.
+
+## Verdict
+
+**SKIP** — archived, and superseded by `microsoft/agent-framework`. The project moved rather than
+died: the repo is archived and read-only, and Microsoft's own README directs new users to Agent
+Framework and ships a migration guide. The successor is already catalogued, so there is nothing to
+repoint this row at and nothing to add.
+
+The earlier leave-decision rested on different ground — that a ★60K first-party framework is too
+significant to SKIP as *redundant* — and the P1 reason is factual rather than a redundancy call:
+archived, with the successor named by the project itself.
+
+_Triaged 2026-11-25 by the P1 successor-check band. Archived is never an automatic SKIP: a repo is
+far more often archived because it **moved** than because it died, so each one gets a successor
+check before disposal. This one got that check._
